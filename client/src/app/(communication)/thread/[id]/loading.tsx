@@ -1,14 +1,7 @@
+
 import React from 'react';
 
 const CustomLoader = () => {
-  const loaderContainerStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100vh', // Adjust this value as needed
-    background: 'white', // Set the background color to white
-  };
-
   const loaderStyle = {
     width: '50px',
     height: '50px',
@@ -47,11 +40,9 @@ const CustomLoader = () => {
   `;
 
   return (
-    <div style={loaderContainerStyle}>
-      <div style={loaderStyle} className="animate-spin">
-        <div style={{ ...loaderInnerStyle, ...loaderInnerBeforeStyle }}></div>
-        <div style={{ ...loaderInnerStyle, ...loaderInnerAfterStyle }}></div>
-      </div>
+    <div style={loaderStyle} className="animate-spin">
+      <div style={{ ...loaderInnerStyle, ...loaderInnerBeforeStyle }}></div>
+      <div style={{ ...loaderInnerStyle, ...loaderInnerAfterStyle }}></div>
       <style>{keyframesStyle}</style>
     </div>
   );

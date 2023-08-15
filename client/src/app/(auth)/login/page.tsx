@@ -1,8 +1,60 @@
-import React from 'react'
+"use client"
+import React, { useState } from 'react'
 import Image from 'next/image'
 import Navbar from '@/components/SecondaryNavbar/Navbar'
-const page = () => {
+import auth from '@/api/axios';
+import { addId } from '@/app/GlobalRedux/Features/id/idSlice';
+import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+const Page = () => {
+    const router = useRouter();
+    const dispatch = useDispatch();
+  
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [error, setError] = useState<string>('');
+  
+    const validateForm = () => {
+      if (!email || !password) {
+        setError('All fields are required');
+        return false;
+      }
+      if (!isValidEmail(email)) {
+        setError('Invalid emailc address');
+        return false;
+      }
+      setError('');
+      return true;
+    };
+  
+    const isValidEmail = (email:string) => {
+      // Basic email validation, you can use a library like 'validator' for more robust validation
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailPattern.test(email);
+    };
+  
+    const signUpHandler = (event: { preventDefault: () => void; }) => {
+      event.preventDefault();
+      if (!validateForm()) {
+        return;
+      }
+      auth
+        .post('/api/tenant/user/login', { email, password })
+        .then((response) => {
+          if (response.data.msg) {
+            setError('Something went wrong');
+          } else {
+            dispatch(addId(response.data.id));
+            router?.push('/thread');
+          }
+        })
+        .catch((error) => {
+          setError('An error occurred');
+        });
+    };
+  
     return (
+        
         <main>
             <Navbar />
             <div className="grid lg:grid-cols-2 lg:mt-3 lg:place-items-center h-screen">
@@ -21,16 +73,14 @@ const page = () => {
 
                             </button>
                             <div className=''><p className="ml-44 bold">OR</p></div>
-                            <div className='relative text-center my-5 border w-96 h-12 bg-white border-gray-300 rounded-md'><div className='absolute text-sm ml-1'>Email</div><input className='w-full h-full rounded-md' type="email" name="" id="" /></div>
-                            <div className='relative text-center my-5 border w-96 h-12 bg-white border-gray-300 rounded-md'><div className='absolute text-sm ml-1'>Password</div><input className='w-full h-full rounded-md' type="text" name="" id="" /></div>
+                            <div className='relative text-center my-5 border w-96 h-12 bg-white border-gray-300 rounded-md'><div className='absolute text-sm ml-1'>Email</div><input onChange={(e:any)=>setEmail(e.target.value)} className='w-full h-full rounded-md' type="email" name="" id="" /></div>
+                            <div className='relative text-center my-5 border w-96 h-12 bg-white border-gray-300 rounded-md'><div className='absolute text-sm ml-1'>Password</div><input onChange={(e:any)=>setPassword(e.target.value)} className='w-full h-full rounded-md' type="text" name="" id="" /></div>
                             <button className='text-center my-5 border w-96 h-12 text-white bg-primary border-gray-300 rounded-md'>Login</button>
                             <div className='flex w-full font-light text-sm mb-10'>
                                 <p >by continuing with google or email, you agree to <br /> IntellectX terms of service and Privacy policy</p>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
 
 
@@ -57,4 +107,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

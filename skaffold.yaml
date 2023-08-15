@@ -33,7 +33,7 @@ build:
           - src: 'src/**/*.ts'
             dest: .
     - image: anshadkt/client1
-      context: frontend
+      context: client
       docker:
         dockerfile: Dockerfile
       sync:
