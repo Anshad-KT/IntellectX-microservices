@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: company1-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: company1
+  template:
+    metadata:
+      labels:
+        app: company1
+    spec:
+      containers:
+        - name: company1
+          image: anshadkt/company1
+          env:
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: my-env-secret
+                  key: MONGO_URI
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: my-env-secret
+                  key: JWT_KEY
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: company1-srv
+spec:
+  selector:
+    app: company1
+  ports:
+    - name: company1
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client1-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client1
+  template:
+    metadata:
+      labels:
+        app: client1
+    spec:
+      containers:
+        - name: client1
+          image: anshadkt/client1
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: client1-srv
+spec:
+  selector:
+    app: client1
+  ports:
+    - name: client1
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
