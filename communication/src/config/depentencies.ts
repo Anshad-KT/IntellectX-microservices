@@ -7,6 +7,8 @@ import { addChannel_UseCase } from "../useCases/channel/addChannel.useCase";
 import { Channel } from "../libs/entities/Channel";
 import { addThread_UseCase } from "../useCases/thread/addThread.useCase";
 import threadRepository from "../libs/app/repository/mongo/thread.repository";
+import { Types } from "mongoose";
+import { pushThread_UseCase } from "../useCases/thread";
 
 
 
@@ -24,7 +26,8 @@ const useCases: useCaseData = {
   company_SignUp_UseCase,
   addChannel_UseCase,
   getChannel_UseCase,
-  addThread_UseCase
+  addThread_UseCase,
+  pushThread_UseCase
 };
 
 const repository: repositoryData = {
@@ -39,3 +42,4 @@ export = {
   useCases,
   repository,
 };
+ 

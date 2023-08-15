@@ -28,7 +28,7 @@ const switchDB = async (dbName: string, dbSchema: Map<string, any>): Promise<Con
     if (!Object.keys(db.models).length) {
       dbSchema.forEach((schema, modelName) => {
         db.model(modelName, schema);
-      });
+      }); 
     }
     return db;
   }

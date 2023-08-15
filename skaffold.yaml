@@ -32,7 +32,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: anshadkt/client1
+    - image: anshadkt/client
       context: client
       docker:
         dockerfile: Dockerfile

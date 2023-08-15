@@ -60,7 +60,10 @@ export interface useCaseData {
     execute: (id:string,companyName:string) => Promise<any | null>;
   };
   addThread_UseCase:(dependencies:DepenteniciesData)=>{ 
-    execute: (threadName:string,companyName:string) => Promise<any | null>;
+    execute: (threadName: string, channelName: string, companyName: string) => Promise<any | null>;
+  };
+  pushThread_UseCase:(dependencies:DepenteniciesData)=>{ 
+    execute: (threadId: mongoose.Types.ObjectId, channelName:any, companyName: string) => Promise<any | null>;
   };
 }
 
@@ -113,9 +116,11 @@ export interface repositoryData {
       threads: mongoose.Types.ObjectId[];
     },channelSchema:any) => Promise<any>
     getChannel: (ChannelSchema: any, id: string) => Promise<PromiseSettledResult<any>[]>;
+    addThread:(channelName: mongoose.Types.ObjectId, ChannelSchema: any, threadData: any) => Promise<Channel | null>
+
   }
   threadRepository:{
-    addThread:(threadName:ThreadData,companySchema:any) => Promise<ThreadData | any|null>
+    addThread:(thread:ThreadData,companySchema:any) => Promise<ThreadData | any|null>
   }
 
 }

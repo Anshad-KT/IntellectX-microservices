@@ -10,7 +10,7 @@ import {TenantCreatedListener } from "./src/events/listeners/tenant-created-list
 const start = async () => {
   if (!process.env.JWT_KEY) {
     throw new Error("JWT_KEY must be defined");
-  }
+  } 
   if (!process.env.MONGO_URI) {
     throw new Error("MONGO_URL must be defined");
   }
@@ -22,7 +22,7 @@ const start = async () => {
     await natsWrapper.connect(
       "ticketing",
       //process.env.NATS_CLIENT_ID,
-       "company1", 
+       "company", 
       "http://nats-srv:4222"  
     );  
   

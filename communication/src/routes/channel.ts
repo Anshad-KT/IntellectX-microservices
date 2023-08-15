@@ -17,3 +17,4 @@ export = (dependencies: any) => {
   router.get('/getchannel', getChannelController)
   return router;
 };
+ 

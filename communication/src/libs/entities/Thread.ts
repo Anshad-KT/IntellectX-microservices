@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 export interface ThreadData {
-    threadName: mongoose.Types.ObjectId;
+    threadName: string
     chat: {
       from: mongoose.Types.ObjectId; // Use Types.ObjectId instead of mongoose.Types.ObjectId
       fileType: string;
@@ -10,7 +10,7 @@ export interface ThreadData {
 }
   
   export class Thread {
-   threadName: mongoose.Types.ObjectId;
+   threadName: string
     constructor({threadName}: ThreadData) {
       this.threadName = threadName;
     }

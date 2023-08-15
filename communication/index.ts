@@ -13,7 +13,7 @@ const start = async () => {
   }
   if (!process.env.MONGO_URI) {
     throw new Error("MONGO_URL must be defined");
-  } 
+  }
   // if (!process.env.NATS_CLIENT_ID) {
   //   throw new Error("NATS_CLIENT_ID must be defined");
   // }
@@ -52,4 +52,4 @@ const start = async () => {
   });
 };
  
-start();
+start(); 

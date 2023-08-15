@@ -6,32 +6,32 @@ import { Channel } from "../../entities/Channel";
 
 export = (dependencies: DepenteniciesData): any => {
   const {
-     useCases: { addChannel_UseCase },
+     useCases: { addThread_UseCase,pushThread_UseCase },
   } = dependencies;
 
   const addChannel = async (req: Request, res: Response, next: NextFunction) => {
     try {
       
-      const channel:{
-        creator: string,
-        channelName: string,
-        superUsers: string[], // Array of strings
-        previlagedUsers: string[], // Array of strings
-        threads: string[], // Array of strings
+      const { 
+        threadName,channelName
       } = req.body;
       const  companyName  = req.subdomains[0]
 console.log(req.body,"looo");
  
-      if (!channel) throw new BadRequestError("Please provide employee details");
+      if (!threadName) throw new BadRequestError("Please provide thread details");
       if (!companyName) throw new BadRequestError("Please provide a password");
       
       
-      const addChannel = await addChannel_UseCase(dependencies).execute(channel,companyName);
-;
+      const {_id} = await addThread_UseCase(dependencies).execute(threadName,channelName,companyName);
+  
+      console.log(_id);
+      
+      const pushThread = await pushThread_UseCase(dependencies).execute(_id,channelName,companyName);
+console.log(pushThread);
 
-      if (!addChannel) throw new BadRequestError("Invalid Credentials");
+      if (!pushThread) throw new BadRequestError("Invalid Credentials");
 
-      res.json(addChannel);
+      res.json(pushThread);
     
       
     } catch (error: any) {

@@ -10,12 +10,12 @@ const initialState:employeeState = {
     value:[]
 }
 
-export const addSlice = createSlice({
+export const addSlice = createSlice({ 
     name:"employee",
-    initialState,
+    initialState, 
     reducers:{
         addEmployee:(state,action)=>{state.value=action.payload}
-    }
+    } 
 })
 
 export const { addEmployee } = addSlice.actions

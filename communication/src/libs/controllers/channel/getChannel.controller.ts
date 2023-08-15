@@ -15,20 +15,19 @@ export = (dependencies: DepenteniciesData): any => {
       
     
       const  companyName  = req.subdomains[0]
-console.log(req.body,"looo");
- console.log(req?.session?.userDetails.id);
+      console.log(req.body,"looo");
+      console.log(req?.session?.userDetails.id);
  
     
       if (!companyName) throw new BadRequestError("Please provide a company");
       
      
       const addChannel = await getChannel_UseCase(dependencies).execute(req?.session?.userDetails.id,companyName);
-;
 
       if (!addChannel) throw new BadRequestError("Invalid Credentials");
 
       res.json(addChannel);
-    console.log(addChannel);
+   
     
       
     } catch (error: any) {

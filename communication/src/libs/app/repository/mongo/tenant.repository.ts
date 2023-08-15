@@ -23,7 +23,7 @@ export = {
     getCompanySchema : async (companyName: any,modelName:string): Promise<any> => {
       if(modelName=="Tenant"||modelName=="User"){
        
-        console.log(modelName);
+        console.log(modelName); 
         
         const tenantDB: Connection = await switchDB('intellectX-tenants', TenantSchemas);
        

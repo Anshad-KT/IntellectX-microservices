@@ -8,7 +8,10 @@ export const routes = (dependencies: any) => {
   const channel = channelRoutes(dependencies);
   const thread = threadRoutes(dependencies)
 
+  routes.use("/communication/thread", thread)
+  console.log("klk");
+  
   routes.use("/communication", channel);
-  routes.use("/communication/addthread", thread)
+
   return routes;
 };

@@ -32,7 +32,10 @@ const Page = () => {
            if(!response.data.threads){
              router.push('/thread/default')
            }else{
-           router?.push(`/thread/${id}`);            
+        
+            
+            
+           router?.push(`/thread/${id.value}`);            
            }
            }
           })

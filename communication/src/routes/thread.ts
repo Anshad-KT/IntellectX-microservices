@@ -14,6 +14,6 @@ export = (dependencies: any) => {
     addThreadController
   } = threadController(dependencies); 
   
-  router.post("/", addThreadController);
+  router.post("/addthread", addThreadController);
   return router;
 };

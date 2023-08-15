@@ -35,7 +35,7 @@ export = {
          
                 return populatedChannel;
             }));
-            console.log(populatedChannels, "lkl");
+         
             return populatedChannels;
         } 
         

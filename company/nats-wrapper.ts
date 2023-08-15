@@ -8,12 +8,12 @@ class NatsWrapper {
       throw new Error("Cannot access Nats client before connection");
     }
 
-    return this._client;
+    return this._client; 
   }
 
   connect(clusterId: string, clientId: string, url: string) {
     this._client = nats.connect(clusterId, clientId, { url });
-
+ 
     return new Promise<void>((resolve, reject) => {
       this._client!.on("connect", () => {
         console.log("Connected to NATS");

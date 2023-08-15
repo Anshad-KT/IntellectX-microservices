@@ -24,8 +24,8 @@ export const addChannel_UseCase = (dependencies: DepenteniciesData) => {
      const g = new mongoose.Types.ObjectId(channel.creator)
 
      console.log(g,"lok");
-
-      const dummyChannelData = {
+       if(channel){
+              const dummyChannelData = {
         creator: new mongoose.Types.ObjectId(channel.creator),
         channelName: channel.channelName,
         superUsers: channel.superUsers.map(id => new mongoose.Types.ObjectId(id)), 
@@ -33,10 +33,12 @@ export const addChannel_UseCase = (dependencies: DepenteniciesData) => {
         threads: channel.threads.map(id => new mongoose.Types.ObjectId(id)), 
       }; console.log(model);
       console.log(dummyChannelData,"lkk");
+       
+
       
 
     return channelRepository.addChannel(dummyChannelData, model)
-
+  }
   };
   return {
     execute,

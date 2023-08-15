@@ -25,7 +25,7 @@ console.log(req.body,"looo");
       if (!channel) throw new BadRequestError("Please provide employee details");
       if (!companyName) throw new BadRequestError("Please provide a password");
       
-      
+       
       const addChannel = await addChannel_UseCase(dependencies).execute(channel,companyName);
 ;
 

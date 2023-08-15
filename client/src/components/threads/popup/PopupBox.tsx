@@ -1,12 +1,15 @@
 "use client"
 import auth from '@/api/axios';
 import { RootState } from '@/app/GlobalRedux/store';
+import { useParams } from 'next/navigation';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { CSSTransition } from 'react-transition-group'
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 
 const PopupBox = ({ onClose }: any) => {
+  
+  const { value } = useSelector((state: RootState) => state.channel)
   const [threadName, setThreadName] = useState('');
   const [selectedChannelId, setSelectedChannelId] = useState<string[]>(['']);
 
@@ -21,7 +24,7 @@ const PopupBox = ({ onClose }: any) => {
     setSelectedChannelId(selectedIds);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Perform the action to add the new thread using threadName and selectedChannelId
     // Reset form values after submission
@@ -29,11 +32,16 @@ const PopupBox = ({ onClose }: any) => {
     setThreadName('');
     setSelectedChannelId(['']);
     const fetchData = async (url: string) => {
-      const response = await auth.post(url,{threadName,selectedChannelId});
+      const response = await auth.post(url,{threadName,channelName:value,previlagedUsers:selectedChannelId});
       console.log(response.data, "ucl");
       return response.data
     };
-    fetchData('/api/communication/addthread')
+    fetchData('/api/communication/thread/addthread')
+    onClose()
+    console.log(Date.now());
+    await mutate('/api/communication/getchannel');
+    console.log(Date.now());
+    
   };
   const channelData: any = useSelector((state: RootState) => state.employee)
   if (!channelData) {
@@ -44,7 +52,7 @@ const PopupBox = ({ onClose }: any) => {
   
   // useEffect(()=>{
 
-  // },[])
+  // },[])  
 
   return (
     <CSSTransition in={true} timeout={300} classNames="popup-fade" unmountOnExit>
