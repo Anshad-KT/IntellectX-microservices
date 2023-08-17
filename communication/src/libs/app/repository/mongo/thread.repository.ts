@@ -5,6 +5,21 @@ import { ThreadData } from "../../../entities/Thread";
 
 
 export = {
+    addChat:async (chatId:mongoose.Types.ObjectId, threadSchema: any, threadName: string) => {
+        const existingThread = await threadSchema.findById( threadName );
+      
+        if (existingThread) {
+
+            console.log(chatId);
+            
+          existingThread.chat.push(chatId); // Push the new thread data into the threads array
+          const updatedChannel = await existingThread.save();
+      
+          return updatedChannel;
+        } 
+      
+        return null; // Return null or handle the case when the channel doesn't exist
+    },
     addThread: async (thread: ThreadData, ChannelSchema: any) => {
         const mongooseObject = await ChannelSchema.findOne({threadName:thread.threadName});
         if (!mongooseObject) {

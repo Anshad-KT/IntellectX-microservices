@@ -9,10 +9,11 @@ import { tenantSchema } from '../app/database/mongo/schemas/tenant/tenant.schema
 import { userSchema } from '../app/database/mongo/schemas/company/user.schema';
 import { channelSchema } from '../app/database/mongo/schemas/communication/channel.schema';
 import { threadSchema } from '../app/database/mongo/schemas/communication/thread.schema';
+import { chatSchema } from '../app/database/mongo/schemas/communication/chat.schema';
 
 // Indicates which Schemas are used by whom
 
-const ChildrenSchemas: Map<string, any> = new Map([['Company', companySchema],['Employee', employeeSchema],['Channel',channelSchema],['Thread',threadSchema]]);
+const ChildrenSchemas: Map<string, any> = new Map([['Company', companySchema],['Employee', employeeSchema],['Channel',channelSchema],['Thread',threadSchema],['Chat',chatSchema]]);
 const TenantSchemas: Map<string, any> = new Map([['Tenant', tenantSchema],['User',userSchema]]);
 
 /** Switch db on the same connection pool

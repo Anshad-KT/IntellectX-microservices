@@ -14,6 +14,7 @@ import { useParams } from 'next/navigation';
 import PopupButton from '@/components/threads/popup/PopupButton';
 import { addEmployee } from '@/app/GlobalRedux/Features/employee/employeeSlice';
 import { RootState } from '@/app/GlobalRedux/store';
+import Link from 'next/link';
 
 const Page = () => {
     const { id } = useParams();
@@ -34,8 +35,10 @@ const Page = () => {
     const { data,  error  } = useSWR(`/api/communication/getchannel`, fetchData);
     const { data: employeeData, error: employeeError } = useSWR('/api/company/getemployee', fetchEmployee);
     const { value } = useSelector((state: RootState) => state.channel)
-    const foundItem:any = data?.find((item:any) => item.id === id);
-    console.log(foundItem,"founItem");
+  
+    
+    const foundItem:any = value?.find((item:any) => item.id === id);
+ 
     
 
    
@@ -106,7 +109,8 @@ const Page = () => {
                                     {/* threads */}
                                     {foundItem?.threads?.map((item:any,index:number)=>{
                                         return(
-                                            <div key={item.id} className='w-full my-2 h-24 hover:bg-primaryhover hover:text-white shadow bg-sidebar rounded-md mt-2 flex items-center pl-3 cursor-pointer'>
+                                            <Link key={item.id} href={`/chat/${item.id}`}> 
+                                            <div className='w-full my-2 h-24 hover:bg-primaryhover hover:text-white shadow bg-sidebar rounded-md mt-2 flex items-center pl-3 cursor-pointer'>
                                             <svg className='w-14 h-12 my-4' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                                             </svg>
@@ -120,6 +124,8 @@ const Page = () => {
                                                 <p>5 min</p>
                                             </div>
                                         </div>
+                                        </Link>
+
                                         )
                                     })}
                                    

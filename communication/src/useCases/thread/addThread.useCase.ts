@@ -3,6 +3,7 @@ import { EmployeeAttrs } from "../../libs/app/database/mongo/schemas/company/emp
 import { Channel } from "../../libs/entities/Channel";
 
 import { DepenteniciesData } from "../../libs/entities/interfaces";
+import { ThreadData } from "../../libs/entities/Thread";
 
 export const addThread_UseCase = (dependencies: DepenteniciesData) => {
   const {
@@ -14,7 +15,7 @@ export const addThread_UseCase = (dependencies: DepenteniciesData) => {
     const execute = async (threadName: string, channelName:any, companyName: string) => {
 
       const model = await tenantRepository.getCompanySchema(companyName, "Thread");
-        const threadInstance = {
+        const threadInstance:ThreadData = {
         threadName,
         chat:[]
       }; console.log(model);

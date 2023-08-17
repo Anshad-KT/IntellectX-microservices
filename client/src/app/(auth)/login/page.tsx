@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Navbar from '@/components/SecondaryNavbar/Navbar'
 import auth from '@/api/axios';
 import { addId } from '@/app/GlobalRedux/Features/id/idSlice';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 const Page = () => {
     const router = useRouter();

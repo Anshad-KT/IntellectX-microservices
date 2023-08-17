@@ -1,14 +1,15 @@
 "use client"
 import auth from '@/api/axios';
+import { addChannel } from '@/app/GlobalRedux/Features/channel/channelSlice';
 import { RootState } from '@/app/GlobalRedux/store';
 import { useParams } from 'next/navigation';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CSSTransition } from 'react-transition-group'
 import useSWR, { mutate } from 'swr';
 
 const PopupBox = ({ onClose }: any) => {
-  
+  const dispatch = useDispatch()
   const { value } = useSelector((state: RootState) => state.channel)
   const [threadName, setThreadName] = useState('');
   const [selectedChannelId, setSelectedChannelId] = useState<string[]>(['']);
@@ -33,13 +34,17 @@ const PopupBox = ({ onClose }: any) => {
     setSelectedChannelId(['']);
     const fetchData = async (url: string) => {
       const response = await auth.post(url,{threadName,channelName:value,previlagedUsers:selectedChannelId});
+      dispatch(addChannel(response.data));
       console.log(response.data, "ucl");
       return response.data
     };
-    fetchData('/api/communication/thread/addthread')
+   const hello = await fetchData('/api/communication/thread/addthread')
+   
+   
     onClose()
-    console.log(Date.now());
-    await mutate('/api/communication/getchannel');
+    console.log("podapatti");
+  
+  
     console.log(Date.now());
     
   };

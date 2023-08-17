@@ -1,5 +1,6 @@
 import express from "express";
 import channelRoutes from "./channel";
+import chatRoutes from "./chat"
 import threadRoutes from "./thread"
 
 export const routes = (dependencies: any) => {
@@ -7,11 +8,12 @@ export const routes = (dependencies: any) => {
 
   const channel = channelRoutes(dependencies);
   const thread = threadRoutes(dependencies)
+  const chat = chatRoutes(dependencies)
 
   routes.use("/communication/thread", thread)
-  console.log("klk");
-  
+  routes.use("/communication/chat",chat)
   routes.use("/communication", channel);
+  console.log("whyso serious");
 
   return routes;
 };

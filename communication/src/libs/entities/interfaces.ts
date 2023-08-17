@@ -6,6 +6,7 @@ import { EmployeeAttrs } from "../app/database/mongo/schemas/company/employee.sc
 import { User, UserData } from "./User";
 import { Channel } from "./Channel";
 import { Thread, ThreadData } from "./Thread";
+import { chatData } from "./Chat";
 
 export interface DepenteniciesData {
   useCases: useCaseData;
@@ -65,6 +66,15 @@ export interface useCaseData {
   pushThread_UseCase:(dependencies:DepenteniciesData)=>{ 
     execute: (threadId: mongoose.Types.ObjectId, channelName:any, companyName: string) => Promise<any | null>;
   };
+  addChat_UseCase:(dependencies:DepenteniciesData)=>{ 
+    execute: (from:string,fileType:string,content:string,companyName:string) => Promise<any | null>;
+  };
+  pushChat_UseCase:(dependencies:DepenteniciesData)=>{ 
+    execute: (chatId: mongoose.Types.ObjectId, threadName:any, companyName: string) => Promise<any | null>;
+  };
+  getChat_UseCase:(dependencies:DepenteniciesData)=>{ 
+    execute: (threadName:string,companyName:string) => Promise<any | null>;
+  };
 }
 
 export interface repositoryData {
@@ -121,6 +131,14 @@ export interface repositoryData {
   }
   threadRepository:{
     addThread:(thread:ThreadData,companySchema:any) => Promise<ThreadData | any|null>
+    addChat:(chat: mongoose.Types.ObjectId, ThreadSchema: any,threadName:string) => Promise<ThreadData | any | null>
   }
-
+  chatRepository:{
+    addChat:(chatId: {
+      from: mongoose.Types.ObjectId;
+      fileType: string;
+      content: string;
+  }, threadName:any) => Promise<chatData | any|null>
+    getChat: (ThreadSchema: any, threadName: string) => Promise<any>;
+  }
 }
