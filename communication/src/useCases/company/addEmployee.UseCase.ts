@@ -11,8 +11,12 @@ export const addEmployee_UseCase = (dependencies: DepenteniciesData) => {
   if (!companyRepository)
     throw new Error("The company repository should be dependencies");
 
-    const execute = async(employeeDetails: EmployeeAttrs,companyName:string) => {
+    const execute = async(employeeDetails: {employeeId:string,role?:string,salary?:number},companyName:string) => {
+      console.log(employeeDetails);
+       
     const model = await tenantRepository.getCompanySchema(companyName,"Employee")
+    console.log(model);
+    
     return companyRepository.addEmployee(employeeDetails,model)
 
   };

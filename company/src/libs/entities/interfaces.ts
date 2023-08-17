@@ -44,7 +44,7 @@ export interface useCaseData {
     execute: (companyName:string) => Promise<Tenant | null>;
   };
   company_SignUp_UseCase:(dependencies:DepenteniciesData)=>{ 
-    execute: ({id,companyName,companyEmail,budget,superUsers}:{id:string,companyName:string,companyEmail:string,budget:number,superUsers:string},companyTitle:string) => Promise<Tenant | null>;
+    execute: ({id,companyName,companyEmail,budget,superUsers,employees}:{id:string,companyName:string,companyEmail:string,budget:number,superUsers:string,employees:string},companyTitle:string) => Promise<Tenant | null>;
   };
   addChannel_UseCase:(dependencies:DepenteniciesData)=>{ 
     execute: (channel:Channel,companyName:string) => Promise<Channel | null>;
@@ -66,14 +66,14 @@ export interface repositoryData {
     addSuperUser: ( id: string, CompanySchema: any) => Promise<Company | null>;
     removeSuperUser: ( id: string, CompanySchema: any) => Promise<Company | null>;
     addEmployee: (
-      employeeDetails: EmployeeAttrs,
+      employeeDetails: {id:string,role?:string,salary?:number},
       CompanyEmployeeSchema: any
     ) => Promise<any>;
     removeEmployee: (id: string, CompanySchema: any) => Promise<Company | null>;
     editCompany: (company: {
       companyName: string;
       companyEmail: string;
-    
+     
       superUsers: mongoose.Types.ObjectId[];
       employees: any[];
       _id: string;

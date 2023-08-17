@@ -13,11 +13,11 @@ export const getChat_UseCase = (dependencies: DepenteniciesData) => {
     throw new Error("The company repository should be dependencies");
     const execute = async (threadName:string,companyName:string) => {
 
-      const model = await tenantRepository.getCompanySchema(companyName, "Thread");
+      const ThreadModel = await tenantRepository.getCompanySchema(companyName, "Thread");
         
- 
+      const UserModel = await tenantRepository.getCompanySchema(companyName, "User");
       
-      return chatRepository.getChat(model,threadName)
+      return chatRepository.getChat(ThreadModel,threadName,UserModel)
   };
   return {
     execute,

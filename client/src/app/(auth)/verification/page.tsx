@@ -34,7 +34,7 @@ const Page = () => {
                 <div className='hidden lg:w-3/4 lg:flex lg:items-center lg:justify-center lg:mb-32'>
                     <div>
                         <Image className=''
-                            src="/landing-images/landing-2.jpg"
+                            src="/landing-images/landin.jpg"
                             width={800}
                             height={800}
                             alt="Picture of the author"

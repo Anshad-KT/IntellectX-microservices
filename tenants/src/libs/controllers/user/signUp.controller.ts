@@ -9,7 +9,7 @@ export = (dependencies: DepenteniciesData): any => {
   const {
     useCases: { signUp_UseCase, getUser_UseCase },
   } = dependencies;
-
+ 
   const signUp = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { username, email, password } = req.body;

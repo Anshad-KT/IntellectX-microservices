@@ -7,7 +7,7 @@ export = (dependencies: DepenteniciesData): any => {
       res.json({ status: true, content: "Successfully Logged out" });
     } catch (error: any) {
       throw new Error(error);
-    }
+    } 
   };
   return signOut;
 }

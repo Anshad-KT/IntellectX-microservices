@@ -28,6 +28,8 @@ const Page = () => {
    
     const fetchEmployee = async (url: string) => {
         const response = await auth.get(url);
+        console.log(response.data);
+        
         dispatch(addEmployee(response.data));
         return response.data
     };

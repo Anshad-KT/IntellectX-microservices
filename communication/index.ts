@@ -17,7 +17,7 @@ const start = async () => {
   // if (!process.env.NATS_CLIENT_ID) {
   //   throw new Error("NATS_CLIENT_ID must be defined");
   // }
-
+ 
   try { 
     await natsWrapper.connect(
       "ticketing",
@@ -25,7 +25,7 @@ const start = async () => {
        "communication1",  
       "http://nats-srv:4222"
     ); 
-  
+   
     natsWrapper.client.on("close", () => {
       console.log("NATS connetion closed!"); 
       process.exit();

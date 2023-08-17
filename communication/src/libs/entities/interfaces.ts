@@ -41,7 +41,7 @@ export interface useCaseData {
   };
   signIn_UseCase:(dependencies:DepenteniciesData)=>{
     execute: ({ username, email }: UserData) => Promise<User | null>;
-  };
+  }; 
   addTenant_UseCase:(dependencies:DepenteniciesData)=>{ 
     execute: (companyName:string) => Promise<Tenant | null>;
   };
@@ -88,7 +88,7 @@ export interface repositoryData {
     addSuperUser: ( id: string, CompanySchema: any) => Promise<Company | null>;
     removeSuperUser: ( id: string, CompanySchema: any) => Promise<Company | null>;
     addEmployee: (
-      employeeDetails: EmployeeAttrs,
+      employeeDetails: any,
       CompanyEmployeeSchema: any
     ) => Promise<any>;
     removeEmployee: (id: string, CompanySchema: any) => Promise<Company | null>;
@@ -139,6 +139,6 @@ export interface repositoryData {
       fileType: string;
       content: string;
   }, threadName:any) => Promise<chatData | any|null>
-    getChat: (ThreadSchema: any, threadName: string) => Promise<any>;
+    getChat: (ThreadSchema: any, threadName: string, UserSchema:any) => Promise<any>;
   }
 }

@@ -48,7 +48,8 @@ export = {
                     })
                     .exec();
          
-                return populatedChannel;
+                 return populatedChannel;
+                
             }));
          
             return populatedChannels;

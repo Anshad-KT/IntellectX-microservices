@@ -5,7 +5,7 @@ import {
 } from "@intellectx/build";
 
 import { chatController } from "../libs/controllers";
-
+ 
 
 export = (dependencies: any) => {
   
@@ -15,7 +15,7 @@ export = (dependencies: any) => {
   } = chatController(dependencies); 
   
   router.post("/addchat", addChatController);
-  router.post("/getchat/:id",getChatController)
+  router.get("/getchat/:id",getChatController)
   console.log("why");
   
   return router;

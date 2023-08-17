@@ -23,7 +23,7 @@ const Page = () => {
        console.log(email,username,budget);
        
         auth
-          .post('/api/tenant/addtenant', { companyEmail:email, companyName:username, budget , superUsers:id.value,employees:id })
+          .post('/api/tenant/addtenant', { companyEmail:email, companyName:username, budget , superUsers:id.value,employee:id.value })
           .then(response => {
           console.log(response);
           if(response.data.msg){

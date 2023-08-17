@@ -15,30 +15,58 @@ export = {
         const mongooseObject = await newChat.save();
         return mongooseObject;
     },
-     getChat : async (ThreadSchema:any, threadName:string) => {
+    getChat: async (ThreadSchema: any, threadName: string,UserSchema:any) => {
         try {
-            const thread = await ThreadSchema.findById( threadName )
-    
+            const thread = await ThreadSchema.findById(threadName)
+
             if (!thread) {
                 throw new Error('Thread not found');
-            }
-    
+             }
+
             if (thread.chat && thread.chat.length > 0) {
                 const populatedThread = await ThreadSchema.findById(thread._id)
-                    .populate({
-                        path: 'chat',
-                        model: 'Chat',
-                        options: { sort: { createdAt: 1 } }, // Sort chats by createdAt in ascending order
-                    })
-                    .exec();
-    
-                return populatedThread;
+                .populate({
+                    path: 'chat',
+                    model: 'Chat',
+                    options: { sort: { createdAt: 1 } },
+                })
+                .exec();
+            
+            // Map through the populated chats and perform the population dynamically
+            const populatedChatsWithSender = await Promise.all(populatedThread.chat.map(async (item:any) => {
+                console.log(item.from.toString());
+                
+                const senderDetails = await UserSchema.aggregate([
+                    { $match: { id: item.from.toString() } },
+                    {
+                        $project: {
+                            _id: 1,
+                            username: 1,
+                            email: 1,
+                            // Include other fields you need in the result
+                            // ...
+                        }
+                    },
+                ]);
+            
+                return {
+                    ...item.toObject(),
+                    from: senderDetails[0], // Assuming senderDetails is an array with a single result
+                };
+            }));
+            
+            const plainThread = populatedThread.toObject(); // Convert to plain object
+            plainThread.chat = populatedChatsWithSender; // Assign the new value
+            
+            return plainThread
             }
+           
+        
     
             return thread;
-        } catch (error) {
-            throw error;
-        }
+    } catch(error) {
+        throw error;
     }
+}
     
 }

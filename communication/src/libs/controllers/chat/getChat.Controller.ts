@@ -11,7 +11,7 @@ export = (dependencies: DepenteniciesData): any => {
 
   const getChat = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      
+    
     
       const  companyName  = req.subdomains[0]
       console.log(req.body,"looo");
@@ -21,6 +21,7 @@ export = (dependencies: DepenteniciesData): any => {
  
       
       const addChatResult = await getChat_UseCase(dependencies).execute(req.params.id,companyName);
+console.log(addChatResult,"lo ee");
 
       if (!addChatResult) throw new BadRequestError("Invalid Credentials");
 

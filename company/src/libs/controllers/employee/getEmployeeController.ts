@@ -19,7 +19,8 @@ export = (dependencies: DepenteniciesData): any => {
 
       if (!employees) throw new BadRequestError("Invalid Credentials");
 
-      res.json(employees);
+res.json(employees);
+            
     } catch (error: any) {
       throw new Error(error);
     }

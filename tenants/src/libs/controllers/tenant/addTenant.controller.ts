@@ -19,7 +19,7 @@ console.log(req.body);
       if (!companyEmail) throw new BadRequestError("Please provide a company email");
    
       const addedCompanyName:any = await addTenant_UseCase(dependencies).execute(companyName);
-
+  
       if (!addedCompanyName) throw new BadRequestError("Invalid Credentials");
       await new TenantRegisteredPublisher(natsWrapper.client).publish({
         id: addedCompanyName._id,

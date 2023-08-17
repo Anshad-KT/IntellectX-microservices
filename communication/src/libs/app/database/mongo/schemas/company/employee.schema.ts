@@ -3,11 +3,9 @@ import { Password } from "../../../../../utils/password";
 import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 
 export interface EmployeeAttrs {
-  email?: string;
-  password?: string;
-  username?: string;
+  employeeId:string
   role?: string;
-  salary?: string;
+  salary?: number;
 }
 
 interface EmployeeModel extends mongoose.Model<EmployeeDoc> {
@@ -16,11 +14,9 @@ interface EmployeeModel extends mongoose.Model<EmployeeDoc> {
 
 interface EmployeeDoc extends mongoose.Document {
 
-    username:string
-    email:string
-    password:string
+  employeeId:mongoose.Types.ObjectId
     role: string;
-    salary: string;
+    salary: number;
     attendance: {
       subject: string;
       description: string;
@@ -28,25 +24,21 @@ interface EmployeeDoc extends mongoose.Document {
     }[];
     updatedAt: string;
     version: number;
-
+ 
 }
 
 const employeeSchema = new mongoose.Schema(
   {
-    username: {
-      type: String,
-    },
-    email: {
-      type: String,
-    },
-    password: {
-      type: String,
+    employeeId:{
+      type:mongoose.Types.ObjectId,
+      ref:"User",
+      required:true
     },
     role: {
       type: String,
     },
     salary: {
-      type: String,
+      type: Number,
     },
     attendance: [
       {
@@ -85,13 +77,13 @@ const employeeSchema = new mongoose.Schema(
 );
 
 
-employeeSchema.pre("save", async function (done) {
-  if (this.isModified("password")) {
-    const hashed = await Password.toHash(this.get("password"));
-    this.set("password", hashed);
-  }
-  done();
-});
+// employeeSchema.pre("save", async function (done) {
+//   if (this.isModified("password")) {
+//     const hashed = await Password.toHash(this.get("password"));
+//     this.set("password", hashed);
+//   }
+//   done();
+// });
 
 employeeSchema.set("versionKey", "version");
 employeeSchema.plugin(updateIfCurrentPlugin);

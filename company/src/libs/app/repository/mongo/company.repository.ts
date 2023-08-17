@@ -43,11 +43,19 @@ export = {
     await mongooseObject.save();
     return mongooseObject;
   },
-  addEmployee: async (employeeDetails: EmployeeAttrs,CompanyEmployeeSchema:any) => {
-    const mongooseObject = CompanyEmployeeSchema.build(employeeDetails);
-    await mongooseObject.save()
+  addEmployee: async (employeeDetails: EmployeeAttrs, CompanyEmployeeSchema: any) => {
+    console.log(employeeDetails,"sreyas",CompanyEmployeeSchema);
+    
+    const newEmployee = new CompanyEmployeeSchema(employeeDetails); // Create a new instance of the CompanyEmployeeSchema with the provided data
+   try {
+    const mongooseObject = await newEmployee.save();
     return mongooseObject;
-  },
+   } catch (error) {
+    console.log(`error while inserting ${employeeDetails} to ${CompanyEmployeeSchema}`,error);
+    
+   } // Save the new employee instance to the database
+   
+},   
   removeEmployee: async (id:string,CompanySchema:any) => {
     const mongooseObject = await CompanySchema.findOne();
     if(!mongooseObject){

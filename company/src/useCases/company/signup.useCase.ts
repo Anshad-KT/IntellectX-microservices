@@ -17,21 +17,22 @@ export const company_SignUp_UseCase = (dependencies: DepenteniciesData) => {
     const superUserId = new mongoose.Types.ObjectId(superUsers);
    
     
-    const employee = {
+    const company = {
       id,
       companyName,
       companyEmail,
       budget,
       superUsers:[
         new mongoose.Types.ObjectId(superUserId)
-      ]  
+      ],  
+
     }
    
     
     const model = await tenantRepository.getCompanySchema(companyName,"Company")
    
     
-    return companyRepository.signUp(employee,model);
+    return companyRepository.signUp(company,model);
   };
   return {
     execute,

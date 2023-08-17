@@ -1,17 +1,19 @@
 import React from 'react'
 
-const TextBubble = ({ isClient }: { isClient: boolean }) => {
+const TextBubble = ({ isClient, from, content, time }: { isClient: boolean, from: string, content: string, time: string }) => {
+    console.log(from,content,time);
+    
     return (
         isClient ? (
             <div className='ml-auto max-w-2xl bg-sidebar rounded-md mt-2 flex items-start justify-end pl-3 pr-5 py-1 cursor-pointer'>
 
 
                 <div className='flex flex-col p-4 shadow-lg '>
-                    <h4 className='text-mini'>~Finance discussion</h4>
+                    <h4 className='text-mini'>~{from}</h4>
                     <div className="flex-col items-center">
-                        <p className='text-sm'>new finance modi, et unde quos qui, veritatis repudiandae dolor, officiis rem itaque? Praesentium laudantium voluptates quam? Expedita vitae harum suscipit distinctio.</p>
+                        <p className='text-sm'>{content}</p>
                     </div>
-                    <div className='flex justify-end text-gray-500 text-mini'>10 mins ago</div>
+                    <div className='flex justify-end text-gray-500 text-mini'>{time}</div>
                 </div>
                 <div>
                     <svg className='w-10 h-8 mr-3 text-primary' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -28,11 +30,11 @@ const TextBubble = ({ isClient }: { isClient: boolean }) => {
                 </div>
 
                 <div className='flex flex-col p-4 shadow-lg'>
-                    <h4 className='text-mini'>~Finance discussion</h4>
+                    <h4 className='text-mini'>~{from}</h4>
                     <div className="flex-col items-center">
-                        <p className='text-sm'>new finance modi, et unde quos qui, veritatis repudiandae dolor, officiis rem itaque? Praesentium laudantium voluptates quam? Expedita vitae harum suscipit distinctio.</p>
+                        <p className='text-sm'>{content}</p>
                     </div>
-                    <div className='flex justify-end text-gray-500 text-mini'>10 mins ago</div>
+                    <div className='flex justify-end text-gray-500 text-mini'>{time}</div>
                 </div>
             </div>
         )

@@ -1,7 +1,7 @@
 // import { Subject } from "@intellectx/build";
 import { Message } from "node-nats-streaming";
 import dependencies from "../../config/depentencies";
-import { addTenant_UseCase, company_SignUp_UseCase } from "../../useCases";
+import { addEmployee_UseCase, addTenant_UseCase, company_SignUp_UseCase } from "../../useCases";
 import { Listener } from "../../libs/utils/base-listener";
 import { tenantRepository } from "../../libs/app/repository/mongo";
 import mongoose from "mongoose";
@@ -23,22 +23,26 @@ export interface TenantCreatedEvent {
     companyEmail: string
     budget: number
     superUsers: any
+    employee:string
   };
 }
 
 export class TenantCreatedListener extends Listener<TenantCreatedEvent>{
   
   async onMessage(data: TenantCreatedEvent["data"], msg: Message) {
-    const { id, companyName, companyEmail, budget, superUsers } = data;
-    try {
+    const { id, companyName, companyEmail, budget, superUsers,employee } = data;
+    try { 
+      console.log(employee);
+      
       await addTenant_UseCase(dependencies).execute({ tenantName: companyName })
       await company_SignUp_UseCase(dependencies).execute({ id, companyName, companyEmail, budget, superUsers }, companyName)
+      const hello  =await addEmployee_UseCase(dependencies).execute({id:employee},companyName)
       msg.ack();
-      console.log("acked ");
+      console.log("acked ",hello);
     } catch (error) {
-      console.log(error);
-    }
-  }
+      console.log(error); 
+    } 
+  } 
   subject: any = "tenant:created"
   queueGroup: string = 'company-tenant-service';
 }

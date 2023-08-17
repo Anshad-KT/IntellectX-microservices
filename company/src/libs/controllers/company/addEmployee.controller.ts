@@ -9,16 +9,17 @@ export = (dependencies: DepenteniciesData): any => {
   } = dependencies;
 
   const addEmployee = async (req: Request, res: Response, next: NextFunction) => {
-    try {
+    try { 
       
       const employeeDetails = req.body;
       const  companyName  = req.subdomains[0]
-
+ 
       if (!employeeDetails) throw new BadRequestError("Please provide employee details");
       if (!companyName) throw new BadRequestError("Please provide a password");
       
       // const employeeDetails = await getEmployeeDetails_UseCase(dependencies).execute(id,companyName)
       const addEmployee = await addEmployee_UseCase(dependencies).execute(employeeDetails,companyName);
+console.log(addEmployee,"addemployee");
 
       if (!addEmployee) throw new BadRequestError("Invalid Credentials");
 

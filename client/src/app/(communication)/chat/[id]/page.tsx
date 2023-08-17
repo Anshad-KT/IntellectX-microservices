@@ -8,42 +8,54 @@ import { useSelector } from 'react-redux'
 import { RootState } from '@/app/GlobalRedux/store'
 import auth from '@/api/axios'
 import { useParams } from 'next/navigation'
+import Cookies from 'js-cookie';
 
 const Page = () => {
-    const {value} = useSelector((state:RootState)=>state.id)
-    const {id} = useParams()
-    const [message,setMessage] = useState<string>()
-    useEffect(() => {
-        fetchMessages()
-    }, [])
-    const fetchMessages = async () => {
-        try {
-           const chats = await auth.get(`/api/communication/chat/getchat/${id}`)
-           console.log(chats);
-           console.log("chatss");
-           
-        } catch (error) {
-            console.log(error);
-            
-        }
-    }
-    const handleKeyDown = async (e:any) => {
-        console.log("keydown");
-        
-        if(e.key=="Enter" && message){
+    const { value } = useSelector((state: RootState) => state.id)
+    const { id } = useParams()
+    const [message, setMessage] = useState<string>()
+    const [displayChat, setDisplayChat] = useState<any>()
+    const handleKeyDown = async (e: any) => {
+        //  console.log();
+
+        if (e.key == "Enter" && message) {
             try {
-                const msgData = {from:value,fileType:"text",content:e.target.value,threadName:id}
-                console.log(msgData);
-                
-                const {data} = await auth.post("/api/communication/chat/addchat",msgData)
-                console.log(data);
+
+                const msgData = { from: value, fileType: "text", content: e.target.value, threadName: id }
+                console.log(msgData)
+
+                const { data } = await auth.post("/api/communication/chat/addchat", msgData)
+                const hello = await fetchMessages()
+                console.log(hello, "hokko");
+                setDisplayChat(hello)
+
             } catch (error) {
                 console.log(error);
-                
+
             }
         }
     }
-    const typingHandler = (e:any) => {
+    useEffect(() => {
+        const hello = fetchMessages()
+        //    log
+
+    }, [handleKeyDown])
+    const fetchMessages = async () => {
+        try {
+
+
+            const chats = await auth.get(`/api/communication/chat/getchat/${id}`)
+
+            return chats?.data?.chat
+
+
+        } catch (error) {
+            console.log(error);
+
+        }
+    }
+
+    const typingHandler = (e: any) => {
         setMessage(e.target.value)
 
     }
@@ -78,13 +90,21 @@ const Page = () => {
                         <div className='w-4/6 bg-white h-full mt-3 overflow-y-scroll relative'>
                             {/* Chat bubbles */}
                             <div className='flex-grow'>
-                                <TextBubble isClient={false} />
-                                <TextBubble isClient={false} />
-                                <TextBubble isClient={false} />
-                                <TextBubble isClient={true} />
-                                <TextBubble isClient={true} />
-                                <TextBubble isClient={false} />
+                                {displayChat ? displayChat?.map((item: any) => {
+                                    console.log(item);
+
+                                    return (
+                                        <TextBubble
+                                            key={item._id} // Make sure to provide a unique key
+                                            isClient={false} // This should be the value, not part of the prop name
+                                            from={item.from.username}
+                                            content={item.content}
+                                            time={item.createdAt}
+                                        />
+                                    );
+                                }) : "no chat"}
                             </div>
+
 
                             {/* Input box for chat */}
                             <div className='sticky bottom-0 left-0 p-4 bg-white border-t shadow flex'>

@@ -7,16 +7,7 @@ export interface CompanyData {
     companyEmail: string;
 
     superUsers?: mongoose.Types.ObjectId[];
-    employees?: {
-      id: mongoose.Types.ObjectId;
-      role: string;
-      salary: string;
-      attendance: {
-        subject: string;
-        description: string;
-        mode: string;
-      }[];
-    }[];
+    employees?: mongoose.Types.ObjectId[]
     budget?:number
   }
   
@@ -25,17 +16,8 @@ export interface CompanyData {
     companyName: string;
     companyEmail: string;
     superUsers?: mongoose.Types.ObjectId[];
-    employees?: {
-      id: mongoose.Types.ObjectId;
-      ref:'User',
-      role: string;
-      salary: string;
-      attendance: {
-        subject: string;
-        description: string;
-        mode: string;
-      }[];
-    }[];
+    employees?: mongoose.Types.ObjectId[]
+     
     budget?:number
   
     constructor({id, companyName, companyEmail,budget }: CompanyData) {
