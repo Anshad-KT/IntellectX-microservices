@@ -31,7 +31,8 @@ module.exports = {
         sm: '14px', // Small font size
         base: '16px', // Default font size
         lg: '18px', // Large font size
-        mini: '10px'
+        mini: '10px',
+        minip: "13px"
       }
     },
   },

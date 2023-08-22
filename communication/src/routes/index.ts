@@ -9,7 +9,7 @@ export const routes = (dependencies: any) => {
   const channel = channelRoutes(dependencies);
   const thread = threadRoutes(dependencies)
   const chat = chatRoutes(dependencies)
-
+ 
   routes.use("/communication/thread", thread)
   routes.use("/communication/chat",chat)
   routes.use("/communication", channel);

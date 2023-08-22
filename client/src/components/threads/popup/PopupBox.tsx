@@ -52,7 +52,7 @@ const PopupBox = ({ onClose }: any) => {
   if (!channelData) {
     console.log("channelData is undefined");
   } else {
-    console.log(channelData, "pop");
+    console.log(channelData.value, "pop");
   }
   
   // useEffect(()=>{

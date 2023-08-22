@@ -1,31 +1,46 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: client-depl
+  name: client1-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: client
+      app: client1
   template:
     metadata:
       labels:
-        app: client
+        app: client1
     spec:
       containers:
-        - name: client
-          image: anshadkt/client
-
+        - name: client1
+          image: anshadkt/client1
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: my-env-secret4
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: my-env-secret4
+                  key: AWS_SECRET_ACCESS_KEY
+            - name: BUCKET_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: my-env-secret4
+                  key: BUCKET_NAME
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: client-srv
+  name: client1-srv
 spec:
   selector:
-    app: client
+    app: client1
   ports:
-    - name: client
+    - name: client1
       protocol: TCP
       port: 3000
       targetPort: 3000

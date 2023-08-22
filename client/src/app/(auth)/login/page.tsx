@@ -43,7 +43,7 @@ const Page = () => {
         .then((response) => {
           if (response.data.msg) {
             setError('Something went wrong');
-          } else {
+          } else { 
             dispatch(addId(response.data.id));
             router?.push('/thread');
           }

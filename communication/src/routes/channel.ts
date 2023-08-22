@@ -16,5 +16,5 @@ export = (dependencies: any) => {
   router.post("/addchannel", addChannelController);
   router.get('/getchannel', getChannelController)
   return router;
-};
+}; 
  

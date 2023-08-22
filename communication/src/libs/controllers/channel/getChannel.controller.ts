@@ -15,8 +15,10 @@ export = (dependencies: DepenteniciesData): any => {
       
     
       const  companyName  = req.subdomains[0]
-      console.log(req.body,"looo");
-      console.log(req?.session?.userDetails.id);
+      console.log(req.body,"podas",companyName,req.session);
+      console.log(req?.session?.userDetails?.id);
+      console.log(req.session);
+      
  
     
       if (!companyName) throw new BadRequestError("Please provide a company");

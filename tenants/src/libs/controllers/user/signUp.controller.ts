@@ -51,6 +51,8 @@ export = (dependencies: DepenteniciesData): any => {
       });
 
       res.json(addedUser);
+      console.log(req.session);
+      
     } catch (error: any) {
       res.json({msg:"something went wrong"})
       throw new Error(error);

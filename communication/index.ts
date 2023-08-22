@@ -5,7 +5,7 @@ import { intPort } from "./src/config/port";
 import { natsWrapper } from "./nats-wrapper";
 import { UserCreatedListener } from "./src/events/listeners/user-created-listener";
 import {TenantCreatedListener } from "./src/events/listeners/tenant-created-listener";
-
+import { Server as SocketIOServer, Socket } from 'socket.io';
 
 const start = async () => { 
   if (!process.env.JWT_KEY) {
@@ -17,15 +17,16 @@ const start = async () => {
   // if (!process.env.NATS_CLIENT_ID) {
   //   throw new Error("NATS_CLIENT_ID must be defined");
   // }
- 
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
   try { 
+
     await natsWrapper.connect(
       "ticketing",
-      //process.env.NATS_CLIENT_ID,
-       "communication1",  
+
+       "communication",  
       "http://nats-srv:4222"
-    ); 
-   
+    );  
+     
     natsWrapper.client.on("close", () => {
       console.log("NATS connetion closed!"); 
       process.exit();
@@ -35,21 +36,57 @@ const start = async () => {
     process.on("SIGTERM", () => natsWrapper.client.close());
     
     
-    // new UserCreatedListener(natsWrapper.client).listen()
-    // new UserCreatedListener(natsWrapper.client).listen()
-    // new UserCreatedListener(natsWrapper.client).listen()
+
        new UserCreatedListener(natsWrapper.client).listen()
        new TenantCreatedListener(natsWrapper.client).listen()
          
-        
-     //connectDB();
+     // const server = 
+  
+      const io = new SocketIOServer(app.listen(intPort, () => {
+        console.log("Listening on port 3000!!!!!!!!");
+      }), {
+        pingTimeout: 60000,
+        cors: {
+          origin: ["https://cybrosis.intellectx.com", "http://cybrosis.intellectx.com"],
+          methods: ["GET", "POST"]
+        }
+    });
+    
+      
+      
+    io.on('connection', (socket: Socket) => {
+      console.log("connected to socketio");
+      
+  socket.on('setup', (userId: string) => {
+    console.log(userId);
+    socket.join(userId);
+    socket.emit('connected');
+  });
+
+  socket.on('join chat', (room: string) => {
+    socket.join(room);
+    console.log(`User Joined room: ${room}`);
+  });
+
+  socket.on('new message', (newMessageRecieved: any) => {
+    let chat = newMessageRecieved.chat;
+ 
+    if (!chat.users) {
+      return console.log('Chat.users not defined');
+    }
+
+    chat.users.forEach((user:any) => {
+      if (user._id === newMessageRecieved.sender._id) return;
+      socket.in(user._id).emit('message received', newMessageRecieved);
+    });
+  });
+});
+  
   } catch (err) {
     console.error(err); 
   }  
 
-  app.listen(intPort, () => {
-    console.log("Listening on port 3000!!!!!!!!");
-  });
+   
 };
  
 start(); 
