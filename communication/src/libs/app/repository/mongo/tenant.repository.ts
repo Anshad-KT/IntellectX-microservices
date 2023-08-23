@@ -23,19 +23,18 @@ export = {
     getCompanySchema : async (companyName: any,modelName:string): Promise<any> => {
       if(modelName=="Tenant"||modelName=="User"){
        
-        console.log(modelName); 
+       
         
         const tenantDB: Connection = await switchDB('intellectX-tenants', TenantSchemas);
        
         const tenantModel: Model<any> = await getDBModel(tenantDB, modelName);
-        console.log(tenantModel,"most");
-          
+  
         return tenantModel
       }
      
       
         const companyDB: Connection = await switchDB(companyName, ChildrenSchemas);
-          console.log(modelName,"modelname");
+    
           
           const companyModel: Model<any> = await getDBModel(companyDB, modelName);
           return companyModel;
@@ -46,7 +45,7 @@ export = {
       const existingCompany: any = await CompanySchema.findOne({ tenantName: company });
     
       if (!existingCompany) {
-        console.log(company, "555");
+       
     
         const newCompany = new CompanySchema({ tenantName: company }); // Create a new instance of the CompanySchema with the provided tenantName
         const mongooseObject = await newCompany.save(); // Save the new company instance to the database

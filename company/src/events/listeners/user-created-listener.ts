@@ -10,7 +10,7 @@ export class UserCreatedListener extends Listener<UserCreatedEvent>{
   
     async onMessage(data: UserCreatedEvent["data"], msg: Message) {
         const {   email,username } = data;
-        console.log(data);
+  
         
         try {
           const id = new mongoose.Types.ObjectId(data.id)

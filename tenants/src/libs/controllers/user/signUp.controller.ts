@@ -13,7 +13,7 @@ export = (dependencies: DepenteniciesData): any => {
   const signUp = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { username, email, password } = req.body;
-      console.log(req.body);
+   
       
       if (!username) throw new BadRequestError("Please provide a username");
       if (!email) throw new BadRequestError("Please provide a email");
@@ -25,7 +25,7 @@ export = (dependencies: DepenteniciesData): any => {
         password,
       });
 
-      console.log(userPresent + "user is present");
+     
       if (userPresent.length) {
         throw new BadRequestError("Email already in use !");
       }

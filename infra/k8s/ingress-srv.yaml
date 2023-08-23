@@ -10,6 +10,7 @@ metadata:
     nginx.ingress.kubernetes.io/cors-allow-origin: "http://brototype.intellectx.com"  # CORS Allow Origin setting
     nginx.ingress.kubernetes.io/cors-allow-methods: "GET, PUT, POST, DELETE, OPTIONS"  # CORS Allow Methods setting
     nginx.ingress.kubernetes.io/cors-allow-headers: "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range"  # CORS Allow Headers setting
+    nginx.ingress.kubernetes.io/cross-origin-opener-policy: "same-origin"
 spec:
   rules:
     - host: "*.intellectx.com"
@@ -19,7 +20,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: tenant-srv
+                name: tenant1-srv
                 port:
                   number: 3000
           - path: /api/company/?(.*)

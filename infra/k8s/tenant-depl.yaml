@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tenant-depl
+  name: tenant1-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: tenant
+      app: tenant1
   template:
     metadata:
       labels:
-        app: tenant
+        app: tenant1
     spec:
       containers:
-        - name: tenant
-          image: anshadkt/tenant
+        - name: tenant1
+          image: anshadkt/tenant1
           env:
             - name: MONGO_URI
               valueFrom:
@@ -31,12 +31,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: tenant-srv
+  name: tenant1-srv
 spec:
   selector:
-    app: tenant
+    app: tenant1
   ports:
-    - name: tenant
+    - name: tenant1
       protocol: TCP
       port: 3000
       targetPort: 3000

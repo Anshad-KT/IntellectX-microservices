@@ -11,8 +11,7 @@ export const addTenant_UseCase = (dependencies: DepenteniciesData) => {
     throw new Error("The company repository should be dependencie");
 
   const execute = (companyName:any) => {
-    //const company = new Tenant(companyName);
-    console.log(companyName,"ecxe");
+
     
     return tenantRepository.signUp(companyName);
   };

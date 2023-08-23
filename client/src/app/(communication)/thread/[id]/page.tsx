@@ -28,7 +28,7 @@ const Page = () => {
    
     const fetchEmployee = async (url: string) => {
         const response = await auth.get(url);
-        console.log(response.data);
+    
         
         dispatch(addEmployee(response.data));
         return response.data
@@ -37,6 +37,7 @@ const Page = () => {
     const { data,  error  } = useSWR(`/api/communication/getchannel`, fetchData);
     const { data: employeeData, error: employeeError } = useSWR('/api/company/getemployee', fetchEmployee);
     const { value } = useSelector((state: RootState) => state.channel)
+  
   
     
     const foundItem:any = value?.find((item:any) => item.id === id);

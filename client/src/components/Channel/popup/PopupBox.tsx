@@ -2,7 +2,7 @@
 import auth from '@/api/axios';
 import { addChannel } from '@/app/GlobalRedux/Features/channel/channelSlice';
 import { RootState } from '@/app/GlobalRedux/store';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CSSTransition } from 'react-transition-group'
@@ -10,17 +10,18 @@ import useSWR, { mutate } from 'swr';
 import Image from "next/image"
 
 const PopupBox = ({ onClose }: any) => {
+
   const dispatch = useDispatch()
+  const router = useRouter()
   const { value } = useSelector((state: RootState) => state.channel)
-  const h = useSelector((state: RootState) => state.currentChannel)
-  const [threadName, setThreadName] = useState('');
+  const [error, setError] = useState<string>()
+  const id = useSelector((state: RootState) => state.id)
+
+  const [ChatName, setChatName] = useState('');
   const [selectedChannelId, setSelectedChannelId] = useState<string[]>(['']);
-  const matchingChannel = value.find((channel: any) => {
-    
-    return channel?.channelName === h.value;
-  });
-  const handleThreadNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setThreadName(e.target.value);
+
+  const handleChatNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setChatName(e.target.value);
   };
 
   const handleChannelIdChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -32,33 +33,34 @@ const PopupBox = ({ onClose }: any) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Perform the action to add the new thread using threadName and selectedChannelId
+    // Perform the action to add the new thread using ChatName and selectedChannelId
     // Reset form values after submission
 
-    setThreadName('');
+    setChatName('');
     setSelectedChannelId(['']);
-    const fetchData = async (url: string) => {
-      console.log(value);
-      console.log(h.value);
-      
-      console.log();
-      
-      
-      const response = await auth.post(url,{threadName,channelName:matchingChannel,previlagedUsers:selectedChannelId});
-      dispatch(addChannel(response.data));
-      
-      return response.data
+    const fetchData = async () => {
+      const data = { creator: id.value, channelName: ChatName, superUsers: [id.value], previlagedUsers: [id.value], threads: [] }
+
+
+      try {
+        const responce = await auth
+          .post('/api/communication/addchannel', data)
+          mutate('/api/communication/getchannel');
+        //  dispatch(addChannel(responce.data));
+        return responce
+      } catch (error) {
+        setError("something went wrong")
+      }
+
+      onClose()
     };
-   const hello = await fetchData('/api/communication/thread/addthread')
-   
-   
-    onClose()
-  
-  
+    fetchData()
+
+
+
   };
   const channelData: any = useSelector((state: RootState) => state.employee)
-  
-  
+ 
 
   // useEffect(()=>{
 
@@ -81,12 +83,12 @@ const PopupBox = ({ onClose }: any) => {
 
               <form onSubmit={handleSubmit}>
                 <div className="mt-4">
-                  <label htmlFor="threadName" className="block font-medium mb-1">Thread Name</label>
+                  <label htmlFor="ChatName" className="block font-medium mb-1">Thread Name</label>
                   <input
                     type="text"
-                    id="threadName"
-                    value={threadName}
-                    onChange={handleThreadNameChange}
+                    id="ChatName"
+                    value={ChatName}
+                    onChange={handleChatNameChange}
                     className="w-full border border-gray-300 rounded px-3 py-2"
                   />
                 </div>
@@ -97,7 +99,7 @@ const PopupBox = ({ onClose }: any) => {
                     id="channelId"
                     value={selectedChannelId}
                     onChange={handleChannelIdChange}
-                    className="w-full border border-gray-300 rounded px-3 py-2"
+                    className="w-full border  rounded px-3 py-2"
                     multiple   >
                     {channelData.value.map((item: any, index: string) => (
                       <option value={item.id} key={index}>
@@ -119,7 +121,7 @@ const PopupBox = ({ onClose }: any) => {
                     type="submit"
                     className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
                   >
-                    Add Thread
+                    Add channel
                   </button>
                   <button
                     className="ml-4 bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 focus:outline-none focus:bg-gray-400"
@@ -134,7 +136,7 @@ const PopupBox = ({ onClose }: any) => {
         </div>
       </div>
     </CSSTransition>
- 
+
   );
 };
 

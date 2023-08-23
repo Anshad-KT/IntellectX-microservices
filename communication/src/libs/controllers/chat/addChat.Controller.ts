@@ -16,7 +16,7 @@ export = (dependencies: DepenteniciesData): any => {
         from,fileType,content,threadName
           } = req.body;
       const  companyName  = req.subdomains[0]
-      console.log(req.body,"looo");
+     
  
       if (!from) throw new BadRequestError("Please provide from details");
       if (!fileType) throw new BadRequestError("Please provide fileType");
@@ -27,7 +27,7 @@ export = (dependencies: DepenteniciesData): any => {
       const addToThreadResult = await pushChat_UseCase(dependencies).execute(addChatResult._id,threadName,companyName)
       
      
- console.log(addToThreadResult);
+ 
       res.json(addChatResult);
     
       

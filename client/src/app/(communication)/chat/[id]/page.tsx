@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Navbar from '@/components/PrimaryNavbar/Navbar'
 import SideBar from '@/components/threads/sidebar/SideBar'
 import TextBubble from '@/components/ChatBubble/Text/TextBubble'
@@ -28,62 +28,75 @@ const Page = () => {
     const { id } = useParams()
     const [message, setMessage] = useState<string>()
     const [displayChat, setDisplayChat] = useState<any>()
-    const socket = io("http://cybrosis.intellectx.com");
-    const handleKeyDown = async (e: any) => {
-        //  console.log();
-
-        if (e.key == "Enter" && message) {
-            try {
-
-                const msgData = { from: value, fileType: "text", content: e.target.value, threadName: id }
-                console.log(msgData)
-                const { data } = await auth.post("/api/communication/chat/addchat", msgData)
-                const hello = await fetchMessages()
-                console.log(hello, "hokko");
-                setDisplayChat(hello)
-                setMessage('')
-                if (chatContainerRef.current) {
-                    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-                  }
-            } catch (error) {
-                console.log(error);
-
-            }
-        }
-    }
-
-    useEffect(() => {
-        const fetchDataAndConnect = async () => {
-            const msgs = await fetchMessages(); // Assuming fetchMessages is an asynchronous function
+    const socket = io("http://brototype.intellectx.com");
+    const channel: any = useSelector((state: RootState) => state.channel)
+    const currentChannel: any = useSelector((state: RootState) => state.currentChannel)
 
 
 
-        };
-
-        fetchDataAndConnect();
-
-    }, [handleKeyDown]);
-
-    useEffect(() => {
-        socket.on("message recieved", (newMessageRecieved) => {
-            // if()
-        })
-    }, [])
-
-    const fetchMessages = async () => {
+    const fetchMessages = useCallback(async () => {
         try {
 
 
             const chats = await auth.get(`/api/communication/chat/getchat/${id}`)
-
-            return chats?.data?.chat
+         
+            socket.emit("join chat", id);
+            return chats?.data
 
 
         } catch (error) {
             console.log(error);
 
         }
-    }
+    }, [id])
+    useEffect(() => {
+        async function hello() {
+            const msgs = await fetchMessages();
+            setDisplayChat(msgs);
+      
+        }
+        hello();
+        socket.emit("setup", id)
+
+    }, [])
+    const handleKeyDown = useCallback(async (e: any) => {
+        if (e.key === "Enter" && message) {
+            try {
+                const msgData = { from: value, fileType: "text", content: e.target.value, threadName: id }
+                console.log(msgData)
+                const { data } = await auth.post("/api/communication/chat/addchat", msgData)
+                // const hello = await fetchMessages()
+                // console.log(data, "hokko" ,hello);
+             
+                
+
+                setMessage('')
+                if (chatContainerRef.current) {
+                    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+                }
+                socket.emit("new message", {...data,id})
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }, [message, value, id, fetchMessages]);
+
+    useEffect(() => {
+
+
+    }, [handleKeyDown]);
+
+    useEffect(() => {
+        socket.on("message received", (newMessageRecieved) => {
+          
+setDisplayChat((prevChat: any) => ({
+                    ...prevChat,
+                    chat: [...prevChat.chat, newMessageRecieved]
+                }));
+        })
+    })
+
+
 
     const typingHandler = (e: any) => {
         setMessage(e.target.value)
@@ -96,54 +109,59 @@ const Page = () => {
     };
     const uploadVideoToS3 = async (file: File) => {
         const s3 = new AWS.S3({
-          accessKeyId: "AKIAQWJPN76GYOSDY3EB",
-          secretAccessKey: "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",
+            accessKeyId: "AKIAQWJPN76GYOSDY3EB",
+            secretAccessKey: "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",
         });
-  
-       
+
+
         const params = {
-          Bucket: "intellectx",
-          Key: `videos/${file.name}`,
-          Body: file,
-          ContentType: file.type,
+            Bucket: "intellectx",
+            Key: `videos/${file.name}`,
+            Body: file,
+            ContentType: file.type,
         };
-    
+
         try {
-           
-            
-          const response = await s3.upload(params).promise();
-          console.log('File uploaded:', response?.Location);
-          return response?.Location
+
+
+            const response = await s3.upload(params).promise();
+            console.log('File uploaded:', response?.Location);
+            return response?.Location
         } catch (error) {
-          console.error('Error uploading file:', error);
+            console.error('Error uploading file:', error);
         }
-      };
+    };
     const handleFileChange = async (event: any) => {
         const selectedFile = event.target.files[0];
         // Do something with the selected file
-        console.log(selectedFile);
+    
         const fileName = selectedFile.name;
-        console.log("avatar");
+    
         // Get the file extension
         const fileExtension = fileName.split('.').pop();
-       const response = await uploadVideoToS3(selectedFile)
-            console.log(response);
-            
-   
-       
+        // const data1 ={ from: value, fileType: fileExtension, content: "uploading", threadName: id }
+        // setDisplayChat(displayChat?.chat?.push(data1))
+        const response = await uploadVideoToS3(selectedFile)
+
+
+
+
         // Do something with the selected file and its extension
         console.log('Selected file:', selectedFile);
         console.log('File extension:', fileExtension);
         const msgData = { from: value, fileType: fileExtension, content: response, threadName: id }
-        console.log(msgData)
+    
         const { data } = await auth.post("/api/communication/chat/addchat", msgData)
-        const hello = await fetchMessages()
-        console.log(hello, "hokko");
-        setDisplayChat(hello)
+        // const hello = await fetchMessages()
+        // console.log(hello, "hokko");
+        // setDisplayChat(hello)
+
+        
+        socket.emit("new message", {...data,id})
 
     };
 
-    
+
     return (
         <main className='font-default max-h-screen'>
             <Navbar />
@@ -155,8 +173,8 @@ const Page = () => {
                     <div className="h-1/6 bg-secondary flex justify-center items-end">
                         <div className='w-2/3 bg-secondary h-2/4 lg:flex relative'>
                             <div className='lg:flex-col justify-start items-center ml-2 bg-secondary lg:w-2/4 w-3/4 block'>
-                                <h1 className='text-4xl'>Product Discussion</h1>
-                                <p className='mb-5'>2 participants</p>
+                                <h1 className='text-4xl'>{displayChat?.threadName}</h1>
+                                <p className='mb-5'>{channel?.value[0]?.previlagedUsers.length} participants</p>
                             </div>
                             <div className='block pl-2 lg:flex h-full items-center justify-end mr-16 mb-auto bg-secondary  w-2/4 relative cursor-pointer'>
                                 <div className='bg-primary w-40 h-10 flex items-center justify-center rounded-md text-sm text-secondary'>New thread</div>
@@ -176,55 +194,57 @@ const Page = () => {
                             <div className='flex-grow:1 h-full'>
                                 <ScrollableFeed>
                                     <div ref={chatContainerRef}>
-{displayChat ? (
-                                        displayChat.map((item: any) => {
-                                            console.log(item.fileType);
-                                            
-                                            if (item.fileType === 'text') {
-                                                return (
-                                                    <TextBubble
-                                                        key={item._id}
-                                                        isClient={false}
-                                                        from={item.from.username}
-                                                        content={item.content}
-                                                        time={item.createdAt}
-                                                    />
-                                                );
-                                            } else if (item.fileType === 'webm' || item.fileType === 'jpg' ||item.fileType === 'svg' || item.fileType === 'png'||item.fileType === 'jpeg') {
-                                                return (
-                                                    <ImageBubble
-                                                        key={item._id}
-                                                        isClient={false}
-                                                        from={item.from.username}
-                                                        time={item.createdAt}
-                                                    />
-                                                );
-                                            } else if (item.fileType === 'mp4' || item.fileType === 'hvm'||item.fileType === 'mlv' ) {
-                                                return (
-                                                    <VideoBubble
-                                                        key={item._id}
-                                                        isClient={false}
-                                                        from={item.from.username}
-                                                        time={item.createdAt}
-                                                    />
-                                                );
-                                            } else {
-                                                return (
-                                                    <DocumentBubble
-                                                        key={item._id}
-                                                        from={item.from.username}
-                                                        content={item.content}
-                                                        time={item.createdAt}
-                                                    // Change 'fileName' to the actual field name
-                                                    />
-                                                );
-                                            }
-                                        })
-                                    ) : (
-                                        "no chat"
-                                    )}
+                                        {displayChat ? (
+
+
+                                            displayChat?.chat?.map((item: any) => {
+                                               
+
+                                                if (item.fileType === 'text') {
+                                                    return (
+                                                        <TextBubble
+                                                            key={item._id}
+                                                            isClient={false}
+                                                            from={item.from.username}
+                                                            content={item.content}
+                                                            time={item.createdAt}
+                                                        />
+                                                    );
+                                                } else if (item.fileType === 'webm' || item.fileType === 'jpg' || item.fileType === 'svg' || item.fileType === 'png' || item.fileType === 'jpeg') {
+                                                    return (
+                                                        <ImageBubble
+                                                            key={item._id}
+                                                            isClient={false}
+                                                            from={item.from.username}
+                                                            time={item.createdAt}
+                                                        />
+                                                    );
+                                                } else if (item.fileType === 'mp4' || item.fileType === 'hvm' || item.fileType === 'mlv') {
+                                                    return (
+                                                        <VideoBubble
+                                                            key={item._id}
+                                                            isClient={false}
+                                                            from={item.from.username}
+                                                            time={item.createdAt}
+                                                        />
+                                                    );
+                                                } else {
+                                                    return (
+                                                        <DocumentBubble
+                                                            key={item._id}
+                                                            from={item.from.username}
+                                                            content={item.content}
+                                                            time={item.createdAt}
+                                                        // Change 'fileName' to the actual field name
+                                                        />
+                                                    );
+                                                }
+                                            })
+                                        ) : (
+                                            "no chat"
+                                        )}
                                     </div>
-                                    
+
                                 </ScrollableFeed>
                             </div>
 

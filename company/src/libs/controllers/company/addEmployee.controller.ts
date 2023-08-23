@@ -19,7 +19,7 @@ export = (dependencies: DepenteniciesData): any => {
       
       // const employeeDetails = await getEmployeeDetails_UseCase(dependencies).execute(id,companyName)
       const addEmployee = await addEmployee_UseCase(dependencies).execute(employeeDetails,companyName);
-console.log(addEmployee,"addemployee");
+
 
       if (!addEmployee) throw new BadRequestError("Invalid Credentials");
 

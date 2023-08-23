@@ -21,7 +21,7 @@ export = {
         }).lean(); // Use .lean() to get plain objects
         
         
-        console.log(channels);
+      
         
         if (!channels[0]?.threads) {
             return channels;
@@ -37,15 +37,13 @@ export = {
      
             return populatedChannel;
         }));
-        console.log(populatedChannels, "lkl");
         return populatedChannels; 
      },
      addThread: async (threadId:mongoose.Types.ObjectId, ChannelSchema: any, channelName: string) => {
         const existingChannel = await ChannelSchema.findOne({ channelName: channelName });
       
         if (existingChannel) {
-            console.log("lokiii");
-            console.log(threadId);
+           
             
           existingChannel.threads.push(threadId); // Push the new thread data into the threads array
           const updatedChannel = await existingChannel.save();

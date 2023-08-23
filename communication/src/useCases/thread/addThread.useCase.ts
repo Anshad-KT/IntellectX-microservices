@@ -18,8 +18,8 @@ export const addThread_UseCase = (dependencies: DepenteniciesData) => {
         const threadInstance:ThreadData = {
         threadName,
         chat:[]
-      }; console.log(model);
-      console.log(channelName[0].channelName,"lkk",channelName);
+      }
+
       
     
   //    const insertThread = await channelRepository.addThread(insertThread._id,channelModel,threadInstance)

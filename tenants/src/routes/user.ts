@@ -18,7 +18,7 @@ export = (dependencies: any) => {
   } = userController(dependencies);
 
   router.post("/signup", signUpController);
-  router.post("/signin", signInController);
+  router.post("/login", signInController);
   router.post("/signout", signOutController);
 //  router.get("/currentuser", currentUser, requireAuth, currentuserController);
 

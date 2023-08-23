@@ -40,22 +40,23 @@ const start = async () => {
        new UserCreatedListener(natsWrapper.client).listen()
        new TenantCreatedListener(natsWrapper.client).listen()
          
-     // const server = 
-  
-      const io = new SocketIOServer(app.listen(intPort, () => {
+       const httpServer = app.listen(intPort, () => {
         console.log("Listening on port 3000!!!!!!!!");
-      }), {
+      });
+      
+      const io = new SocketIOServer(httpServer, {
         pingTimeout: 60000,
         cors: {
           origin: ["https://cybrosis.intellectx.com", "http://cybrosis.intellectx.com"],
           methods: ["GET", "POST"]
         }
-    });
+      });
+      
     
       
       
     io.on('connection', (socket: Socket) => {
-      console.log("connected to socketio");
+     
       
   socket.on('setup', (userId: string) => {
     console.log(userId);
@@ -68,17 +69,16 @@ const start = async () => {
     console.log(`User Joined room: ${room}`);
   });
 
-  socket.on('new message', (newMessageRecieved: any) => {
-    let chat = newMessageRecieved.chat;
- 
-    if (!chat.users) {
-      return console.log('Chat.users not defined');
+  socket.on('new message', (newMessageReceived: any) => {
+    const chatRoomId = newMessageReceived.id; // Assuming you have a unique chat room identifier
+    console.log(newMessageReceived);
+    
+    if (!chatRoomId) {
+      return console.log('Chat room ID not defined');
     }
-
-    chat.users.forEach((user:any) => {
-      if (user._id === newMessageRecieved.sender._id) return;
-      socket.in(user._id).emit('message received', newMessageRecieved);
-    });
+  
+    // Emit 'message received' event to the specific chat room
+    socket.to(chatRoomId).emit('message received', newMessageReceived);
   });
 });
   

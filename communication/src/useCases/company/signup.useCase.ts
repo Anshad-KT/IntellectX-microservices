@@ -29,7 +29,7 @@ export const company_SignUp_UseCase = (dependencies: DepenteniciesData) => {
    
     
     const model = await tenantRepository.getCompanySchema(companyName,"Company")
-   console.log(await model?.find());
+ 
    
     
     return companyRepository.signUp(employee,model);

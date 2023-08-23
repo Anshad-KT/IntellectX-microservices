@@ -9,11 +9,11 @@ export = {
     const existingCompany: any = await CompanySchema.findOne({ companyName: company.companyName });
   
     if (!existingCompany) {
-      console.log(company, "555");
+   
   
       const newCompany = new CompanySchema(company); // Create a new instance of the CompanySchema with the provided data
       const mongooseObject = await newCompany.save(); // Save the new company instance to the database
-  console.log(mongooseObject);
+  
   
       return mongooseObject;
     }
@@ -44,7 +44,7 @@ export = {
     return mongooseObject;
   },
   addEmployee: async (employeeDetails: EmployeeAttrs, CompanyEmployeeSchema: any) => {
-    console.log(employeeDetails,"sreyas",CompanyEmployeeSchema);
+ 
     
     const newEmployee = new CompanyEmployeeSchema(employeeDetails); // Create a new instance of the CompanyEmployeeSchema with the provided data
    try {

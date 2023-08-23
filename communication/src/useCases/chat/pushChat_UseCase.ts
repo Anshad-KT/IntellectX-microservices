@@ -13,11 +13,11 @@ export const pushChat_UseCase = (dependencies: DepenteniciesData) => {
     throw new Error("The company repository should be dependencies");
     const execute = async (chatId: mongoose.Types.ObjectId, threadName:any, companyName: string) => {
 
-      console.log("pushChat",chatId,threadName);
+   
       
       const model = await tenantRepository.getCompanySchema(companyName, "Thread");
       
-      console.log("console.logs",chatId,threadName,companyName);
+
       
       return threadRepository.addChat(chatId,model,threadName)
   };

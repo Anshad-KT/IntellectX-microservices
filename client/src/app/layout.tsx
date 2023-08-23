@@ -2,6 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import { Providers } from './GlobalRedux/provider';
+import AuthProvider from '@/components/auth/AuthProvider';
 const inter = Poppins({ subsets: ['latin'], weight: '400' });
 
 export const metadata: Metadata = {
@@ -18,9 +19,13 @@ export default function RootLayout({
   
       <html lang="en">
         <body className={inter.className}>
+    
+
+          
         <Providers>
         {children}
         </Providers>
+   
           </body>
       </html>
    

@@ -12,7 +12,7 @@ export const signUp_UseCase = (dependencies: DepenteniciesData) => {
 
   const execute = async({ username, id, email }: UserData) => {
     const model = await tenantRepository.getCompanySchema("intellectX-tenants","User")
-    console.log(model,"ss");
+   
     const details = {username,id:new mongoose.Types.ObjectId(id),email}
     const user = new User(details);
     return userRepository.signUp(user,model);

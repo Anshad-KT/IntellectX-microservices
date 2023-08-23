@@ -6,6 +6,19 @@ import auth from '@/api/axios';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { addId } from '@/app/GlobalRedux/Features/id/idSlice';
+import { GoogleCredentialResponse, GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import jwt_decode from "jwt-decode";
+import { AxiosError } from 'axios';
+
+interface ApiError {
+  message: string;
+}
+interface JwtPayload {
+  sub: string;
+  name: string;
+  exp: number;
+  email:string;
+}
 
 const Page = () => {
   const router = useRouter();
@@ -54,7 +67,42 @@ const Page = () => {
         setError('An error occurred');
       });
   };
+  const handleGoogleSignUp = async (credentialResponse: GoogleCredentialResponse) => {
+    const { credential } = credentialResponse as GoogleCredentialResponse;
+    console.log(credential);
+    
+    if (credential) {
+        try {
+            const { email, name }: JwtPayload = jwt_decode(credential); 
+            const googleCredential = {
+                email,
+                username: name,
+                password: email.split("@")[0],
+                IsGoogle: true
+            };
 
+            try {
+                const response = await auth.post('/api/tenant/user/signup', { ...googleCredential });
+                if (response.data.msg) {
+                    setError('Something went wrong');
+                } else {
+                    dispatch(addId(response.data.id));
+                    router?.push('/server');
+                }
+            } catch (error) {
+                const googleSignUpErr = error as AxiosError;
+                const googlesignUpErrMsg = googleSignUpErr?.response?.data as ApiError;
+                const GoogleSignUpErrMess = googlesignUpErrMsg.message;
+                setError(GoogleSignUpErrMess);
+            }
+
+        } catch (error) {
+            console.error('Error decoding Google token:', error);
+        }
+    } else {
+        console.error('Invalid tokenId in GoogleCredentialResponse');
+    }
+};
   return (
     <main>
       <Navbar />
@@ -67,6 +115,10 @@ const Page = () => {
                         <h2 className='text-4xl'>Sign up or log in</h2>
                         <div className="mt-10">
                             <button className='text-center my-5 border w-96 h-12 bg-white border-gray-300 rounded-md'>
+                            <GoogleOAuthProvider clientId="271001457248-4kcskf4juada36227ud0i9icjgoagbvo.apps.googleusercontent.com">
+                        <GoogleLogin
+                            onSuccess={handleGoogleSignUp}    />
+                    </GoogleOAuthProvider>
                                 <div className='flex justify-center items-center'>
                                     <Image className='mr-2' width={30}
                                         height={30}

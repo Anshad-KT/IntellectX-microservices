@@ -10,11 +10,32 @@ export = {
         from: mongoose.Types.ObjectId;
         fileType: string;
         content: string;
-    }, ChatSchema: any) => {
+    }, ChatSchema: any,UserSchema:any) => {
         const newChat = new ChatSchema(chat);
         const mongooseObject = await newChat.save();
-        return mongooseObject;
-    },
+
+      
+        const senderDetails = await UserSchema.aggregate([
+          { $match: { id: chat.from.toString() } },
+          {
+            $project: {
+              _id: 1,
+              username: 1,
+              email: 1,
+              // Include other fields you need in the result
+              // ...
+            } 
+          },
+        ]);
+      
+        const chatWithSenderDetails = {
+          ...mongooseObject.toObject(),
+          from: senderDetails[0], // Assuming only one result is returned
+        };
+    
+      
+        return chatWithSenderDetails;
+      },   
     getChat: async (ThreadSchema: any, threadName: string,UserSchema:any) => {
         try {
             const thread = await ThreadSchema.findById(threadName)
@@ -34,7 +55,7 @@ export = {
             
             // Map through the populated chats and perform the population dynamically
             const populatedChatsWithSender = await Promise.all(populatedThread.chat.map(async (item:any) => {
-                console.log(item.from.toString());
+          
                 
                 const senderDetails = await UserSchema.aggregate([
                     { $match: { id: item.from.toString() } },

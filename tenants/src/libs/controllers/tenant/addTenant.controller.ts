@@ -14,7 +14,7 @@ export = (dependencies: DepenteniciesData): any => {
     try {
 
       const { companyName,companyEmail,budget,superUsers,employee } = req.body;
-console.log(req.body);
+
 
       if (!companyEmail) throw new BadRequestError("Please provide a company email");
    

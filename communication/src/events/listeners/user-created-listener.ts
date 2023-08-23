@@ -9,7 +9,7 @@ export class UserCreatedListener extends Listener<UserCreatedEvent>{
   
     async onMessage(data: UserCreatedEvent["data"], msg: Message) {
         const {  id,  email,username } = data; 
-        console.log(data);
+     
         
         try {
           const hello = await signUp_UseCase(dependencies).execute({

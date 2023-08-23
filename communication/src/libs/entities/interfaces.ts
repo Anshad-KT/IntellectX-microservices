@@ -138,7 +138,7 @@ export interface repositoryData {
       from: mongoose.Types.ObjectId;
       fileType: string;
       content: string;
-  }, threadName:any) => Promise<chatData | any|null>
+  }, threadName:any,UserSchema:any) => Promise<chatData | any|null>
     getChat: (ThreadSchema: any, threadName: string, UserSchema:any) => Promise<any>;
   }
 }

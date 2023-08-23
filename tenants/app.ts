@@ -14,15 +14,15 @@ app.use(
   cookieSession({
     signed: false,
   })     
-)        
+)         
 app.use("/api", routes(depentencies));
 
 app.all("*", async (req, res) => {
-  console.log("fdsd");
+ 
   throw new NotFoundError();
 })  
    
 app.use(ErrorHandler);
  
 export { app };
-        
+         

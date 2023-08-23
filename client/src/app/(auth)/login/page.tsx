@@ -6,6 +6,21 @@ import auth from '@/api/axios';
 import { addId } from '@/app/GlobalRedux/Features/id/idSlice';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
+
+import { GoogleCredentialResponse, GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import jwt_decode from "jwt-decode";
+
+interface ApiError {
+  message: string;
+}
+interface JwtPayload {
+  sub: string;
+  name: string;
+  exp: number;
+  email:string;
+}
+
+
 const Page = () => {
     const router = useRouter();
     const dispatch = useDispatch();
@@ -45,14 +60,14 @@ const Page = () => {
             setError('Something went wrong');
           } else { 
             dispatch(addId(response.data.id));
-            router?.push('/thread');
+            router?.push('/thread/home');
           }
         })
         .catch((error) => {
           setError('An error occurred');
         });
     };
-  
+    
     return (
         
         <main>
@@ -75,7 +90,7 @@ const Page = () => {
                             <div className=''><p className="ml-44 bold">OR</p></div>
                             <div className='relative text-center my-5 border w-96 h-12 bg-white border-gray-300 rounded-md'><div className='absolute text-sm ml-1'>Email</div><input onChange={(e:any)=>setEmail(e.target.value)} className='w-full h-full rounded-md' type="email" name="" id="" /></div>
                             <div className='relative text-center my-5 border w-96 h-12 bg-white border-gray-300 rounded-md'><div className='absolute text-sm ml-1'>Password</div><input onChange={(e:any)=>setPassword(e.target.value)} className='w-full h-full rounded-md' type="text" name="" id="" /></div>
-                            <button className='text-center my-5 border w-96 h-12 text-white bg-primary border-gray-300 rounded-md'>Login</button>
+                            <button onClick={signUpHandler} className='text-center my-5 border w-96 h-12 text-white bg-primary border-gray-300 rounded-md'>Login</button>
                             <div className='flex w-full font-light text-sm mb-10'>
                                 <p >by continuing with google or email, you agree to <br /> IntellectX terms of service and Privacy policy</p>
                             </div>

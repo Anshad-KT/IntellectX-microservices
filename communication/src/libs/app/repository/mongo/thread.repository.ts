@@ -10,7 +10,7 @@ export = {
       
         if (existingThread) {
 
-            console.log(chatId);
+         
             
           existingThread.chat.push(chatId); // Push the new thread data into the threads array
           const updatedChannel = await existingThread.save();
@@ -37,7 +37,7 @@ export = {
         }).lean(); // Use .lean() to get plain objects
         
         
-        console.log(channels);
+    
         
         if (channels[0].threads) {
             const populatedChannels = await Promise.all(channels.map(async (channel: any) => {

@@ -13,13 +13,13 @@ export const pushThread_UseCase = (dependencies: DepenteniciesData) => {
     throw new Error("The company repository should be dependencies");
     const execute = async (threadId: mongoose.Types.ObjectId, channelName:any, companyName: string) => {
 
-      console.log();
+      console.log(threadId);
       
       const model = await tenantRepository.getCompanySchema(companyName, "Channel");
       
       console.log("console.logs",threadId,channelName,companyName);
       
-      return channelRepository.addThread(threadId,model,channelName[0].channelName)
+      return channelRepository.addThread(threadId,model,channelName.channelName)
   };
   return {
     execute,

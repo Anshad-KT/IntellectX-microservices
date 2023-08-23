@@ -24,11 +24,11 @@ const Page = () => {
         auth
           .post('/api/communication/addchannel',data)
           .then(response => { 
-          console.log(response);
+      
           if(response.data.msg){
             setError("something went wrong")
            }else{ 
-            console.log(response.data);
+         
            if(!response.data.threads){
              router.push('/thread/default')
            }else{
@@ -40,12 +40,11 @@ const Page = () => {
            }
           })
           .catch(error => {
-            console.log(data);
+          
             
             console.log(error.message,"ssss");
           }); 
-        console.log("check");
-        
+     
         
       };
     return (

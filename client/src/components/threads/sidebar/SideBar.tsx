@@ -1,15 +1,19 @@
 "use client"
 import { currentChannel } from '@/app/GlobalRedux/Features/currentChannel/currentChannelSlice'
 import { RootState } from '@/app/GlobalRedux/store'
+import PopupButton1 from '@/components/Channel/popup/PopupButton'
 import PopupButton from '@/components/Popup/PopupButton'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 const SideBar = () => {
-    //console.log(data);
+
+
+    const [channels, setChannels] = useState<any>([]);
     const channelData = useSelector((state: RootState) => state.channel)
     const dispatch = useDispatch()
+   
     return (
         <div className='lg:w-full lg:h-screen lg:bg-sidebar lg:col-span-2 lg:text-sm hidden lg:block'>
 
@@ -82,7 +86,8 @@ const SideBar = () => {
                 ))}
 
             </div>
-            <div className='ml-5'>+ New Channel</div>
+            <PopupButton1 />
+              
             <div className='ml-5'>+<span className='ml-1'>Inivite your team </span></div>
         </div>
     )

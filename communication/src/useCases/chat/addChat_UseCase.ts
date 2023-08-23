@@ -13,16 +13,18 @@ export const addChat_UseCase = (dependencies: DepenteniciesData) => {
     throw new Error("The company repository should be dependencies");
     const execute = async (from:string,fileType:string,content:string,companyName:string) => {
 
-      const model = await tenantRepository.getCompanySchema(companyName, "Chat");
+      const Chatmodel = await tenantRepository.getCompanySchema(companyName, "Chat");
         const chatInstance = {
         from:new mongoose.Types.ObjectId(from),
         fileType,
         content,
       };
-       console.log(model);
- 
       
-      return chatRepository.addChat(chatInstance, model)
+      
+       const UserModel = await tenantRepository.getCompanySchema(companyName, "User");
+     
+       
+      return chatRepository.addChat(chatInstance, Chatmodel,UserModel)
   };
   return {
     execute,

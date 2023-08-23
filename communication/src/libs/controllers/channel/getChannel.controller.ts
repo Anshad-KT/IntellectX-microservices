@@ -15,9 +15,7 @@ export = (dependencies: DepenteniciesData): any => {
       
     
       const  companyName  = req.subdomains[0]
-      console.log(req.body,"podas",companyName,req.session);
-      console.log(req?.session?.userDetails?.id);
-      console.log(req.session);
+   
       
  
     

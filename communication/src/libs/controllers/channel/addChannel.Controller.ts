@@ -20,7 +20,7 @@ export = (dependencies: DepenteniciesData): any => {
         threads: string[], // Array of strings
       } = req.body;
       const  companyName  = req.subdomains[0]
-console.log(req.body,"looo");
+
  
       if (!channel) throw new BadRequestError("Please provide employee details");
       if (!companyName) throw new BadRequestError("Please provide a password");

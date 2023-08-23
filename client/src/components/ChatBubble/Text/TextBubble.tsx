@@ -1,7 +1,7 @@
 import React from 'react'
 
 const TextBubble = ({ isClient, from, content, time }: { isClient: boolean, from: string, content: string, time: string }) => {
-    console.log(from,content,time);
+    
     
     return (
         isClient ? (

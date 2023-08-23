@@ -16,7 +16,7 @@ export = (dependencies: DepenteniciesData): any => {
         threadName,channelName
       } = req.body;
       const  companyName  = req.subdomains[0]
-console.log(req.body,"looo");
+
  
       if (!threadName) throw new BadRequestError("Please provide thread details");
       if (!companyName) throw new BadRequestError("Please provide a password");
@@ -24,7 +24,7 @@ console.log(req.body,"looo");
       
       const {_id} = await addThread_UseCase(dependencies).execute(threadName,channelName,companyName);
   
-      console.log(_id);
+     
       
       const pushThread = await pushThread_UseCase(dependencies).execute(_id,channelName,companyName);
 

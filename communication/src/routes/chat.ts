@@ -15,8 +15,7 @@ export = (dependencies: any) => {
   } = chatController(dependencies); 
   router.post("/addchat", addChatController);
   router.get("/getchat/:id",getChatController)
-  console.log("why");
-  
+
   return router;
 }
  
