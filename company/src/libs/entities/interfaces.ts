@@ -52,11 +52,17 @@ export interface useCaseData {
   getEmployee_UseCase:(dependencies:DepenteniciesData)=>{ 
     execute: (companyName:string) => Promise<EmployeeAttrs[] | null>;
   };
+  generateLink_UseCase:(dependencies:DepenteniciesData)=>{ 
+    execute: (id:string) => Promise<any|null>;
+  };
+  verifyGeneratedLink_UseCase: (dependencies: DepenteniciesData) => {
+    execute: ({ id, link }: { id: string; link: string; }, companyName: string) => Promise<any>;
+  };  
 }
 
 export interface repositoryData {
   companyRepository: {
-    getEmployee:(companySchema:any) => Promise<EmployeeAttrs[] | null>
+    getEmployee:(companySchema:any,UserSchema:any) => Promise<EmployeeAttrs[] | null>
     signUp:(
       company: Company,
       CompanySchema: any
@@ -64,6 +70,8 @@ export interface repositoryData {
     getCompany: (company: any, CompanySchema: any) => Promise<Company | null>;
     getUser: (user: any, CompanyUserSchema: any) => Promise<any[]>;
     addSuperUser: ( id: string, CompanySchema: any) => Promise<Company | null>;
+    generateLink:(companyName:string,CompanySchema:any) => Promise<Company | null | any>
+    verifyGeneratedLink:(companyName:string,CompanySchema:any) => Promise<Company | null | any>
     removeSuperUser: ( id: string, CompanySchema: any) => Promise<Company | null>;
     addEmployee: (
       employeeDetails: {id:string,role?:string,salary?:number},
@@ -78,6 +86,7 @@ export interface repositoryData {
       employees: any[];
       _id: string;
     }, CompanySchema: any) => Promise<Company | null>;
+
   };
   tenantRepository: {
     getAllTenants: () => Promise<any[]>;

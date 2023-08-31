@@ -15,6 +15,8 @@ export const signUp_UseCase = (dependencies: DepenteniciesData) => {
    
     const details = {username,id:new mongoose.Types.ObjectId(id),email}
     const user = new User(details);
+    console.log(user);
+    
     return userRepository.signUp(user,model);
   };
   return {

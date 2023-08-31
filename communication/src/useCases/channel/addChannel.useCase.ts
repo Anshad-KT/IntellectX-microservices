@@ -20,9 +20,10 @@ export const addChannel_UseCase = (dependencies: DepenteniciesData) => {
     }, companyName: string) => {
 
       const model = await tenantRepository.getCompanySchema(companyName, "Channel");
-    
+    console.log(channel);
      const g = new mongoose.Types.ObjectId(channel.creator)
-
+  
+      
   
        if(channel){
               const dummyChannelData = {
@@ -35,7 +36,7 @@ export const addChannel_UseCase = (dependencies: DepenteniciesData) => {
  
        
 
-      
+    
 
     return channelRepository.addChannel(dummyChannelData, model)
   }

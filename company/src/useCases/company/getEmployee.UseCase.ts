@@ -11,8 +11,9 @@ export const getEmployee_UseCase = (dependencies: DepenteniciesData) => {
     throw new Error("The company repository should be a included dependencies");
 
     const execute = async(companyName:string) => {
-    const model = await tenantRepository.getCompanySchema(companyName,"Employee")
-    return companyRepository.getEmployee(model);
+    const Employeemodel = await tenantRepository.getCompanySchema(companyName,"Employee")
+    const UserModel = await tenantRepository.getCompanySchema(companyName,"User")
+    return companyRepository.getEmployee(Employeemodel,UserModel);
   };
   return {
     execute,

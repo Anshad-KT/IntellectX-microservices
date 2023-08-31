@@ -8,7 +8,7 @@ build:
   local:
     push: false
   artifacts:
-    - image: anshadkt/tenant1
+    - image: anshadkt/tenant
       context: tenants
       docker:
         dockerfile: Dockerfile

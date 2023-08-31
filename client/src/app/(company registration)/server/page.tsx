@@ -2,11 +2,12 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import Navbar from '@/components/SecondaryNavbar/Navbar'
-import auth from '@/api/axios'
+import auth from '@/services/axios'
 import {useRouter} from 'next/navigation'
 import {useDispatch, useSelector} from 'react-redux'
 import { RootState } from '@/app/GlobalRedux/store'
 import { addCompany } from '@/app/GlobalRedux/Features/company/companySlice'
+import Link from 'next/link'
 const Page = () => {
     
     const router = useRouter()
@@ -30,7 +31,7 @@ const Page = () => {
             setError("something went wrong")
            }else{
             dispatch(addCompany(response.data.id));
-           router?.push('/channel');
+            router?.push('/channel');
            }
           })
           .catch(error => {
@@ -59,8 +60,9 @@ const Page = () => {
                                 <div className='relative text-center my-5 border w-96 h-12 bg-white border-gray-300 rounded-md'><div className='absolute text-sm ml-1'>budget</div><input onChange={(e:any)=>setBudget(parseInt(e.target.value))} className='w-full h-full rounded-md' type="text" name="" id="" /></div>
                                 <p className='text-red-700 shadow'>{error}</p>
                                 <button className='text-center my-5 border w-96 h-12 text-white bg-blue-950 border-gray-300 rounded-md' onClick={signUpHandler}>Continue with email</button>
+                                
                                 <div className='flex w-full font-light text-sm mb-10'>
-                                    <p >by continuing with google or email, you agree to <br /> IntellectX terms of service and Privacy policy</p>
+                                    <p >click <Link href="/invitelink">here</Link> to paste a invite link <br /></p>
                                 </div>
                             </div>
 
@@ -75,7 +77,7 @@ const Page = () => {
                 <div className='hidden lg:w-3/4 lg:flex lg:items-center lg:justify-center lg:mb-32'>
                     <div>
                         <Image className=''
-                            src="/landing-images/landing-3-.avif"
+                            src="/landing-images/landingf.jpg"
                             width={800}
                             height={800}
                             alt="Picture of the author"

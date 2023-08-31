@@ -20,16 +20,22 @@ export = (dependencies: DepenteniciesData): any => {
         password,
       });
 
-      if (!addedUser) throw new BadRequestError("Invalid Credentials");
+      if (!addedUser){
+        res.json({msg:"error"})
+            throw new BadRequestError("Invalid Credentials");
+       
+      }else{
+        const token: any = generateToken(addedUser);
 
-      const token: any = generateToken(addedUser);
+        req.session = {
+          jwt: token,
+          userDetails: addedUser,
+        };
+  
+        res.json(addedUser);
+      } 
 
-      req.session = {
-        jwt: token,
-        userDetails: addedUser,
-      };
-
-      res.json(addedUser);
+      
     } catch (error: any) {
       throw new Error(error);
     }

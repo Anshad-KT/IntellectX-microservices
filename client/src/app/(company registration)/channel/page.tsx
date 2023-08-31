@@ -5,7 +5,7 @@ import Navbar from '@/components/SecondaryNavbar/Navbar'
 import { useSelector } from 'react-redux'
 import { useRouter } from 'next/navigation'
 import { RootState } from '@/app/GlobalRedux/store'
-import auth from '@/api/axios'
+import auth from '@/services/axios'
 
 const Page = () => {
     const router = useRouter()
@@ -24,7 +24,8 @@ const Page = () => {
         auth
           .post('/api/communication/addchannel',data)
           .then(response => { 
-      
+           console.log(response);
+           
           if(response.data.msg){
             setError("something went wrong")
            }else{ 
@@ -35,7 +36,7 @@ const Page = () => {
         
             
             
-           router?.push(`/thread/${id.value}`);            
+           router?.push(`/thread/${response.data.id}`);            
            }
            }
           })
@@ -59,7 +60,7 @@ const Page = () => {
                         <div className='lg:my-2 lg:p-5 lg:w-3/4 lg:h-3/4 lg:ml-36 mt-10'>
                             <h2 className='text-4xl '>What project is your </h2>
                             <h2 className='text-4xl'> team currenlty working</h2>
-                            <h2 className='text-4xl'>on?{channel}</h2>
+                            <h2 className='text-4xl'>on?</h2>
                             <div className="mt-10">
                                 {/* <div className=''><p className="ml-44 bold">OR</p></div> */}
                                 <div className='relative text-center my-5 border w-96 h-12 bg-white border-gray-300 rounded-md'><div className='absolute text-sm ml-1'>Channel Name</div><input onChange={(e:any)=>setChannel(e.target.value)} className='w-full h-full rounded-md' type="text" name="" id="" /></div>

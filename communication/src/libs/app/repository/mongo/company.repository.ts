@@ -45,7 +45,8 @@ export = {
     return mongooseObject;
   },
   addEmployee: async (employeeDetails: EmployeeAttrs, CompanyEmployeeSchema: any) => {
-
+   console.log(employeeDetails);
+   
     
     const newEmployee = new CompanyEmployeeSchema(employeeDetails); // Create a new instance of the CompanyEmployeeSchema with the provided data
    try {

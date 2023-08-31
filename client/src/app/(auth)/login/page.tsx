@@ -2,14 +2,18 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import Navbar from '@/components/SecondaryNavbar/Navbar'
-import auth from '@/api/axios';
+import auth from '@/services/axios';
 import { addId } from '@/app/GlobalRedux/Features/id/idSlice';
 import { useRouter } from 'next/navigation';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { GoogleCredentialResponse, GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import jwt_decode from "jwt-decode";
+import { RootState } from '@/app/GlobalRedux/store';
+import useSWR, { mutate } from 'swr';
+import { addChannel } from '@/app/GlobalRedux/Features/channel/channelSlice';
 
+  
 interface ApiError {
   message: string;
 }
@@ -24,11 +28,17 @@ interface JwtPayload {
 const Page = () => {
     const router = useRouter();
     const dispatch = useDispatch();
-  
+
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
-  
+    const fetchData = async (url: string) => {
+      const response = await auth.get(url);
+      dispatch(addChannel(response.data));
+      return response.data
+  };
+    const { data  } = useSWR(`/api/communication/getchannel`, fetchData);
+    const { value }:any = useSelector((state: RootState) => state.channel)
     const validateForm = () => {
       if (!email || !password) {
         setError('All fields are required');
@@ -49,21 +59,37 @@ const Page = () => {
     };
   
     const signUpHandler = (event: { preventDefault: () => void; }) => {
+      console.log("////////////////////////////////////////");
+      
       event.preventDefault();
       if (!validateForm()) {
         return;
       }
       auth
         .post('/api/tenant/user/login', { email, password })
+       
+        
         .then((response) => {
+      
+          console.log(response);
+          
           if (response.data.msg) {
+            console.log(response,"lllllllllllllllllll");
             setError('Something went wrong');
-          } else { 
+          } else {
+          
+            console.log(value);
+            
+            console.log(`/thread/${value[0].id}`);
             dispatch(addId(response.data.id));
-            router?.push('/thread/home');
+            router?.push(`/thread/${value[0].id}`);
           }
+          console.log("sreyas");
+          
         })
         .catch((error) => {
+          console.log("an error occurede",error);
+          
           setError('An error occurred');
         });
     };

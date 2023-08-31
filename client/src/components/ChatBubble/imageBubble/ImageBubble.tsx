@@ -1,7 +1,9 @@
 import React from 'react'
 import Image from 'next/image'
 
-const ImageBubble = ({ isClient, from,  time }: { isClient: boolean, from: string, time: string }) => {
+const ImageBubble = ({ isClient, from,  time,content }: { isClient: boolean, from: string, time: string,content:string }) => {
+  console.log(content);
+  
   return (
     <div className='max-w-2xl bg-sidebar rounded-md mt-2 flex items-start pl-3 pr-5 py-1 cursor-pointer'>
     <div>
@@ -12,7 +14,7 @@ const ImageBubble = ({ isClient, from,  time }: { isClient: boolean, from: strin
     <div className='flex flex-col p-4 shadow-lg'>
       <h4 className='text-mini'>~{from}</h4>
       <div className="flex-col items-center">
-        <Image src="/landing-images/landing-1.jpg" alt="Image" width={250} height={150} />
+        <Image src={content} alt="Image" width={250} height={150} />
       </div>
       <div className='flex justify-end text-gray-500 text-mini'>{time}</div>
     </div>

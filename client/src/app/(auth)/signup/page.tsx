@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Navbar from '@/components/SecondaryNavbar/Navbar';
-import auth from '@/api/axios';
+import auth from '@/services/axios';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { addId } from '@/app/GlobalRedux/Features/id/idSlice';

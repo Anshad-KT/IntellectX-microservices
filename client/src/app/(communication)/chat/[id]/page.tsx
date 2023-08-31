@@ -6,7 +6,7 @@ import TextBubble from '@/components/ChatBubble/Text/TextBubble'
 import TextBubbleClient from '@/components/ChatBubble/Text/TextBubbleClient'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/app/GlobalRedux/store'
-import auth from '@/api/axios'
+import auth from '@/services/axios'
 import { useParams } from 'next/navigation'
 import Cookies from 'js-cookie';
 import ScrollableFeed from 'react-scrollable-feed'
@@ -167,7 +167,7 @@ setDisplayChat((prevChat: any) => ({
             <Navbar />
             <div className='grid grid-cols-12'>
                 {/* sidebar div */}
-                <SideBar />
+                <SideBar /> 
                 {/* content div */}
                 <div className='lg:w-full lg:h-full   bg-secondary lg:col-span-10 col-span-12'>
                     <div className="h-1/6 bg-secondary flex justify-center items-end">
@@ -199,7 +199,8 @@ setDisplayChat((prevChat: any) => ({
 
                                             displayChat?.chat?.map((item: any) => {
                                                
-
+                                               console.log(item.content);
+                                               
                                                 if (item.fileType === 'text') {
                                                     return (
                                                         <TextBubble
@@ -213,6 +214,7 @@ setDisplayChat((prevChat: any) => ({
                                                 } else if (item.fileType === 'webm' || item.fileType === 'jpg' || item.fileType === 'svg' || item.fileType === 'png' || item.fileType === 'jpeg') {
                                                     return (
                                                         <ImageBubble
+                                                        content={item.content}
                                                             key={item._id}
                                                             isClient={false}
                                                             from={item.from.username}
@@ -222,6 +224,7 @@ setDisplayChat((prevChat: any) => ({
                                                 } else if (item.fileType === 'mp4' || item.fileType === 'hvm' || item.fileType === 'mlv') {
                                                     return (
                                                         <VideoBubble
+                                                        content={item.content}
                                                             key={item._id}
                                                             isClient={false}
                                                             from={item.from.username}

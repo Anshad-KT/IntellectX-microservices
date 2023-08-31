@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Navbar from '@/components/PrimaryNavbar/Navbar';
 import SideBar from '@/components/threads/sidebar/SideBar';
 import useSWR from 'swr';
-import auth from '@/api/axios';
+import auth from '@/services/axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { addChannel } from '@/app/GlobalRedux/Features/channel/channelSlice';
 
@@ -69,10 +69,7 @@ const Page = () => {
                                 }
 
                             </div>
-                            {/* {id === "default" ? (<div>
-
-                            </div>
-                            ) : (<> */}
+                            
                                 <div className='block pl-2 lg:flex h-full items-center justify-end mr-16 mb-auto bg-secondary  w-2/4 relative cursor-pointer'>
                                 <PopupButton />
                                     <div className='w-10 h-10 flex items-center justify-center lg:ml-4 rounded-md text-sm text-secondary'>
@@ -82,9 +79,7 @@ const Page = () => {
                                     </div>
 
                                 </div>
-                            {/* </>
-                            )
-                            } */}
+                          
 
 
                         </div>

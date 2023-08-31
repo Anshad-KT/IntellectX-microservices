@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { EmployeeAttrs } from "../../database/mongo/schemas/company/employee.schema";
+import { Password } from "../../../utils/password";
 
 
 // const { Tenant } = schemas;
@@ -81,8 +82,69 @@ export = {
     await mongooseObject.save();
     return mongooseObject
   }, 
-  getEmployee:async (CompanyUserSchema:any) => {
-    const employees = await CompanyUserSchema.find()
-    return employees;
+  getEmployee:async (CompanyUserSchema:any,UserSchema:any) => {
+    const employees = await CompanyUserSchema.find();
+    
+    const employeeDetailsPromises = employees.map(async (employee:any) => {
+        const userDetails = await UserSchema.aggregate([
+            { $match: { id: employee.id} },
+            {
+                $project: {
+                    _id: 1,
+                    username: 1,
+                    email: 1,
+                    // Include other fields you need in the result
+                    // ...
+                }
+            },
+        ]);
+        return {
+            ...employee.toObject(),
+            userDetails: userDetails[0], // Assuming only one result is returned
+        };
+    });
+    
+    const employeesWithDetails = await Promise.all(employeeDetailsPromises);
+    
+    console.log(employeesWithDetails);
+    
+    return employeesWithDetails;
   },
+  generateLink: async (  companyName:string,CompanySchema: any) => {
+    const hashedValue = await Password.toHash(companyName);
+  
+    if (CompanySchema) {
+      const mongooseObject = await CompanySchema.findOne();
+        if(!mongooseObject){
+        return null
+      }
+  
+        mongooseObject.inviteLinks.push({link:`intellectx.${companyName}.invite/${hashedValue}`});
+        await mongooseObject.save(); // Save the updated document
+        return {link:`intellectx.${companyName}.invite/${hashedValue}`};
+      }
+    },
+    verifyGeneratedLink: async (companyName: string,CompanySchema: any) => {
+      try {
+        if (CompanySchema) {
+          const mongooseObject = await CompanySchema.findOne();
+    
+          if (!mongooseObject) {
+            return false;
+          }
+    
+          const hashedLinkExists = mongooseObject.inviteLinks.some(async (linkObj: any) => {
+            const hashedLinkValue = linkObj.link.split('/').pop(); 
+            return await Password.compare(hashedLinkValue, companyName);
+          });
+    
+          return hashedLinkExists;
+        }
+    
+        return false;
+      } catch (error) {
+        console.error('Error checking hashed value:', error);
+        return false;
+      }
+    }
 };

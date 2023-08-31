@@ -10,9 +10,11 @@ export = (dependencies: any) => {
   
   const router = express.Router();
   const {
-    getEmployeeController
+    getEmployeeController,generateLinkController,verifygeneratedLinkController
   } = employeeController(dependencies); 
 
   router.get('/getemployee', getEmployeeController)
+  router.post('/verifylink', verifygeneratedLinkController)
+  router.get('/generatelink', generateLinkController)
   return router;
 };

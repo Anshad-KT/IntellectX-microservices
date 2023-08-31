@@ -19,6 +19,7 @@ export interface CompanyDoc extends Document {
   budget?: number;
   updatedAt?: Date;
   version?: number;
+  inviteLinks:[]
 }
 
 
@@ -27,27 +28,34 @@ interface CompanyModel extends Model<CompanyDoc> {
   build(attrs: CompanyAttrs): CompanyDoc;
 }
 
-// Define the Company schema
-const companySchema: Schema<CompanyDoc> = new mongoose.Schema(
-  {
-    companyName: { type: String },
-    companyEmail: { type: String },
-    companyDescription: { type: String },
-    superUsers: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
-    budget:{ type: Number },
-    updatedAt: { type: Date, default: Date.now },
-    version: { type: Number, default: 0 },
-  },
-  {
-    toJSON: {
-      transform(doc, ret) {
-        ret.id = ret._id;
-        delete ret._id;
-        delete ret.password;
-      },
+  // Define the Company schema
+  const companySchema: Schema<CompanyDoc> = new mongoose.Schema(
+    {
+      companyName: { type: String },
+      companyEmail: { type: String },
+      companyDescription: { type: String },
+      superUsers: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
+      budget:{ type: Number },
+      updatedAt: { type: Date, default: Date.now },
+      version: { type: Number, default: 0 },
+      inviteLinks: [
+        {
+          link: { type: String, required: true },
+          createdAt: { type: Date, default: Date.now },
+          expiresAt: { type: Date, expires: '30m', default: Date.now }, 
+        },
+      ],
     },
-  }
-);
+    {
+      toJSON: {
+        transform(doc, ret) {
+          ret.id = ret._id;
+          delete ret._id;
+          delete ret.password;
+        },
+      },
+    }
+  );
 
 // Define the pre-save hook for hashing the password before saving
 // companySchema.pre('save', async function (done) {

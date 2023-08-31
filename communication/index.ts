@@ -22,10 +22,9 @@ const start = async () => {
 
     await natsWrapper.connect(
       "ticketing",
-
-       "communication",  
+       "communication1",  
       "http://nats-srv:4222"
-    );  
+    )  
      
     natsWrapper.client.on("close", () => {
       console.log("NATS connetion closed!"); 

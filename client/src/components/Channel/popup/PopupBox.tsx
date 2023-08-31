@@ -1,5 +1,5 @@
 "use client"
-import auth from '@/api/axios';
+import auth from '@/services/axios';
 import { addChannel } from '@/app/GlobalRedux/Features/channel/channelSlice';
 import { RootState } from '@/app/GlobalRedux/store';
 import { useParams, useRouter } from 'next/navigation';
@@ -74,7 +74,7 @@ const PopupBox = ({ onClose }: any) => {
             <div className="bg-white rounded-lg p-8">
               <div className='flex justify-start items-center'>
                 <div>
-                  <p>Add new thread{selectedChannelId}</p>
+                  <p>Add new thread</p>
                 </div>
                 <div className='justify-start ml-2'>
                   <p className='font-semibold'>wisebox</p>
@@ -103,7 +103,7 @@ const PopupBox = ({ onClose }: any) => {
                     multiple   >
                     {channelData.value.map((item: any, index: string) => (
                       <option value={item.id} key={index}>
-                        {item.username}
+                        {item.userDetails.username}
                       </option>
                     ))}
 
@@ -123,8 +123,8 @@ const PopupBox = ({ onClose }: any) => {
                   >
                     Add channel
                   </button>
-                  <button
-                    className="ml-4 bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 focus:outline-none focus:bg-gray-400"
+                  <button 
+                    className="backdrop ml-4 bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 focus:outline-none focus:bg-gray-400"
                     onClick={onClose}
                   >
                     Cancel
