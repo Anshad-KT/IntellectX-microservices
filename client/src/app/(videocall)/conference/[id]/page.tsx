@@ -1,6 +1,46 @@
-import React from 'react'
+"use client"
+import React, { useEffect } from 'react'
+import * as webRTCHandler from "../../../../utils/webRTCHandler"
+// import { connectToSocket } from '@/utils/wss'
+import { useDispatch, useSelector } from 'react-redux';
+import io from 'socket.io-client'
+import { addvideoConferenceParticipants, addvideoConferenceRoomId } from '@/app/GlobalRedux/Features/videoConfererence/videoConferenceSlice';
+import { RootState } from '@/app/GlobalRedux/store';
+import { useParams } from 'next/navigation';
+export let socket: any;
+const Page = () => {
+    
 
-const page = () => {
+    const { isRoomHost,identity } = useSelector((state: RootState) => state.videoConference)
+    
+    const { id }:any = useParams()
+    const SERVER = "https://brototype.intellectx.com"
+    const dispatch = useDispatch()
+    const connectToSocket = () => {
+        socket = io(SERVER)
+        socket.on("connect", () => {
+            console.log("successfully connected with socket io server");
+            console.log(socket.id);
+        })
+        socket.on("room-id", (data: any) => {
+            const { roomId } = data
+            dispatch(addvideoConferenceRoomId(roomId))
+        })
+        socket.on("room-update", (data: any) => {
+            console.log(data,"dataaaaaaaaaaa");
+            dispatch(addvideoConferenceParticipants(data.connectedUsers))
+        })         
+    }
+
+    const socketConnection = connectToSocket()
+    console.log(socketConnection);
+    
+    const { participants } = useSelector((state: RootState) => state.videoConference)
+    useEffect(() => {
+      const a=  webRTCHandler.getLocalPreviewAndInitRoomConnection(isRoomHost,identity, id)
+console.log(a);
+
+    }, [])
     return (
         <main className='bg-white w-full h-screen'>
             <div className='bg-gray-400 w-full h-5/6 grid lg:grid-cols-5'>
@@ -8,15 +48,20 @@ const page = () => {
 
                 </div>
                 <div className='bg-green-700 col-span-1 h-full flex flex-col items-center'>
-                    <div className='w-5/6 h-1/4 bg-violet-400 mt-5'>
+
+                    {/* <div className='w-5/6 h-1/4 bg-violet-400 mt-5'>
 
                     </div>
                     <div className='w-5/6 h-1/4 bg-violet-400 mt-5'>
 
-                    </div>
-                    <div className='w-5/6 h-1/4 bg-violet-400 mt-5'>
-
-                    </div>
+                    </div> */}
+                    {participants.map((item) => {
+                        return (
+                            <div key={item.id} className='w-5/6 h-1/4 bg-violet-400 mt-5'>
+                                {item.id}
+                            </div>
+                        )
+                    })}
                 </div>
 
             </div>
@@ -47,4 +92,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

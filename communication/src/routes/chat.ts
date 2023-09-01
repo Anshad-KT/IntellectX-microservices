@@ -7,15 +7,15 @@ import {
 import { chatController } from "../libs/controllers";
  
 
-export = (dependencies: any) => {
+export = ( dependencies: any ) => {
   
   const router = express.Router();
   const { 
-    addChatController,getChatController
+    addChatController,getChatController,
   } = chatController(dependencies); 
   router.post("/addchat", addChatController);
   router.get("/getchat/:id",getChatController)
-
+  
   return router;
 }
  

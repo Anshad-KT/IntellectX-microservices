@@ -18,13 +18,14 @@ const PopupBox = ({ onClose }: any) => {
   const [threadName, setThreadName] = useState('');
   const [selectedOptions, setSelectedOptions] = useState([]);
 
-  const handleChange = (selectedItems:any) => {
+  const handleChange = (selectedItems: any) => {
     setSelectedOptions(selectedItems);
   };
   const [selectedChannelId, setSelectedChannelId] = useState<string[]>(['']);
   const matchingChannel = value.find((channel: any) => {
-   
 
+   console.log(channel.channelName, "----------",h.value );
+   
 
     return channel?.channelName === h.value;
   });
@@ -45,10 +46,10 @@ const PopupBox = ({ onClose }: any) => {
     setThreadName('');
     setSelectedChannelId(['']);
     const fetchData = async (url: string) => {
-      console.log(value);
-      console.log(h.value);
+      // console.log(value);
+      console.log({ threadName, channelName: matchingChannel, previlagedUsers: selectedChannelId },"valueeeeeee");
 
-      console.log();
+      console.log(value,"nnottttvalueeeeeee");
 
 
       const response = await auth.post(url, { threadName, channelName: matchingChannel, previlagedUsers: selectedChannelId });
@@ -100,37 +101,37 @@ const PopupBox = ({ onClose }: any) => {
 
                 <div className="mt-4">
                   <label htmlFor="channelId" className="block font-medium mb-1">Select Channel</label>
-                   <select
+                  <select
                     id="channelId"
                     value={selectedChannelId}
                     onChange={handleChannelIdChange}
                     className="w-full border text-black border-gray-300 rounded px-3 py-2"
                     multiple   >
-                      
-                      {channelData.value.map((item: any, index: number) => {
-    console.log(item); // Log the item
 
-    return (
-      <option value={item.id} key={index}>
-        {item.userDetails.username}
-      </option>
-    );
-  })}
+                    {channelData.value.map((item: any, index: number) => {
+                      console.log(item); // Log the item
 
-                    
+                      return (
+                        <option value={item.id} key={index}>
+                          {item.userDetails.username}
+                        </option>
+                      );
+                    })}
+
+
                   </select>
                   <Select
-      isMulti
-      options={channelData.value}
-      value={selectedOptions}
-      onChange={handleChange}
-      placeholder="Select tags..."
-      closeMenuOnSelect={false}
-      isSearchable
-      isClearable
-     
-    />
-                 
+                    isMulti
+                    options={channelData.value}
+                    value={selectedOptions}
+                    onChange={handleChange}
+                    placeholder="Select tags..."
+                    closeMenuOnSelect={false}
+                    isSearchable
+                    isClearable
+
+                  />
+
 
                 </div>
 

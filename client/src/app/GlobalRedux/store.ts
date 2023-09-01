@@ -7,6 +7,7 @@ import companyReducer from './Features/company/companySlice'
 import channelReducer from './Features/channel/channelSlice'
 import employeeReducer from './Features/employee/employeeSlice'
 import currentChannelReducer from './Features/currentChannel/currentChannelSlice'
+import  videoConferenceReducer  from "./Features/videoConfererence/videoConferenceSlice";
 
 export const store = configureStore({
     reducer:{
@@ -14,7 +15,8 @@ export const store = configureStore({
         company:companyReducer,
         channel:channelReducer,
         employee:employeeReducer,
-        currentChannel:currentChannelReducer
+        currentChannel:currentChannelReducer,
+        videoConference:videoConferenceReducer
     }
 })
 

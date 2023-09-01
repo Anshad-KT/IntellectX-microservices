@@ -15,12 +15,12 @@ const start = async () => {
   // if (!process.env.NATS_CLIENT_ID) {
   //   throw new Error("MONGO_URI must be defined");
   // }      
-               
+                 
   try {       
     await natsWrapper.connect( 
       "ticketing",
       //process.env.NATS_CLIENT_ID,
-       "tenant",     
+       "tenant1",     
       "http://nats-srv:4222"
     );   
  

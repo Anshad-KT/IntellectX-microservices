@@ -21,6 +21,7 @@ export = (dependencies: DepenteniciesData): any => {
  
     
       if (!companyName) throw new BadRequestError("Please provide a company");
+      console.log(req?.session?.userDetails.id);
       
      
       const addChannel = await getChannel_UseCase(dependencies).execute(req?.session?.userDetails.id,companyName);
