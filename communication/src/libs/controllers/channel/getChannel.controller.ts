@@ -15,7 +15,7 @@ export = (dependencies: DepenteniciesData): any => {
       
     
       const  companyName  = req.subdomains[0]
-   
+    
       console.log("aswioiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiinnn");
       
  

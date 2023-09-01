@@ -9,6 +9,8 @@ export const createNewRoom = (identity:string,roomId:string,userId:string) => {
         roomId,
         userId
     }
+    console.log("+++++++++++++++++++++++");
+    
     socket.emit('create-new-room',data)
 }
 
@@ -17,5 +19,7 @@ export const joinRoom = (identity:string,roomId:string) => {
         roomId,
         identity
     }
+    console.log("--------------------");
+    
     socket.emit('join-new-room',data)
 }

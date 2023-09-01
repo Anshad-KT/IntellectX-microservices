@@ -33,7 +33,7 @@ const TextBubble = ({ isClient, from, content, time }: { isClient: boolean, from
                 <div className='flex flex-col p-4 shadow-lg'>
                     <h4 className='text-mini'>~{from}</h4>
                     <div className="flex-col items-center">
-                    <Link target='_blank' href={content}><p className='text-sm'>{content}</p></Link>
+                    <Link href={content}><p className='text-sm'>{content}</p></Link>
                     </div>
                     <div className='flex justify-end text-gray-500 text-mini'>{time}</div>
                 </div>

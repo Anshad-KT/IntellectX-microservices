@@ -33,7 +33,7 @@ const Page = () => {
     }
 
     const socketConnection = connectToSocket()
-    console.log(socketConnection);
+    console.log(isRoomHost,"isRoomHost");
     
     const { participants } = useSelector((state: RootState) => state.videoConference)
     useEffect(() => {

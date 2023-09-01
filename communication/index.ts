@@ -24,7 +24,7 @@ const start = async () => {
 
     await natsWrapper.connect(
       "ticketing",
-       "communication133",  
+       "communication",  
       "http://nats-srv:4222"
     )  
      
@@ -85,7 +85,7 @@ const start = async () => {
   socket.on('create-new-room', (data)=>{
       console.log(`host is creating new Room ${{...data}}`);
       const {identity,roomId,userId} = data
-      
+       
       const newUser = {
         identity,
         roomHost:true,

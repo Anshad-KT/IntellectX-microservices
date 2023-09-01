@@ -34,6 +34,8 @@ const Page = () => {
     const [error, setError] = useState<string>('');
     const fetchData = async (url: string) => {
       const response = await auth.get(url);
+      console.log(response);
+      
       dispatch(addChannel(response.data));
       return response.data
   };

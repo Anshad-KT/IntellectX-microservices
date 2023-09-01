@@ -23,7 +23,7 @@ export const getLocalPreviewAndInitRoomConnection = (
     localStream = stream
     showLocalVideoPreview(localStream)
     //dispatch action to hide overlay
-    console.log(isRoomHost,identity);
+    console.log(isRoomHost,identity,"lklklklk");
     
     isRoomHost ? wss.createNewRoom(identity,identity,identity) : wss.joinRoom(roomId,identity)
     })
