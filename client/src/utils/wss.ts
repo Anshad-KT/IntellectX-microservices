@@ -23,3 +23,7 @@ export const joinRoom = (identity:string,roomId:string) => {
     
     socket.emit('join-new-room',data)
 }
+
+export const signalPeerData = (data) =>{
+  socket.emit('conn-signal',data)
+} 

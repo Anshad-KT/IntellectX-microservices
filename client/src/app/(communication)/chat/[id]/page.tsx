@@ -60,9 +60,13 @@ const Page = () => {
                 console.log(msgData)
                 const { data } = await auth.post("/api/communication/chat/addchat", msgData)
                 setMessage('')
+                console.log(chatContainerRef,chatContainerRef.current);
+                
                 if (chatContainerRef.current) {
                     chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
                 }
+                console.log("sencee");
+                
                 socket.emit("new message", { ...data, id })
             } catch (error) {
                 console.log(error);

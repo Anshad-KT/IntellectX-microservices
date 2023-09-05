@@ -40,6 +40,7 @@
     "react-select": "^5.7.4",
     "react-transition-group": "^4.4.5",
     "redux": "^4.2.1",
+    "simple-peer": "^9.11.1",
     "socket.io-client": "^4.7.2",
     "swr": "^2.2.1",
     "tailwindcss": "3.3.3",
@@ -51,6 +52,7 @@
   "devDependencies": {
     "@types/react-modal": "^3.16.0",
     "@types/react-transition-group": "^4.4.6",
+    "@types/simple-peer": "^9.11.5",
     "@types/uuid": "^9.0.3"
   }
 }

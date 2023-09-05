@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: client1-depl
+  name: client-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: client1
+      app: client
   template:
     metadata:
       labels:
-        app: client1
+        app: client
     spec:
       containers:
-        - name: client1
-          image: anshadkt/client1
+        - name: client
+          image: anshadkt/client
           env:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
@@ -35,12 +35,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: client1-srv
+  name: client-srv
 spec:
   selector:
-    app: client1
+    app: client
   ports:
-    - name: client1
+    - name: client
       protocol: TCP
       port: 3000
       targetPort: 3000

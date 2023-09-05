@@ -9,13 +9,13 @@ import { Server as SocketIOServer, Socket } from 'socket.io';
 import { v4 as uuidv4 } from 'uuid';
 let rooms:any[] = []
 let connectedUsers: any[] = []
-const start = async () => { 
+const start = async () => {  
   if (!process.env.JWT_KEY) {
     throw new Error("JWT_KEY must be defined");
-  }
+  } 
   if (!process.env.MONGO_URI) {
     throw new Error("MONGO_URL must be defined");
-  }
+  }  
   // if (!process.env.NATS_CLIENT_ID) {
   //   throw new Error("NATS_CLIENT_ID must be defined");
   // }
@@ -24,9 +24,9 @@ const start = async () => {
 
     await natsWrapper.connect(
       "ticketing",
-       "communication",  
+       "communication11",  
       "http://nats-srv:4222"
-    )  
+    )    
      
     natsWrapper.client.on("close", () => {
       console.log("NATS connetion closed!"); 
@@ -98,7 +98,7 @@ const start = async () => {
         id:roomId,
         connectedUsers:[newUser]
       }
-
+      
       socket.join(roomId)
       rooms=[...rooms,newRoom]
       console.log(rooms,"roooooooooooooomsssssssssss");
@@ -121,11 +121,52 @@ const start = async () => {
     console.log(rooms);
     
     room.connectedUsers = [...room.connectedUsers,newUser]
+    
     socket.join(roomId,)
+
     connectedUsers = [...connectedUsers,newUser]
+    
+    //emit to all users who are already in this room to prepare for a peer connection
+    room.connectedUsers.forEach((user:any) => {
+      if (user.socketId !== socket.id) {
+        const data = {
+          connUserSocketId: socket.id
+        }
+        socket.to(roomId).emit('conn-prepare', data)
+      }
+    });
+
     socket.to(roomId).emit('room-update',{connectedUsers})
   })
-});
+  socket.on("disconnect",()=>{
+    const user = connectedUsers.find(user => user.socketId == socket.id)
+    if(user){
+       const room = rooms.find((room)=>{room.id === user.roomId})
+      if(room.connectedUsers.length > 0){
+        room.connectedUsers = room.connectedUsers.filter((user:any)=>user.socketId!=socket.id)
+        socket.leave(user.roomId)
+        socket.to(room.id).emit('room-update',{connectedUsers})
+      }else{
+        rooms=rooms.filter(r => r.id != room.id)
+      }
+    }
+  })
+  socket.on('conn-signal',(data)=>{
+    const { connUserSocketId, signal } = data 
+    const signalingData = {
+      signal, 
+      connUserSocketId:socket.id
+    }
+    socket.to(connUserSocketId).emit('conn-signal',signalingData)
+  })
+  socket.on('conn-init',(data)=>{
+    const {connUserSocketId} = data
+    const initData = {
+      connUserSocketId:socket.id
+    }
+    socket.to(connUserSocketId).emit("conn-init",initData)
+  })
+}); 
   
   } catch (err) {
     console.error(err); 

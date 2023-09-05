@@ -34,9 +34,7 @@ const start = async () => {
     process.on("SIGTERM", () => natsWrapper.client.close());
     
     
-    // new UserCreatedListener(natsWrapper.client).listen()
-    // new UserCreatedListener(natsWrapper.client).listen()
-    // new UserCreatedListener(natsWrapper.client).listen()
+   
        new UserCreatedListener(natsWrapper.client).listen()
        
        new TenantCreatedListener(natsWrapper.client).listen();

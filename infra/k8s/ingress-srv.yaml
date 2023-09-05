@@ -34,20 +34,20 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: communication-srv
+                name: communication1-srv
                 port:
                   number: 3000
           - path: /socket.io/?(.*)
             pathType: Prefix
             backend:
               service:
-                name: communication-srv
+                name: communication1-srv
                 port:
                   number: 3000
           - path: /?(.*)
             pathType: Prefix
             backend:
               service:
-                name: client1-srv
+                name: client-srv
                 port:
                   number: 3000
