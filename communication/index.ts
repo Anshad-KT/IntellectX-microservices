@@ -20,23 +20,22 @@ const start = async () => {
   //   throw new Error("NATS_CLIENT_ID must be defined");
   // }
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-  try { 
-
+  try {  
     await natsWrapper.connect(
       "ticketing",
-       "communication11",  
+       "communication3w33",  
       "http://nats-srv:4222"
-    )    
-     
+    )     
+         
     natsWrapper.client.on("close", () => {
       console.log("NATS connetion closed!"); 
       process.exit();
     });
-
+  
     process.on("SIGINT", () => natsWrapper.client.close());
     process.on("SIGTERM", () => natsWrapper.client.close());
     
-    
+     
 
        new UserCreatedListener(natsWrapper.client).listen()
        new TenantCreatedListener(natsWrapper.client).listen()
@@ -109,33 +108,36 @@ const start = async () => {
       socket.emit('room-update',{connectedUsers: newRoom.connectedUsers})
   })
   socket.on("join-new-room",(data,userId)=>{
-    const {identity,roomId} = data
+    const { identity , roomId } = data
     const newUser = {
       identity,
       id:uuidv4(),
       socketId:socket.id,
       roomId
-    }
+    } 
      
     const room = rooms.find(room => room.id === roomId)
+    console.log(roomId);
+    console.log(data);
+    
     console.log(rooms);
     
     room.connectedUsers = [...room.connectedUsers,newUser]
     
-    socket.join(roomId,)
+    socket.join(roomId)
 
     connectedUsers = [...connectedUsers,newUser]
     
-    //emit to all users who are already in this room to prepare for a peer connection
+   
     room.connectedUsers.forEach((user:any) => {
       if (user.socketId !== socket.id) {
         const data = {
           connUserSocketId: socket.id
         }
-        socket.to(roomId).emit('conn-prepare', data)
+        socket.to(user.socketId).emit('updateConnection', data)
       }
     });
-
+ 
     socket.to(roomId).emit('room-update',{connectedUsers})
   })
   socket.on("disconnect",()=>{
@@ -149,23 +151,45 @@ const start = async () => {
       }else{
         rooms=rooms.filter(r => r.id != room.id)
       }
-    }
+    } 
   })
-  socket.on('conn-signal',(data)=>{
-    const { connUserSocketId, signal } = data 
-    const signalingData = {
-      signal, 
-      connUserSocketId:socket.id
-    }
-    socket.to(connUserSocketId).emit('conn-signal',signalingData)
+  socket.on('offer',(opts)=>{     
+    const {data,offer} = opts
+    const {
+      roomId, 
+      identity,
+      isRoomHost
+    } = data
+    console.log("//////////////");
+    io.to(roomId).emit("offer-recieved",{offer,identity})
   })
-  socket.on('conn-init',(data)=>{
-    const {connUserSocketId} = data
-    const initData = {
-      connUserSocketId:socket.id
-    }
-    socket.to(connUserSocketId).emit("conn-init",initData)
+  socket.on('answer',(opts)=>{
+    
+    const {data,answer} = opts
+    const {
+      roomId,
+      identity,
+      isRoomHost
+    } = data
+    console.log("\\\\\\\\\\");
+    
+    io.to(roomId).emit("answer-recieved",{answer,identity})
   })
+  // socket.on('conn-signal',(data)=>{
+  //   const { connUserSocketId, signal } = data 
+  //   const signalingData = {
+  //     signal, 
+  //     connUserSocketId:socket.id
+  //   }
+  //   socket.to(connUserSocketId).emit('conn-signal',signalingData)
+  // })
+  // socket.on('conn-init',(data)=>{
+  //   const {connUserSocketId} = data
+  //   const initData = {
+  //     connUserSocketId:socket.id
+  //   }
+  //   socket.to(connUserSocketId).emit("conn-init",initData)
+  // })
 }); 
   
   } catch (err) {

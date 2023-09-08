@@ -22,7 +22,7 @@ const start = async () => {
       //process.env.NATS_CLIENT_ID,
        "tenant1",     
       "http://nats-srv:4222"
-    );      
+    )      
     
     natsWrapper.client.on("close", () => {
       console.log("NATS connetion closed!");

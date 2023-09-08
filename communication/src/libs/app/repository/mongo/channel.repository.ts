@@ -20,10 +20,28 @@ export = {
             previlagedUsers: { $in: [new mongoose.Types.ObjectId(id)] },
         }).lean(); // Use .lean() to get plain objects
         
+        console.log(channels);
         
-      
-        
-        if (!channels[0]?.threads) {
+        if(channels.length==0){
+            const channels = await ChannelSchema.find().sort({_id:1}).lean();
+            const result = []
+            result.push(channels[0])
+            const populatedChannels = await Promise.all(result.map(async (channel: any) => {
+                const populatedChannel = await ChannelSchema.findById(channel._id) // Retrieve by ID to get Mongoose document
+                    .populate({
+                        path: 'threads',
+                        model: 'Thread',
+                    })
+                    .exec();
+         
+                return populatedChannel;
+            }));
+            console.log("pouplatedchannel",populatedChannels);
+            
+            return populatedChannels
+        }else{
+             if (!channels[0]?.threads) {
+            console.log("this one");
             return channels;
            
         } 
@@ -38,6 +56,9 @@ export = {
             return populatedChannel;
         }));
         return populatedChannels; 
+        }
+        
+       
      },
      addThread: async (threadId:mongoose.Types.ObjectId, ChannelSchema: any, channelName: string) => {
         const existingChannel = await ChannelSchema.findOne({ channelName: channelName });

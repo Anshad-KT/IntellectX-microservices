@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 const navbar = () => {
   return (
     <div className='w-full h-14 bg-primary flex'>
@@ -19,12 +20,12 @@ const navbar = () => {
                         </svg>
              </div>
 
-             <div className='w-1/6 h-12  flex justify-center items-center shadow hover:text-orange-600 cursor-pointer'>
+             <Link href={'/employee'}><div className='w-1/6 h-12  flex justify-center items-center shadow hover:text-orange-600 cursor-pointer'>
                <h6>employee</h6> 
                <svg className='w-3 h-3 ml-2' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                         </svg>
-             </div>
+             </div></Link>
              <div className='w-1/6 h-12  flex justify-center items-center shadow hover:text-orange-600 cursor-pointer'>
                <h6>attendance</h6> 
                <svg className='w-3 h-3 ml-2' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">

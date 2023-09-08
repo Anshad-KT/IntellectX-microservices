@@ -7,13 +7,13 @@ import {
   NotFoundError,  
 } from "@intellectx/build";
 import depentencies from "./src/config/depentencies";
-const app = express(); 
+const app = express();  
 app.set("trust proxy", true);  
 app.use(json()) 
 app.use(      
   cookieSession({
     signed: false,
-  })     
+  })      
 )         
 app.use("/api", routes(depentencies));
 

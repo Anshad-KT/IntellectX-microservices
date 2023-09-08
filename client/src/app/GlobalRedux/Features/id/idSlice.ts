@@ -7,7 +7,7 @@ export interface idState{
 }
 
 const initialState:idState = {
-    value:""
+    value:"anshad"
 }
 
 export const idSlice = createSlice({

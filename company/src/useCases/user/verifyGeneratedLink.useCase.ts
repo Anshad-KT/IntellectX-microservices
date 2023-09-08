@@ -16,8 +16,11 @@ export const verifyGeneratedLink_UseCase = (dependencies: DepenteniciesData) => 
     
     if(result) {
         const model = await tenantRepository.getCompanySchema(companyName,"Employee")
+        console.log(model,id,result,"--------------");
+        
         return companyRepository.addEmployee({id},model)
     }
+    console.log(id,result,"+++++++");
     return result
   };
   return {
