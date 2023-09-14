@@ -3,7 +3,7 @@ import { DepenteniciesData } from "../../entities/interfaces";
 
 export = (dependencies: DepenteniciesData): any => {
   const {
-    useCases: { signUp_UseCase, getUser_UseCase },
+    useCases: {  getUser_UseCase },
   } = dependencies;
 
   const currentUser = async (
@@ -12,6 +12,7 @@ export = (dependencies: DepenteniciesData): any => {
     next: NextFunction 
   ) => {
     try {
+
       res.json(req.session);
     } catch (error: any) {
       throw new Error(error);

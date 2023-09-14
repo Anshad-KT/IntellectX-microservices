@@ -37,7 +37,7 @@ export interface useCaseData {
     execute: ({ username, email }: UserData) => Promise<any | null>;
   };
   getUser_UseCase:(dependencies:DepenteniciesData)=>{
-    execute: ({ username, email }: UserData) => Promise<any[]>
+    execute: (id: string,companyName:string) => Promise<any[]>
   };
   signIn_UseCase:(dependencies:DepenteniciesData)=>{
     execute: ({ username, email }: UserData) => Promise<User | null>;
@@ -74,6 +74,9 @@ export interface useCaseData {
   };
   getChat_UseCase:(dependencies:DepenteniciesData)=>{ 
     execute: (threadName:string,companyName:string) => Promise<any | null>;
+  };
+  saveThread_UseCase:(dependencies:DepenteniciesData)=>{ 
+    execute: (threadId:mongoose.Types.ObjectId,companyName:string,userId:string) => Promise<any | null>;
   };
 }
 
@@ -114,8 +117,9 @@ export interface repositoryData {
   };
   userRepository:{
     signUp: (user: any,CompanySchema: any) => Promise<any>
-    getUser: (user: any,CompanySchema: any) => Promise<any[]>
+    getUser: (user: any,CompanySchema: any,ThreadSchema:any) => Promise<any[]>
     signIn: (user: any,CompanySchema: any) => Promise<any | boolean>
+    saveThread: (threadId:mongoose.Types.ObjectId,UserSchema:any,userId:string) => Promise<any | null>
   }
   channelRepository:{
     addChannel:(channel:{

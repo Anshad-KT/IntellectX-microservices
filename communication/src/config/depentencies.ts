@@ -11,6 +11,7 @@ import { Types } from "mongoose";
 import { pushThread_UseCase } from "../useCases/thread";
 import chatRepository from "../libs/app/repository/mongo/chat.repository";
 import { getChat_UseCase } from "../useCases/chat";
+import { saveThread_UseCase } from "../useCases/thread/saveThread.useCase";
 
 
 
@@ -32,7 +33,8 @@ const useCases: useCaseData = {
   pushThread_UseCase,
   addChat_UseCase,
   pushChat_UseCase,
-  getChat_UseCase
+  getChat_UseCase,
+  saveThread_UseCase
 };
 
 const repository: repositoryData = {

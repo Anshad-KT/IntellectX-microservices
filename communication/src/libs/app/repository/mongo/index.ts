@@ -5,4 +5,4 @@ import threadRepository from "./thread.repository";
 import chatRepository from "./chat.repository";
 
 export { companyRepository,tenantRepository,channelRepository,threadRepository,chatRepository };
- 
+  

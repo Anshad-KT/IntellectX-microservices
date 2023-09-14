@@ -2,7 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import { Providers } from './GlobalRedux/provider';
-import AuthProvider from '@/components/auth/AuthProvider';
+import { VideoContextProvider } from '@/context/videoSocket';
 import { Select, initTE } from "tw-elements";
 const inter = Poppins({ subsets: ['latin'], weight: '400' });
 
@@ -23,10 +23,12 @@ export default function RootLayout({
         <body className={inter.className}>
     
 
-          
-        <Providers>
+        <VideoContextProvider>
+           <Providers>
         {children}
         </Providers>
+        </VideoContextProvider>
+       
    
           </body>
       </html>

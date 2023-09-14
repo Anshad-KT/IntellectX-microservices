@@ -25,8 +25,9 @@ export = (dependencies: DepenteniciesData): any => {
         password,
       });
 
+     console.log(userPresent);
      
-      if (userPresent.length) {
+      if (userPresent) {
         throw new BadRequestError("Email already in use !");
       }
 
@@ -34,7 +35,7 @@ export = (dependencies: DepenteniciesData): any => {
         username,
         email,
         password,
-      });
+      }); 
 
       const token: any = generateToken(addedUser);
 

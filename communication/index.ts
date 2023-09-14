@@ -23,9 +23,9 @@ const start = async () => {
   try {  
     await natsWrapper.connect(
       "ticketing",
-       "communication3w33",  
+       "communication",  
       "http://nats-srv:4222"
-    )     
+    )      
          
     natsWrapper.client.on("close", () => {
       console.log("NATS connetion closed!"); 
@@ -70,14 +70,16 @@ const start = async () => {
   });
 
   socket.on('new message', (newMessageReceived: any) => {
-    const chatRoomId = newMessageReceived.id; // Assuming you have a unique chat room identifier
-    console.log(newMessageReceived);
+    const chatRoomId = newMessageReceived.id; 
+    console.log('new message',chatRoomId);
     
     if (!chatRoomId) {
       return console.log('Chat room ID not defined');
     }
   
-    // Emit 'message received' event to the specific chat room
+    
+    console.log(chatRoomId);
+    
     socket.to(chatRoomId).emit('message received', newMessageReceived);
   });
 

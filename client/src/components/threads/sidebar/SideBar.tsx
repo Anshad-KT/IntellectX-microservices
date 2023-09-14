@@ -59,7 +59,8 @@ const SideBar = () => {
 
                     <p className='mt-1'>Messages</p>
                 </div>
-                <div className='flex mb-2 border'>
+                <Link href={'/saved'}>
+                     <div className='flex mb-2 border'>
                     <svg className='w-4 h-4 mt-1 mr-1' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
                     </svg>
@@ -67,6 +68,8 @@ const SideBar = () => {
 
                     <p className='mt-1'>Saved</p>
                 </div>
+                </Link>
+               
             </div>
             <div className='ml-5 font-extralight bold'>Channels</div>
             <div className='flex-col items-center justify-evenly p-5'>

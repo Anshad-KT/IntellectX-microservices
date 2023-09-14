@@ -10,8 +10,10 @@ export = {
     return await mongooseObject.save();
   },
 
-  getUser: async (user: any) => {
-    const userList = await User.find({ email: user.email });
+  getUser: async (id: string): Promise<any> => {
+    const userList = await User.findOne({ id });
+console.log(userList);
+
     return userList;
   },
 

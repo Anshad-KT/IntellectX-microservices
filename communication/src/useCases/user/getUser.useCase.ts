@@ -1,4 +1,4 @@
-import { UserData, User } from "../../libs/entities";
+// import { UserData, User } from "../../libs/entities";
 import { DepenteniciesData } from "../../libs/entities/interfaces";
 
 export const getUser_UseCase = (dependencies: DepenteniciesData) => {
@@ -9,10 +9,10 @@ export const getUser_UseCase = (dependencies: DepenteniciesData) => {
   if (!userRepository)
     throw new Error("The user repository should be dependencie");
 
-  const execute = async({ username, id, email }: UserData) => {
-    const user = new User({ username,  email,id });
-    const model = await tenantRepository.getCompanySchema("intellectX-tenants","User")
-    return userRepository.getUser(user,model);
+  const execute = async (id:string,companyName:string) => {
+    const UserModel = await tenantRepository.getCompanySchema("intellectX-tenants","User")
+    const ThreadModel = await tenantRepository.getCompanySchema(companyName,"Thread")
+    return userRepository.getUser(id,UserModel,ThreadModel);
   };
   return {
     execute,

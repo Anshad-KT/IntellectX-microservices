@@ -31,7 +31,6 @@ const Page = () => {
     const currentChannel: any = useSelector((state: RootState) => state.currentChannel)
 
 
-
     const fetchMessages = useCallback(async () => {
         try {
             const chats = await auth.get(`/api/communication/chat/getchat/${id}`)
@@ -80,6 +79,7 @@ const Page = () => {
 
     useEffect(() => {
         socket.on("message received", (newMessageRecieved) => {
+console.log("message recieved");
 
             setDisplayChat((prevChat: any) => ({
                 ...prevChat,
@@ -129,7 +129,14 @@ const Page = () => {
             console.error('Error uploading file:', error);
         }
     };
-
+    const saveThread = async (event: any) => {
+        console.log(displayChat);
+        console.log(displayChat.id);
+        console.log(value);
+        
+        
+        const { data } = await auth.post('/api/communication/thread/saveThread', { threadId:displayChat.id,id:value })
+    }
     const handleFileChange = async (event: any) => {
         const selectedFile = event.target.files[0];
         const fileName = selectedFile.name;
@@ -158,6 +165,10 @@ const Page = () => {
                             </div>
                             <div className='block pl-2 lg:flex h-full items-center justify-end mr-16 mb-auto bg-secondary  w-2/4 relative cursor-pointer'>
                                 <OptionsPopup onResponseData={handleResponseData} />
+                                
+                                
+                                        <div onClick={saveThread} className='bg-slate-400 ml-2 w-14 border-primary h-10 flex items-center justify-center rounded-md text-sm text-secondary hover:text-orange-500'>save</div>
+                                    
                                 {/* <p>Public - closed threads are hidden</p> */}
                             </div>
 

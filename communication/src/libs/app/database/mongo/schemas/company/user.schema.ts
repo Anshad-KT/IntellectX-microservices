@@ -30,7 +30,15 @@ const userSchema = new mongoose.Schema(
     },
     id:{
       type:String
-    }
+    },
+    savedThreads:[
+    {
+      id: {
+        type: mongoose.Types.ObjectId,
+      
+      },
+    },
+  ],
   },
   {
     toJSON: {

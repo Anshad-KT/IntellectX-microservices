@@ -35,7 +35,7 @@ export interface useCaseData {
     execute: ({ username, email }: UserData) => Promise<any | null>;
   };
   getUser_UseCase:(dependencies:DepenteniciesData)=>{
-    execute: ({ username, email }: UserData) => Promise<any[]>
+    execute: ({ username, id, email }: UserData) => Promise<any[]>
   };
   signIn_UseCase:(dependencies:DepenteniciesData)=>{
     execute: ({ username, email }: UserData) => Promise<User | null>;
