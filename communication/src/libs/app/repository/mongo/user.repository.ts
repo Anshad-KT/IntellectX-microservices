@@ -71,11 +71,42 @@ export = {
     id: string // Assuming email is a string
   ) => {
     try {
-      // Find the user by email
+      // Find the user by ID
       const existingUser = await UserSchema.findOne({ id });
+  
+      if (!existingUser) {
+        // Handle the case where the user is not found
+        console.log('User not found.');
+        return false;
+      }
+       console.log(existingUser);
+       
+      // Check if the threadId is already in the savedThreads array
+      const isThreadAlreadySaved = existingUser.savedThreads.find((savedThread: any) => {
+        const savedThreadIdAsString = savedThread.id.toString(); // Convert ObjectId to string
+       
+        const threadIdAsString = threadId.toString(); // Convert threadId to string
+        console.log(savedThread, '   ', threadId, '  ', typeof savedThread, '  ', typeof threadId);
+        return savedThreadIdAsString === threadIdAsString;
+    });
     
-      if (existingUser) {
-        // Create a new savedThread object
+    console.log(threadId, isThreadAlreadySaved);
+    
+    if (isThreadAlreadySaved) {
+      // If the thread is already saved, remove it from the savedThreads array
+      existingUser.savedThreads = existingUser.savedThreads.filter((savedThread: any) => savedThread.id.toString() !== threadId.toString());
+    
+      // Save the user with the updated savedThreads array
+      await existingUser.save();
+    
+      console.log('Thread removed from savedThreads.', existingUser);
+    
+      // Return the updated user
+      return existingUser;
+    }
+    
+     else {
+        // If the thread is not found in savedThreads, add it
         const savedThread = {
           id: threadId,
         };
@@ -86,15 +117,14 @@ export = {
         // Save the user with the updated savedThreads array
         await existingUser.save();
   
-        // You can return the updated user if needed
+        console.log('Thread added to savedThreads.');
+  
+        // Return the updated user
         return existingUser;
-      } else {
-        // User not found, you can return false or handle the error as needed
-        return false;
       }
     } catch (error) {
       // Handle any errors that occur during the process
-      console.error("Error saving thread:", error);
+      console.error('Error saving thread:', error);
       throw error; // You can choose to throw the error or handle it differently
     }
   }

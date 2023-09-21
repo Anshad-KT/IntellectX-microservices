@@ -8,6 +8,7 @@ import channelReducer from './Features/channel/channelSlice'
 import employeeReducer from './Features/employee/employeeSlice'
 import currentChannelReducer from './Features/currentChannel/currentChannelSlice'
 import  videoConferenceReducer  from "./Features/videoConfererence/videoConferenceSlice";
+import currentThreadReducer from "./Features/currentThread/currentThreadSlice"
 
 export const store = configureStore({
     reducer:{
@@ -16,6 +17,7 @@ export const store = configureStore({
         channel:channelReducer,
         employee:employeeReducer,
         currentChannel:currentChannelReducer,
+        currentThread:currentThreadReducer,
         videoConference:videoConferenceReducer
     }
 })
@@ -23,3 +25,4 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>
 
 export type AppDispatch = typeof store.dispatch
+

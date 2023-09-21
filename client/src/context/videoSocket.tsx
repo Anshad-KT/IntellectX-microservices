@@ -1,8 +1,6 @@
 "use client"
 import React, { createContext, useContext, Dispatch, SetStateAction, useState, useMemo } from "react";
-import { io, Socket } from "socket.io-client"; // Import Socket type
-
-// Define the data type
+import { io, Socket } from "socket.io-client"; 
 type DataType = {
   firstName: string;
 };

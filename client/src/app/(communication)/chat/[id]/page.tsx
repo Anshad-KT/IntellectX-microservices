@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Navbar from '@/components/PrimaryNavbar/Navbar'
 import SideBar from '@/components/threads/sidebar/SideBar'
 import TextBubble from '@/components/ChatBubble/Text/TextBubble'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/app/GlobalRedux/store'
 import auth from '@/services/axios'
 import { useParams } from 'next/navigation'
@@ -14,32 +14,33 @@ import VideoBubble from '@/components/ChatBubble/videoBubble/videoBubble'
 import DocumentBubble from '@/components/ChatBubble/DocumentBubble/DocumentBubble'
 import AWS from 'aws-sdk';
 import OptionsPopup from '@/components/OptionsPopup/OptionsPopup'
+import { currentThread } from '@/app/GlobalRedux/Features/currentThread/currentThreadSlice'
 
 
-// const socketManager: Socket = io('https://cybrosis.intellectx.com', {
-//   agent: new https.Agent({ rejectUnauthorized: false }),
-// });
+
 const Page = () => {
     const { value } = useSelector((state: RootState) => state.id)
     const chatContainerRef = useRef(null);
     const { id } = useParams()
     const [message, setMessage] = useState<string>()
+    const [data, setData] = useState<boolean>()
     const [displayChat, setDisplayChat] = useState<any>()
     const [responseData, setResponseData] = useState<any>(null);
     const socket = io("https://brototype.intellectx.com");
     const channel: any = useSelector((state: RootState) => state.channel)
     const currentChannel: any = useSelector((state: RootState) => state.currentChannel)
-
-
+    const threadValue: any = useSelector((state: RootState) => state.currentThread)
+    const dispatch = useDispatch()
     const fetchMessages = useCallback(async () => {
         try {
             const chats = await auth.get(`/api/communication/chat/getchat/${id}`)
             socket.emit("join chat", id);
+            dispatch(currentThread(chats?.data))
             return chats?.data
         } catch (error) {
             console.log(error);
         }
-    }, [id])
+    }, [id, socket])
 
     useEffect(() => {
         async function hello() {
@@ -64,7 +65,7 @@ const Page = () => {
                 if (chatContainerRef.current) {
                     chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
                 }
-                console.log("sencee");
+                console.log("sencee")
                 
                 socket.emit("new message", { ...data, id })
             } catch (error) {
@@ -87,6 +88,35 @@ console.log("message recieved");
             }));
         })
     })
+
+    useEffect(() => {
+        const fetchData = async () => {
+            console.log(value);
+
+            const response = await auth.get(`/api/communication/thread/currentuser/${value}`);
+            console.log(response.data.foundThreads.length,"  ",threadValue?.value?.id,"     ",threadValue?.value?._id);
+            console.log(threadValue?.value?._id);
+            
+            if (
+                response.data.foundThreads.length > 0 &&
+                (response.data.foundThreads.includes(threadValue?.value?._id) ||
+                  response.data.foundThreads.includes(threadValue?.value?.id))
+              ) {
+                setData(true);
+                console.log("Thread found, setData(true)");
+              } else {
+                setData(false);
+                console.log("Thread not found, setData(false)");
+              }
+              
+            
+           
+        
+            return response.data
+        };
+
+        fetchData()
+    }, [displayChat, displayChat?.id, value])
 
     const typingHandler = (e: any) => {
         setMessage(e.target.value)
@@ -130,12 +160,14 @@ console.log("message recieved");
         }
     };
     const saveThread = async (event: any) => {
-        console.log(displayChat);
-        console.log(displayChat.id);
-        console.log(value);
+        const threadId = displayChat.id || displayChat._id;
+
+        const res = await auth.post('/api/communication/thread/saveThread', { threadId, id: value });
         
+        const isThreadSaved = res.data.savedThreads.find((saved:any) => threadId === saved.id);
         
-        const { data } = await auth.post('/api/communication/thread/saveThread', { threadId:displayChat.id,id:value })
+        setData(!!isThreadSaved); // Use !! to convert the result to a boolean
+        
     }
     const handleFileChange = async (event: any) => {
         const selectedFile = event.target.files[0];
@@ -166,10 +198,10 @@ console.log("message recieved");
                             <div className='block pl-2 lg:flex h-full items-center justify-end mr-16 mb-auto bg-secondary  w-2/4 relative cursor-pointer'>
                                 <OptionsPopup onResponseData={handleResponseData} />
                                 
-                                
-                                        <div onClick={saveThread} className='bg-slate-400 ml-2 w-14 border-primary h-10 flex items-center justify-center rounded-md text-sm text-secondary hover:text-orange-500'>save</div>
+                                        
+                                        {data ? (<div onClick={saveThread} className='bg-slate-400 ml-2 w-14 border-primary h-10 flex items-center justify-center rounded-md text-sm text-secondary hover:text-orange-500'>unsave</div>) : (<div onClick={saveThread} className='bg-slate-400 ml-2 w-14 border-primary h-10 flex items-center justify-center rounded-md text-sm text-secondary hover:text-orange-500'>save</div>)}
                                     
-                                {/* <p>Public - closed threads are hidden</p> */}
+                             
                             </div>
 
                         </div>

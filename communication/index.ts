@@ -23,8 +23,8 @@ const start = async () => {
   try {  
     await natsWrapper.connect(
       "ticketing",
-       "communication",  
-      "http://nats-srv:4222"
+       "communication9",  
+      "http://nats-srv:4222" 
     )      
          
     natsWrapper.client.on("close", () => {
