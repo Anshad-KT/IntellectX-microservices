@@ -82,116 +82,134 @@ const start = async () => {
     
     socket.to(chatRoomId).emit('message received', newMessageReceived);
   });
+  socket.on("join-video-chat", async ({room_id, user_id}) => {
+    await socket.join(room_id)
+    socket.to(room_id).emit("newUser", user_id)
+})
 
-  socket.on('create-new-room', (data)=>{
-      console.log(`host is creating new Room ${{...data}}`);
-      const {identity,roomId,userId} = data
+socket.on("sendMessageToPeer",(data) =>{
+    socket.to(data.room_id).emit("receivedPeerToPeer",data)
+})
+
+socket.on("call-end",(room_id)=>socket.to(room_id).emit("call-end",room_id))
+
+  // socket.on('create-new-room', (data)=>{
+  //     console.log(`host is creating new Room ${{...data}}`);
+  //     const {identity,roomId,userId} = data
        
-      const newUser = {
-        identity,
-        roomHost:true,
-        id:userId,
-        socketId:socket.id,
-        roomId
-      }
-      connectedUsers = [...connectedUsers,newUser]
-      const newRoom = {
-        id:roomId,
-        connectedUsers:[newUser]
-      }
+  //     const newUser = {
+  //       identity,
+  //       roomHost:true,
+  //       id:userId,
+  //       socketId:socket.id,
+  //       roomId
+  //     }
+  //     connectedUsers = [...connectedUsers,newUser]
+  //     const newRoom = {
+  //       id:roomId,
+  //       connectedUsers:[newUser]
+  //     }
       
-      socket.join(roomId)
-      rooms=[...rooms,newRoom]
-      console.log(rooms,"roooooooooooooomsssssssssss");
+  //     socket.join(roomId)
+  //     rooms=[...rooms,newRoom]
+  //     console.log(rooms,"roooooooooooooomsssssssssss");
       
-      //emit the roomId to the client that create the room
-      socket.emit('room-id',{roomId})
-      //emit an event to all users connected
-      socket.emit('room-update',{connectedUsers: newRoom.connectedUsers})
-  })
-  socket.on("join-new-room",(data,userId)=>{
-    const { identity , roomId } = data
-    const newUser = {
-      identity,
-      id:uuidv4(),
-      socketId:socket.id,
-      roomId
-    } 
+  //     //emit the roomId to the client that create the room
+  //     socket.emit('room-id',{roomId})
+  //     //emit an event to all users connected
+  //     socket.emit('room-update',{connectedUsers: newRoom.connectedUsers})
+  // })
+  // socket.on("join-new-room",(data,userId)=>{
+  //   const { identity , roomId } = data
+  //   const newUser = {
+  //     identity,
+  //     id:uuidv4(),
+  //     socketId:socket.id,
+  //     roomId
+  //   } 
      
-    const room = rooms.find(room => room.id === roomId)
-    console.log(roomId);
-    console.log(data);
+  //   const room = rooms.find(room => room.id === roomId)
+  //   console.log(roomId);
+  //   console.log(data);
     
-    console.log(rooms);
+  //   console.log(rooms);
     
-    room.connectedUsers = [...room.connectedUsers,newUser]
+  //   room.connectedUsers = [...room.connectedUsers,newUser]
     
-    socket.join(roomId)
+  //   socket.join(roomId)
 
-    connectedUsers = [...connectedUsers,newUser]
+  //   connectedUsers = [...connectedUsers,newUser]
     
    
-    room.connectedUsers.forEach((user:any) => {
-      if (user.socketId !== socket.id) {
-        const data = {
-          connUserSocketId: socket.id
-        }
-        socket.to(user.socketId).emit('updateConnection', data)
-      }
-    });
+  //   room.connectedUsers.forEach((user:any) => {
+  //     if (user.socketId !== socket.id) {
+  //       const data = {
+  //         connUserSocketId: socket.id
+  //       }
+  //       socket.to(user.socketId).emit('updateConnection', data)
+  //     }
+  //   });
  
-    socket.to(roomId).emit('room-update',{connectedUsers})
-  })
-  socket.on("disconnect",()=>{
-    const user = connectedUsers.find(user => user.socketId == socket.id)
-    if(user){
-       const room = rooms.find((room)=>{room.id === user.roomId})
-      if(room.connectedUsers.length > 0){
-        room.connectedUsers = room.connectedUsers.filter((user:any)=>user.socketId!=socket.id)
-        socket.leave(user.roomId)
-        socket.to(room.id).emit('room-update',{connectedUsers})
-      }else{
-        rooms=rooms.filter(r => r.id != room.id)
-      }
-    } 
-  })
-  socket.on('offer',(opts)=>{     
-    const {data,offer} = opts
-    const {
-      roomId, 
-      identity,
-      isRoomHost
-    } = data
-    console.log("//////////////");
-    io.to(roomId).emit("offer-recieved",{offer,identity})
-  })
-  socket.on('answer',(opts)=>{
-    
-    const {data,answer} = opts
-    const {
-      roomId,
-      identity,
-      isRoomHost
-    } = data
-    console.log("\\\\\\\\\\");
-    
-    io.to(roomId).emit("answer-recieved",{answer,identity})
-  })
-  // socket.on('conn-signal',(data)=>{
-  //   const { connUserSocketId, signal } = data 
-  //   const signalingData = {
-  //     signal, 
-  //     connUserSocketId:socket.id
-  //   }
-  //   socket.to(connUserSocketId).emit('conn-signal',signalingData)
+  //   socket.to(roomId).emit('room-update',{connectedUsers})
   // })
-  // socket.on('conn-init',(data)=>{
-  //   const {connUserSocketId} = data
-  //   const initData = {
-  //     connUserSocketId:socket.id
-  //   }
-  //   socket.to(connUserSocketId).emit("conn-init",initData)
+  
+  // socket.on("callUser",(data:any)=>{
+  //   io.to(data.roomId).emit("callUser",{signal:data.signalData,from:data.identity})
   // })
+  // socket.on("answerCall",(data:any)=>{
+  //   io.to(data.roomId).emit("calAccepted",data.signal)
+  // })
+
+  // socket.on("disconnect",()=>{
+  //   const user = connectedUsers.find(user => user.socketId == socket.id)
+  //   if(user){
+  //      const room = rooms.find((room)=>{room.id === user.roomId})
+  //     if(room.connectedUsers.length > 0){
+  //       room.connectedUsers = room.connectedUsers.filter((user:any)=>user.socketId!=socket.id)
+  //       socket.leave(user.roomId)
+  //       socket.to(room.id).emit('room-update',{connectedUsers})
+  //     }else{
+  //       rooms=rooms.filter(r => r.id != room.id)
+  //     }
+  //   } 
+  // })
+  // socket.on('offer',(opts)=>{     
+  //   const {data,offer} = opts
+  //   const {
+  //     roomId, 
+  //     identity,
+  //     isRoomHost
+  //   } = data
+  //   console.log("//////////////");
+  //   io.to(roomId).emit("offer-recieved",{offer,identity})
+  // })
+  // socket.on('answer',(opts)=>{
+    
+  //   const {data,answer} = opts
+  //   const {
+  //     roomId,
+  //     identity,
+  //     isRoomHost
+  //   } = data
+  //   console.log("\\\\\\\\\\");
+    
+  //   io.to(roomId).emit("answer-recieved",{answer,identity})
+  // })
+  // // socket.on('conn-signal',(data)=>{
+  // //   const { connUserSocketId, signal } = data 
+  // //   const signalingData = {
+  // //     signal, 
+  // //     connUserSocketId:socket.id
+  // //   }
+  // //   socket.to(connUserSocketId).emit('conn-signal',signalingData)
+  // // })
+  // // socket.on('conn-init',(data)=>{
+  // //   const {connUserSocketId} = data
+  // //   const initData = {
+  // //     connUserSocketId:socket.id
+  // //   }
+  // //   socket.to(connUserSocketId).emit("conn-init",initData)
+  // // })
 }); 
   
   } catch (err) {
