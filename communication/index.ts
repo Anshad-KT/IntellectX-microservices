@@ -23,7 +23,7 @@ const start = async () => {
   try {  
     await natsWrapper.connect(
       "ticketing",
-       "communiscatisy",  
+       "communiscation",  
       "http://nats-srv:4222" 
     )      
          
@@ -89,7 +89,8 @@ const start = async () => {
 
 socket.on("sendMessageToPeer",(data) =>{
   if(data.type=="offer"||data.type=="answer"){
-    console.log(data.user_id,data.type);
+    console.log(`from ${data.user_id} to ${data.remoteUser_id} type: ${data.type} `);
+
   }
     socket.to(data.roomId).emit("receivedPeerToPeer",data)
 })

@@ -5,18 +5,22 @@ import { useSelector } from 'react-redux'
 import { RootState } from '@/app/GlobalRedux/store'
 import { useParams } from 'next/navigation'
 import { Socket } from 'socket.io-client'
+import OtherVideoComponents from '@/components/ChildrenVideo/ChildrenVideo'
+import ChildrenVideo from '@/components/ChildrenVideo/ChildrenVideo'
 
 
 
 const Page = () => {
 
   const socket= useSocket(); // Replace with your actual socket hook
+  const [streams,setStreams] = useState<any>([])
   const myVideo = useRef<HTMLVideoElement | null>(null);
   const userVideoSrc = useRef<HTMLVideoElement | null>(null);
   const userVideoSrc2 = useRef<HTMLVideoElement | null>(null);
   const localStream = useRef<MediaStream | null>(null);
   const remoteStream = useRef<MediaStream | null | any>({});
   const peerConnection = useRef<RTCPeerConnection | null |any>({});
+  
   const [slash, setSlash] = useState({ audio: false, video: false });
   const [callEnd, setCallEnd] = useState(false);
   const roomIds= useParams()
@@ -74,6 +78,13 @@ const Page = () => {
             await remoteStream.current![user_id].addTrack(track, remoteStream.current[user_id]);
             
           });
+          console.log("sdsdsdssssssss");
+          
+          setStreams((prev:any) => ({
+            ...prev,
+            [user_id]: remoteStream.current[user_id],
+          }))
+          
           // if (userVideoSrc.current && remoteStream.current) {
           //   userVideoSrc.current.srcObject = remoteStream.current;
           // }
@@ -92,7 +103,8 @@ const Page = () => {
             type: 'candidate',
             candidate: event.candidate,
             roomId,
-            user_id:value
+            user_id:value,
+            remoteUser_id:user_id
           });
         }
       };
@@ -108,7 +120,7 @@ const Page = () => {
       try {
         const offer = await peerConnection.current[user_id].createOffer();
         await peerConnection.current[user_id].setLocalDescription(offer);
-        socket?.emit("sendMessageToPeer", { type: "offer", offer, roomId, user_id:value });
+        socket?.emit("sendMessageToPeer", { type: "offer", offer, roomId, user_id:value,remoteUser_id:user_id });
       } catch (error) {
         console.error('Error creating offer:', error);
       }
@@ -135,7 +147,7 @@ const Page = () => {
         await peerConnection.current[user_id].setRemoteDescription(offer);
         const answer = await peerConnection.current[user_id].createAnswer();
         await peerConnection.current[user_id].setLocalDescription(answer);
-        socket?.emit("sendMessageToPeer", { type: "answer", answer, roomId, user_id:value });
+        socket?.emit("sendMessageToPeer", { type: "answer", answer, roomId, user_id:value,remoteUser_id:user_id });
       } catch (error) {
         console.error('Error creating answer:', error);
       }
@@ -179,7 +191,7 @@ const Page = () => {
       } catch (error) {
         console.error('Error setting remote description:', error);
       }
-    }
+    }  
 
     if (userVideoSrc.current && remoteStream.current[user_id] && userVideoSrc2.current) {
       if(userVideoSrc.current.srcObject ){
@@ -191,6 +203,7 @@ const Page = () => {
       
       userVideoSrc.current.srcObject =remoteStream.current[user_id]
       }
+      
      
     }
   };
@@ -205,12 +218,16 @@ const Page = () => {
       socket?.on("newUser", async (user_id: string) => await handleUserJoined(user_id));
       
       socket?.on("receivedPeerToPeer", async (data: any) => {
-        if (data.type === "offer") {
-
+        console.log("remoteUser_id ",data.remoteUser_id, " value ",value);
+        
+        if(data.remoteUser_id == value){
+          if (data.type === "offer") {
+          console.log("offered");
           await createAnswer(data.user_id, data.offer);
         }
         if (data.type === "answer") {
-
+          console.log("answered");
+ 
           await addAnswer(data.answer,data.user_id);
         }
         if (data.type === "candidate") {
@@ -220,10 +237,22 @@ const Page = () => {
             await peerConnection.current[data.user_id].addIceCandidate(data.candidate,data.user_id);
           }
         }
+        }else{
+          console.log("not done");
+          
+        } 
+        
       });
     
-  }, [createAnswer, handleUserJoined, socket]);
-  
+  }, [createAnswer, handleUserJoined, socket, value]);
+  const renderHelloForEachStream = () => {
+
+    return Object.entries(remoteStream.current).map(([streamKey, streamValue], index) => (
+      
+      <ChildrenVideo key={index} userVideoSrc={streamValue} />
+    
+    ));
+  };
   const toggleCamera = () => {
     const videoTrack = localStream.current?.getVideoTracks()[0];
     if (videoTrack?.enabled) {
@@ -268,15 +297,14 @@ const Page = () => {
                     <video ref={myVideo} autoPlay playsInline muted width="900" height="850" />
                 </div>
                 <div className='bg-green-700 col-span-1 h-full flex flex-col items-center'>
-
-
-                    <div className='w-5/6 h-1/4 bg-violet-400 mt-5'>
+                {renderHelloForEachStream()}
+                    {/* <div className='w-5/6 h-1/4 bg-violet-400 mt-5'>
                         <video ref={userVideoSrc} autoPlay playsInline muted width="324" height="200" />
                     </div>
                     <div className='w-5/6 h-1/4 bg-violet-400 mt-5'>
                         <video ref={userVideoSrc2} autoPlay playsInline muted width="324" height="200" />
-                    </div>
-
+                    </div> */}
+                    
 
                 </div>
 

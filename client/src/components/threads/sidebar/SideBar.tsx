@@ -91,7 +91,7 @@ const SideBar = () => {
             </div>
             <PopupButton1 />
               
-            <div className='ml-5'>+<span className='ml-1'>Inivite your team </span></div>
+            <Link href={'/employee'}><div className='ml-5'>+<span className='ml-1'>Inivite your team </span></div></Link>
         </div>
     )
 }
