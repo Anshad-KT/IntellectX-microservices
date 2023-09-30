@@ -13,6 +13,7 @@ const Page = () => {
   const socket= useSocket(); // Replace with your actual socket hook
   const myVideo = useRef<HTMLVideoElement | null>(null);
   const userVideoSrc = useRef<HTMLVideoElement | null>(null);
+  const userVideoSrc2 = useRef<HTMLVideoElement | null>(null);
   const localStream = useRef<MediaStream | null>(null);
   const remoteStream = useRef<MediaStream | null | any>({});
   const peerConnection = useRef<RTCPeerConnection | null |any>({});
@@ -39,10 +40,17 @@ const Page = () => {
     // if (userVideoSrc.current && remoteStream.current) {
     //   userVideoSrc.current.srcObject = remoteStream.current;
     // }
-    if (userVideoSrc.current && remoteStream.current[user_id]) {
-      console.log("doneee222",remoteStream.current[user_id],remoteStream.current,peerConnection.current);
+    if (userVideoSrc.current && remoteStream.current[user_id] && userVideoSrc2.current) {
+      if(userVideoSrc.current.srcObject ){
+        console.log("doneee",remoteStream.current[user_id],remoteStream.current,peerConnection.current);
+      
+        userVideoSrc2.current.srcObject =remoteStream.current[user_id]
+      }else{
+         console.log("doneee",remoteStream.current[user_id],remoteStream.current,peerConnection.current);
       
       userVideoSrc.current.srcObject =remoteStream.current[user_id]
+      }
+     
     }
 
     if (localStream.current && peerConnection.current[user_id]) {
@@ -173,10 +181,17 @@ const Page = () => {
       }
     }
 
-    if (userVideoSrc.current && remoteStream.current[user_id]) {
-      console.log("doneee",remoteStream.current[user_id],remoteStream.current,peerConnection.current);
+    if (userVideoSrc.current && remoteStream.current[user_id] && userVideoSrc2.current) {
+      if(userVideoSrc.current.srcObject ){
+        console.log("doneee",remoteStream.current[user_id],remoteStream.current,peerConnection.current);
+      
+        userVideoSrc2.current.srcObject =remoteStream.current[user_id]
+      }else{
+         console.log("doneee",remoteStream.current[user_id],remoteStream.current,peerConnection.current);
       
       userVideoSrc.current.srcObject =remoteStream.current[user_id]
+      }
+     
     }
   };
   useEffect(() => {
@@ -257,6 +272,9 @@ const Page = () => {
 
                     <div className='w-5/6 h-1/4 bg-violet-400 mt-5'>
                         <video ref={userVideoSrc} autoPlay playsInline muted width="324" height="200" />
+                    </div>
+                    <div className='w-5/6 h-1/4 bg-violet-400 mt-5'>
+                        <video ref={userVideoSrc2} autoPlay playsInline muted width="324" height="200" />
                     </div>
 
 
