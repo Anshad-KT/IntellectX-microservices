@@ -24,7 +24,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: anshadkt/communication
+    - image: anshadkt/communication1
       context: communication
       docker:
         dockerfile: Dockerfile

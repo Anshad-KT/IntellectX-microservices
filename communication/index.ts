@@ -23,7 +23,7 @@ const start = async () => {
   try {  
     await natsWrapper.connect(
       "ticketing",
-       "communication9",  
+       "communiscatisw",  
       "http://nats-srv:4222" 
     )      
          
@@ -82,16 +82,19 @@ const start = async () => {
     
     socket.to(chatRoomId).emit('message received', newMessageReceived);
   });
-  socket.on("join-video-chat", async ({room_id, user_id}) => {
-    await socket.join(room_id)
-    socket.to(room_id).emit("newUser", user_id)
+  socket.on("join-video-chat", async ({roomId, user_id}) => {
+    await socket.join(roomId)
+    socket.to(roomId).emit("newUser", user_id)
 })
 
 socket.on("sendMessageToPeer",(data) =>{
-    socket.to(data.room_id).emit("receivedPeerToPeer",data)
+  if(data.type=="offer"||data.type=="answer"){
+    console.log(data.user_id,data.type);
+  }
+    socket.to(data.roomId).emit("receivedPeerToPeer",data)
 })
 
-socket.on("call-end",(room_id)=>socket.to(room_id).emit("call-end",room_id))
+socket.on("call-end",(roomId)=>socket.to(roomId).emit("call-end",roomId))
 
   // socket.on('create-new-room', (data)=>{
   //     console.log(`host is creating new Room ${{...data}}`);
