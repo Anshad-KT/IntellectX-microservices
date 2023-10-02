@@ -1,7 +1,7 @@
 "use state"
 import React, { useEffect, useRef } from 'react';
 
-const ChildrenVideo = ({ userVideoSrc }: any) => {
+const ChildrenVideo = ({ userVideoSrc,onClick }: any) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const ChildrenVideo = ({ userVideoSrc }: any) => {
 console.log(userVideoSrc);
 
   return (
-    <div className='w-5/6 h-1/4 bg-violet-400 mt-5'>
+    <div onClick={onClick} className='w-5/6 h-1/4 bg-violet-400 my-5'>
       <video ref={videoRef} autoPlay playsInline muted width="324" height="200" />
     </div>
   );

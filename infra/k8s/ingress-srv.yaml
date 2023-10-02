@@ -4,7 +4,7 @@ metadata:
   name: ingress-service
   annotations:
     kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/websocket-services: "communication-srv"
+    nginx.ingress.kubernetes.io/websocket-services: "communication1-srv"
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/cors-allow-origin: "http://brototype.intellectx.com"  # CORS Allow Origin setting
@@ -30,24 +30,24 @@ spec:
                 name: company1-srv
                 port:
                   number: 3000
-          - path: /api/communication/?(.*)
+          - path: /api/communication1/?(.*)
             pathType: Prefix
             backend:
               service:
-                name: communication-srv
+                name: communication1-srv
                 port:
                   number: 3000
           - path: /socket.io/?(.*)
             pathType: Prefix
             backend:
               service:
-                name: communication-srv
+                name: communication1-srv
                 port:
                   number: 3000
           - path: /?(.*)
             pathType: Prefix
             backend:
               service:
-                name: client1-srv
+                name: client-srv
                 port:
                   number: 3000

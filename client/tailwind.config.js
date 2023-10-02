@@ -33,7 +33,8 @@ module.exports = {
         lg: '18px', // Large font size
         mini: '10px',
         minip: "13px"
-      }
+      },
+      
     },
   },
   plugins: [],
