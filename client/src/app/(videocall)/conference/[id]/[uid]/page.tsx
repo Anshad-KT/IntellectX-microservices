@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useSocket } from '@/context/videoSocket'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/app/GlobalRedux/store'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { Socket } from 'socket.io-client'
 import OtherVideoComponents from '@/components/ChildrenVideo/ChildrenVideo'
 import ChildrenVideo from '@/components/ChildrenVideo/ChildrenVideo'
@@ -11,7 +11,8 @@ import Image from 'next/image'
 
 
 const Page = () => {
-
+  const router = useRouter();
+  const returnValue: any = useSelector((state: RootState) => state.channel)
   const socket = useSocket(); // Replace with your actual socket hook
   const [streams, setStreams] = useState<any>([])
   const [selected, setSelected] = useState<any>([])
@@ -209,18 +210,25 @@ const Page = () => {
     }
   };
   useEffect(() => {
-
-    socket?.on("call-end", (room_id: string) => {
-      localStream.current?.getTracks().forEach((track: MediaStreamTrack) => track.stop());
-      remoteStream.current?.getTracks().forEach((track: MediaStreamTrack) => track.stop());
-      setCallEnd(true);
-    });
-
-    socket?.on("newUser", async (user_id: string) => await handleUserJoined(user_id));
-
-    socket?.on("receivedPeerToPeer", async (data: any) => {
+    const handleCallEnd = (userData: any) => {
+      const { remoteUser_id } = userData;
+      peerConnection.current[remoteUser_id] = null;
+  
+      // Stop remote stream tracks if they exist
+      if (remoteStream.current[remoteUser_id]) {
+        remoteStream.current[remoteUser_id].getTracks().forEach((track: MediaStreamTrack) => track.stop());
+      }
+      remoteStream.current[remoteUser_id] = null;
+      console.log(`${remoteUser_id} logged out`);
+    };
+  
+    const handleNewUser = async (user_id: string) => {
+      await handleUserJoined(user_id);
+    };
+  
+    const handleReceivedPeerToPeer = async (data: any) => {
       console.log("remoteUser_id ", data.remoteUser_id, " value ", value);
-
+  
       if (data.remoteUser_id == value) {
         if (data.type === "offer") {
           console.log("offered");
@@ -228,36 +236,31 @@ const Page = () => {
         }
         if (data.type === "answer") {
           console.log("answered");
-
           await addAnswer(data.answer, data.user_id);
         }
         if (data.type === "candidate") {
           if (peerConnection.current[data.user_id]) {
             console.log("ince candiadding");
-
             await peerConnection.current[data.user_id].addIceCandidate(data.candidate, data.user_id);
           }
         }
-      } else {
-        console.log("not done");
-
       }
-
-    });
-
+    };
+  
+    // Attach socket event listeners
+    socket?.on("call-end", handleCallEnd);
+    socket?.on("newUser", handleNewUser);
+    socket?.on("receivedPeerToPeer", handleReceivedPeerToPeer);
+  
+    // Clean up event listeners when the component unmounts
+    return () => {
+      socket?.off("call-end", handleCallEnd);
+      socket?.off("newUser", handleNewUser);
+      socket?.off("receivedPeerToPeer", handleReceivedPeerToPeer);
+    };
   }, [createAnswer, handleUserJoined, socket, value]);
-  const renderHelloForEachStream = () => {
-    return Object.entries(remoteStream.current).map(([streamKey, streamValue], index) => {
+  
 
-
-      if (streamKey !== selected) {
-        return (
-          <ChildrenVideo onClick={() => setSelected(streamKey)} key={index} userVideoSrc={streamValue} />
-        );
-      }
-      return null; // Return null for the selected component to exclude it
-    });
-  };
 
 
   useEffect(() => {
@@ -301,11 +304,22 @@ const Page = () => {
   const endCall = async () => {
     if (localStream.current) {
       localStream.current.getTracks().forEach((track: MediaStreamTrack) => track.stop());
-      if (remoteStream.current)
-        remoteStream.current.getTracks().forEach((track: MediaStreamTrack) => track.stop());
-      socket?.emit("call-end", roomId);
-      window.location.reload();
+      if (remoteStream.current) {
+        {
+          Object.entries(remoteStream.current).map(([streamKey, streamValue], index) => {
+            remoteStream.current[streamKey].getTracks().forEach((track: MediaStreamTrack) => track.stop());
+          })
+        }
+      }
+
+
+      socket?.emit("call-end", { remoteUser_id: value,roomId });
+
+      router?.push(`/thread/${returnValue.value[0].id}`);
+
     }
+
+
   };
 
 
@@ -329,21 +343,21 @@ const Page = () => {
         </div>
 
         <div className='bg-green-700 col-span-1 h-full flex flex-col items-center overflow-y-auto'>
-  <div className='w-5/6 h-1/4 bg-violet-400 mt-5'>
-    <video ref={myVideo} autoPlay playsInline muted width="324" height="200" />
-  </div>
-  <br />
-  {Object.entries(remoteStream.current).map(([streamKey, streamValue], index) => {
-    if (streamKey !== selected) {
-      console.log(selected);
+          <div className='w-5/6 h-1/4 bg-violet-400 mt-5'>
+            <video ref={myVideo} autoPlay playsInline muted width="324" height="200" />
+          </div>
+          <br />
+          {Object.entries(remoteStream.current).map(([streamKey, streamValue], index) => {
+            if (streamKey !== selected) {
+              console.log(selected);
 
-      return (
-        <ChildrenVideo onClick={() => setSelected(streamKey)} key={index} userVideoSrc={streamValue} />
-      );
-    }
-    return null; // Return null for the selected component to exclude it
-  })}
-</div>
+              return (
+                <ChildrenVideo onClick={() => setSelected(streamKey)} key={index} userVideoSrc={streamValue} />
+              );
+            }
+            return null; // Return null for the selected component to exclude it
+          })}
+        </div>
 
 
       </div>
@@ -382,7 +396,7 @@ const Page = () => {
 
 
           </div>
-          <div>
+          <div onClick={endCall}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
               <path strokeLinecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
             </svg>

@@ -23,7 +23,7 @@ const start = async () => {
   try {  
     await natsWrapper.connect(
       "ticketing",
-       "communiscation",  
+       "communiscas5",  
       "http://nats-srv:4222" 
     )      
          
@@ -95,7 +95,12 @@ socket.on("sendMessageToPeer",(data) =>{
     socket.to(data.roomId).emit("receivedPeerToPeer",data)
 })
 
-socket.on("call-end",(roomId)=>socket.to(roomId).emit("call-end",roomId))
+socket.on("call-end",({remoteUser_id,roomId})=>{
+  console.log({remoteUser_id,roomId});
+  
+  socket.to(roomId).emit("call-end",{remoteUser_id,roomId})
+  socket.leave(roomId)
+})
 
   // socket.on('create-new-room', (data)=>{
   //     console.log(`host is creating new Room ${{...data}}`);

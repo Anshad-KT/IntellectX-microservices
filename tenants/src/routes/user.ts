@@ -15,11 +15,15 @@ export = (dependencies: any) => {
     currentuserController,
     signInController,
     signOutController,
+    getOtpController,
+    otpVerifyController
   } = userController(dependencies);
 
   router.post("/signup", signUpController);
   router.post("/login", signInController);
   router.post("/signout", signOutController);
+  router.post("/verifyUser",otpVerifyController)
+  router.get("/otp/:id",getOtpController)
 //  router.get("/currentuser", currentUser, requireAuth, currentuserController);
 
   return router;

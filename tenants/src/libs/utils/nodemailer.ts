@@ -2,16 +2,13 @@ import nodemailer from 'nodemailer';
 
 const sendOtpEmail = (
   senderEmail: string,
-  senderPassword: string,
   recipientEmail: string,
-  subject: string
+
 ): Promise<{ otp: number; message: string }> => {
   return new Promise((resolve, reject) => {
     if (
       !senderEmail.length ||
-      !senderPassword.length ||
-      !recipientEmail.length ||
-      !subject.length
+      !recipientEmail.length 
     ) {
       reject(
         'Please provide valid details (senderEmail, senderPassword, recipientEmail, subject).'
@@ -21,7 +18,7 @@ const sendOtpEmail = (
         service: 'gmail',
         auth: {
           user: senderEmail,
-          pass: senderPassword,
+          pass: process.env.NODEPASS,
         },
       });
 
@@ -30,7 +27,7 @@ const sendOtpEmail = (
       const mailOptions: nodemailer.SendMailOptions = {
         from: senderEmail,
         to: recipientEmail,
-        subject: subject,
+        subject: "OTP Verification",
         html: `
           <!DOCTYPE html>
           <html>

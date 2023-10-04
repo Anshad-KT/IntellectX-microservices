@@ -20,6 +20,7 @@ const Page = () => {
         
         const data =  { creator:id.value, channelName:channel, superUsers:[id.value] , previlagedUsers:[id.value], threads:[] }
     
+       console.log(data);
        
         auth
           .post('/api/communication/addchannel',data)

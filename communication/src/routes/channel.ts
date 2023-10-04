@@ -13,6 +13,8 @@ export = (dependencies: any) => {
   const {
     addChannelController,getChannelController
   } = channelController(dependencies); 
+  console.log("reaching here");
+  
   router.post("/addchannel", addChannelController);
   router.get('/getchannel', getChannelController)
   return router;

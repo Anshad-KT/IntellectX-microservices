@@ -22,7 +22,7 @@ const start = async () => {
     await natsWrapper.connect(
       "ticketing",
       //process.env.NATS_CLIENT_ID,
-       "company", 
+       "compwny", 
       "http://nats-srv:4222"  
     )    
     natsWrapper.client.on("close", () => { 

@@ -60,7 +60,18 @@ const Page = () => {
           setError('Something went wrong');
         } else {
           dispatch(addId(response.data.id));
-          router?.push('/server');
+         
+            auth.get(`/api/tenant/user/otp/${email}`)
+                .then((res)=>{
+                 console.log(res);
+                 router?.push('/verification/'+email);
+                })
+                .catch((err)=>{
+                 console.log(err);
+                 
+                })
+        
+          
         }
       })
       .catch((error) => {
@@ -87,7 +98,7 @@ const Page = () => {
                     setError('Something went wrong');
                 } else {
                     dispatch(addId(response.data.id));
-                    router?.push('/server');
+                    router?.push('/verification/'+email);
                 }
             } catch (error) {
                 const googleSignUpErr = error as AxiosError;

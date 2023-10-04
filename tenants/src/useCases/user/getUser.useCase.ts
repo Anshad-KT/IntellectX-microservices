@@ -9,9 +9,9 @@ export const getUser_UseCase = (dependencies: DepenteniciesData) => {
   if (!userRepository)
     throw new Error("The user repository should be dependencie");
 
-  const execute = ({ username, password, email }: UserData) => {
-    const user = new User({ username, password, email });
-    return userRepository.getUser(user);
+  const execute = ( email:  string) => {
+   
+    return userRepository.getUser(email);
   };
   return {
     execute,

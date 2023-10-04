@@ -30,7 +30,7 @@ spec:
                 name: company1-srv
                 port:
                   number: 3000
-          - path: /api/communication1/?(.*)
+          - path: /api/communication/?(.*)
             pathType: Prefix
             backend:
               service:

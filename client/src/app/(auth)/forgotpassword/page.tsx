@@ -19,8 +19,8 @@ const Page = () => {
                                 <p >by continuing with google or email, you agree to <br /> IntellectX terms of service and Privacy policy</p>
                             </div>
 
-                            <button className='text-center my-5 border w-96 h-12 text-white bg-primary border-gray-300 rounded-md hover:text-blue-950 hover:bg-gray-100 cursor-pointer hover:border-blue-950'>Open Email box</button>
-                            <button className='text-center border w-96 h-12 bg-gray-100 border-gray-100 rounded-md hover:text-gray-100 hover:bg-blue-950 cursor-pointer hover:border-gray-100'>Resend Email</button>
+                            <input type='text' className='text-center my-5 border w-96 h-12 text-primary border-gray-300 rounded-md  hover:bg-gray-100 cursor-pointer ' />
+                            <button className='text-center border w-96 h-12 bg-gray-100 border-gray-100 rounded-md hover:text-gray-100 hover:bg-blue-950 cursor-pointer hover:border-gray-100'>Submit</button>
 
                         </div>
 

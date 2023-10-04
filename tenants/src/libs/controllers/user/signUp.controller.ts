@@ -19,11 +19,7 @@ export = (dependencies: DepenteniciesData): any => {
       if (!email) throw new BadRequestError("Please provide a email");
       if (!password) throw new BadRequestError("Please provide a password");
       
-      const userPresent = await getUser_UseCase(dependencies).execute({
-        username,
-        email,
-        password,
-      });
+      const userPresent = await getUser_UseCase(dependencies).execute(email);
 
      console.log(userPresent);
      

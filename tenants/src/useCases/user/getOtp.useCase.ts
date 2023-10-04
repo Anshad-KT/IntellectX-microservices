@@ -1,7 +1,8 @@
 import { UserData, User } from "../../libs/entities";
 import { DepenteniciesData } from "../../libs/entities/interfaces";
+import sendOtpEmail from "../../libs/utils/nodemailer";
 
-export const verification_UseCase = (dependencies: DepenteniciesData) => {
+export const getOtp_UseCase = (dependencies: DepenteniciesData) => {
   const {
     repository: { userRepository },
   } = dependencies;
@@ -9,14 +10,12 @@ export const verification_UseCase = (dependencies: DepenteniciesData) => {
   if (!userRepository)
     throw new Error("The user repository should be dependencie");
 
-  const execute = (link:string,sessionValue:any) => {
-    console.log(link,sessionValue);
+  const execute = (email:string) => {
+    console.log(email);
     
-    if(sessionValue == link){
-        return true
-    }else{
-        return false
-    }
+    
+    return sendOtpEmail("intellectx303@gmail.com",email);
+
   };
   return {
     execute,

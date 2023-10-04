@@ -1,4 +1,4 @@
-import { Company } from "../../libs/entities/index";
+
 import { DepenteniciesData } from "../../libs/entities/interfaces";
 
 export const removeEmployee_UseCase = (dependencies: DepenteniciesData) => {
