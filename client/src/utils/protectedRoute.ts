@@ -1,16 +1,39 @@
-// "use client"
-// import { useSelector } from "react-redux";
-// import { RootState } from "./path-to-your-root-state";
-// import { useRouter } from "next/router";
+"use client"
+import React, { ReactNode, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
-// const checkAndNavigate = () => {
-//   const router = useRouter();
-//   const id = useSelector((state: RootState) => state.id.value);
+interface UserProtectedRouterProps {
+  children: ReactNode;
+}
 
-//   if (!id) {
-//     router.push("/"); // Redirect to the desired route if ID is not present
-//   }
-// };
+const UserProtectedRouter: React.FC<UserProtectedRouterProps> = ({ children }) => {
+    const [user, setUser] = useState<{ user?: { email?: string } }>({});
+  const [superUser, setSuperUser] = useState<{ superUser?: { email?: string } }>({});
 
-// export default checkAndNavigate;
+  useEffect(() => {
+    // Perform localStorage action
+    const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
+    const storedSuperUser = JSON.parse(localStorage.getItem("superUser") || "{}");
 
+    
+    setUser(storedUser?.user?.email);
+    setSuperUser(storedSuperUser?.user?.email);
+  }, []);
+
+  const email = user || superUser;
+  const router = useRouter();
+
+  
+  if (user||superUser) {
+    console.log("shit");
+    
+    return children;
+  } else {
+    console.log("whyy");
+    
+    router.push("/login");
+    return null;
+  }
+};
+
+export default UserProtectedRouter;

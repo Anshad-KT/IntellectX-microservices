@@ -324,16 +324,16 @@ const Page = () => {
 
 
   return (
-    <main className='bg-white w-full h-screen'>
+    <main className='bg-primary w-full h-screen'>
       <div className='bg-gray-400 w-full h-5/6 grid lg:grid-cols-5'>
 
         <div className='bg-red-800 col-span-4 h-full relative flex-row'>
-          <div className='bg-blue-500 h-14 w-full flex justify-center items-center'>
-
+          <div className='bg-primary h-14 w-full flex justify-center items-center text-center'>
+            I - MEET
           </div>
-          <div className="bg-green-500 pl-64 w-full h-4/5 flex relative justify-end items-center ">
+          <div className="bg-gray-600 pl-64 w-full h-4/5 flex relative justify-end items-center rounded-lg">
             <div className="w-full">
-              <video ref={videoRef} autoPlay playsInline width={650} />
+              <video className='rounded-3xl shadow-3xl' ref={videoRef} autoPlay playsInline width={650} />
             </div>
           </div>
 
@@ -342,9 +342,9 @@ const Page = () => {
 
         </div>
 
-        <div className='bg-green-700 col-span-1 h-full flex flex-col items-center overflow-y-auto'>
-          <div className='w-5/6 h-1/4 bg-violet-400 mt-5'>
-            <video ref={myVideo} autoPlay playsInline muted width="324" height="200" />
+        <div className='bg-primary col-span-1 h-full flex flex-col items-center overflow-y-auto'>
+          <div className='w-5/6 h-1/4 bg-violet-400 mt-5 shadow-lg rounded-3xl'>
+            <video className='shadow-3xl rounded-3xl' ref={myVideo} autoPlay playsInline muted width="324" height="200" />
           </div>
           <br />
           {Object.entries(remoteStream.current).map(([streamKey, streamValue], index) => {
@@ -362,46 +362,61 @@ const Page = () => {
 
       </div>
 
-      <div className='bg-white-800 px-4 w-full h-8 flex justify-evenly '>
+      <div className='bg-white-700  w-full h-8 flex items-center justify-center m-10 mr-4 '>
 
-        <div className='flex w-32 border-white items-center rounded'>
-          <div onClick={toggleCamera} className='flex items-center'>
+       
+          <div onClick={toggleCamera} className='mr-5'>
 
             {slash.video ? (
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+              <button className='font-bold py-2 px-4 rounded bg-blue-500 text-white bg-blue-700'>
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M12 18.75H4.5a2.25 2.25 0 01-2.25-2.25V9m12.841 9.091L16.5 19.5m-1.409-1.409c.407-.407.659-.97.659-1.591v-9a2.25 2.25 0 00-2.25-2.25h-9c-.621 0-1.184.252-1.591.659m12.182 12.182L2.909 5.909M1.5 4.5l1.409 1.409" />
               </svg>
+              </button>
+              
             ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+              <button className='font-bold py-2 px-4 rounded bg-blue-500 text-white bg-blue-700'>
+                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" />
               </svg>
+              </button>
+             
 
             )}
 
 
 
           </div>
-          <div onClick={toggleMic} >
+          <div onClick={toggleMic} className='mr-5' >
             {slash.audio ? (
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <button className='font-bold py-2 px-4 rounded  text-white bg-blue-700'>
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 9.75L19.5 12m0 0l2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6l4.72-4.72a.75.75 0 011.28.531V19.94a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.506-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.395C2.806 8.757 3.63 8.25 4.51 8.25H6.75z" />
               </svg>
+              </button>
+              
             ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+              <button className='font-bold py-2 px-4 rounded  text-white bg-blue-700'>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
               </svg>
+              </button>
+              
 
 
             )}
 
 
           </div>
-          <div onClick={endCall}>
+          <div onClick={endCall} className='mr-5'>
+          <button className='font-bold py-2 px-4 rounded  text-white bg-blue-700'>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
               <path strokeLinecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
             </svg>
+          </button>
+            
           </div>
-        </div>
+     
       </div>
     </main>
   )

@@ -1,7 +1,35 @@
-import axios,{AxiosInstance} from "axios"
+import axios,{AxiosError, AxiosInstance} from "axios"
 const  auth : AxiosInstance= axios.create({
     baseURL : "/"
   })
+  auth.interceptors.request.use(
+    (config) => {
+      const user = JSON.parse(localStorage.getItem("user") as string);
+      if (user) {
+        const tokens = user.token;
+  
+        if (tokens) {
+          config.headers["authorization"] = `Bearer ${tokens}`;
+        }
+      }
+      const superUser = JSON.parse(localStorage.getItem("superUser") as string);
+      if (superUser) {
+        const tokens = superUser.token;
+  
+        if (tokens) {
+          config.headers["superUserauthorization"] = `Bearer ${tokens}`;
+        }
+      }
+  
+     
+      return config;
+    },
+    (error: AxiosError) => {
+      return Promise.reject(error);
+    }
+  );
+  
+ 
   
   
   export default auth

@@ -16,7 +16,7 @@ console.log(userVideoSrc);
 
   return (
     <div onClick={onClick} className='w-5/6 h-1/4 bg-violet-400 my-5'>
-      <video ref={videoRef} autoPlay playsInline muted width="324" height="200" />
+      <video className='shadow-3xl rounded-3xl' ref={videoRef} autoPlay playsInline muted width="324" height="200" />
     </div>
   );
 };

@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: communication1-depl
+  name: communication-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: communication1
+      app: communication
   template:
     metadata:
       labels:
-        app: communication1
+        app: communication
     spec:
       containers:
-        - name: communication1
-          image: anshadkt/communication1
+        - name: communication
+          image: anshadkt/communication
           env:
             - name: MONGO_URI
               valueFrom:
@@ -31,12 +31,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: communication1-srv
+  name: communication-srv
 spec:
   selector:
-    app: communication1
+    app: communication
   ports:
-    - name: communication1
+    - name: communication
       protocol: TCP
       port: 3000
       targetPort: 3000

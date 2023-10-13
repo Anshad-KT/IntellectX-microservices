@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addChannel } from '@/app/GlobalRedux/Features/channel/channelSlice';
 
 
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useParams } from 'next/navigation';
 import PopupButton from '@/components/threads/popup/PopupButton';
 import { addEmployee } from '@/app/GlobalRedux/Features/employee/employeeSlice';

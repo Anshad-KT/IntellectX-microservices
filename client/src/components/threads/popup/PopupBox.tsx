@@ -17,17 +17,19 @@ const PopupBox = ({ onClose }: any) => {
   const h = useSelector((state: RootState) => state.currentChannel)
   const [threadName, setThreadName] = useState('');
   const [selectedOptions, setSelectedOptions] = useState([]);
-
+  const {id} = useParams()
+  console.log(value);
+  
   const handleChange = (selectedItems: any) => {
     setSelectedOptions(selectedItems);
   };
   const [selectedChannelId, setSelectedChannelId] = useState<string[]>(['']);
   const matchingChannel = value.find((channel: any) => {
 
-   console.log(channel.channelName, "----------",h.value );
+   console.log(channel.id, "----------",id );
    
 
-    return channel?.channelName === h.value;
+    return channel?.id === id;
   });
   const handleThreadNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setThreadName(e.target.value);

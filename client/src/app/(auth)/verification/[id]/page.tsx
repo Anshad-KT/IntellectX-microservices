@@ -4,10 +4,13 @@ import Image from 'next/image'
 import Navbar from '@/components/SecondaryNavbar/Navbar'
 import auth from '@/services/axios'
 import { useParams, useRouter } from 'next/navigation'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/app/GlobalRedux/store'
 
 const Page = () => {
     const router = useRouter();
     const {id} = useParams()
+    const tempUser = useSelector((state:RootState) => state.tempUser)
     const [otp,setOtp] = useState<string>('')
     const [error,SetError] = useState<string>('')
     const [resend,setResent] = useState<boolean>(false)
@@ -34,9 +37,12 @@ const Page = () => {
            .then((res)=>{
             console.log(res);
             if(res.data){
+                localStorage.setItem(`user`, JSON.stringify({ token:tempUser.jwt, user:tempUser.addedUser}))
                 router.push('/server')
+                
             }else{
                 SetError("invalid otp")
+                
             }
            })
            .catch((err)=>{

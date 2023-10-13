@@ -80,7 +80,8 @@ const Page = () => {
 
     useEffect(() => {
         socket.on("message received", (newMessageRecieved) => {
-console.log("message recieved");
+            
+console.log("message recieved",newMessageRecieved);
 
             setDisplayChat((prevChat: any) => ({
                 ...prevChat,
@@ -142,11 +143,11 @@ console.log("message recieved");
 
     const uploadVideoToS3 = async (file: File) => {
         const s3 = new AWS.S3({
-            accessKeyId: "AKIAQWJPN76GYOSDY3EB",
-            secretAccessKey: "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",
+            accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+            secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
         });
         const params = {
-            Bucket: "intellectx",
+            Bucket: process.env.BUCKET_NAME,
             Key: `videos/${file.name}`,
             Body: file,
             ContentType: file.type,

@@ -18,6 +18,7 @@ const Page = () => {
     const [budget,setBudget] = useState<number>()
     const [error,setError] = useState<string>()
     const id = useSelector((state:RootState)=>state.id)
+console.log(id,"idddd");
 
     const signUpHandler = (event: React.FormEvent) => {
         event.preventDefault(); 
@@ -31,6 +32,13 @@ const Page = () => {
             setError("something went wrong")
            }else{
             dispatch(addCompany(response.data.id));
+            const userContents = JSON.parse(localStorage.getItem("user") || "{}");
+
+
+            localStorage.removeItem("user");
+   
+   
+            localStorage.setItem("superUser", JSON.stringify(userContents)); 
             router?.push('/channel');
            }
           })

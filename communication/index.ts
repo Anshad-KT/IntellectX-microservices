@@ -23,7 +23,7 @@ const start = async () => {
   try {  
     await natsWrapper.connect(
       "ticketing",
-       "communiscas5",  
+       "communidcsss",  
       "http://nats-srv:4222" 
     )      
          
@@ -65,13 +65,20 @@ const start = async () => {
   });
 
   socket.on('join chat', (room: string) => {
-    socket.join(room);
-    console.log(`User Joined room: ${room}`);
+    // Check if the socket is already in the specified room
+    if (!socket.rooms.has(room)) {
+      // If not, join the room
+      socket.join(room);
+      console.log(`User Joined room: ${room}`);
+    } else {
+      console.log(`User is already in room: ${room}`);
+    }
   });
+  
 
   socket.on('new message', (newMessageReceived: any) => {
     const chatRoomId = newMessageReceived.id; 
-    console.log('new message',chatRoomId);
+    console.log('new message',newMessageReceived);
     
     if (!chatRoomId) {
       return console.log('Chat room ID not defined');

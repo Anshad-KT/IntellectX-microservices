@@ -9,6 +9,7 @@ import { addId } from '@/app/GlobalRedux/Features/id/idSlice';
 import { GoogleCredentialResponse, GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import jwt_decode from "jwt-decode";
 import { AxiosError } from 'axios';
+import { addTempUser } from '@/app/GlobalRedux/Features/tempUser/tempUser';
 
 interface ApiError {
   message: string;
@@ -59,12 +60,16 @@ const Page = () => {
         if (response.data.msg) {
           setError('Something went wrong');
         } else {
-          dispatch(addId(response.data.id));
+          
+          dispatch(addId(response.data.addedUser.id));
          
             auth.get(`/api/tenant/user/otp/${email}`)
                 .then((res)=>{
                  console.log(res);
                  router?.push('/verification/'+email);
+                
+                 dispatch(addTempUser({ addedUser: response.data.addedUser, jwt: response.data.token }));
+                  localStorage.setItem(`user`, JSON.stringify({ token:response.data.token, user:response.data.addedUser}))
                 })
                 .catch((err)=>{
                  console.log(err);

@@ -16,7 +16,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: anshadkt/company1
+    - image: anshadkt/company
       context: company
       docker:
         dockerfile: Dockerfile
@@ -24,7 +24,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: anshadkt/communication1
+    - image: anshadkt/communication
       context: communication
       docker:
         dockerfile: Dockerfile

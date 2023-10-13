@@ -32,7 +32,7 @@ export = (dependencies: DepenteniciesData): any => {
           userDetails: addedUser,
         };
   
-        res.json(addedUser);
+        res.json({addedUser,jwt:token});
       } 
 
       

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image';
 import Navbar from '@/components/PrimaryNavbar/Navbar';
-import SideBar from '@/components/employee/SideBar/SideBar';
+import SideBar from '@/components/threads/sidebar/SideBar';
 import Link from 'next/link';
 import employeeSlice from '@/app/GlobalRedux/Features/employee/employeeSlice';
 import { useSelector } from 'react-redux';
@@ -66,7 +66,7 @@ const Page = () => {
 
                             {/* threads */}
                             <div>
-                                {channelData.value.map((employee: any, index: string) => (
+                                {/* {channelData.value.map((employee: any, index: string) => (
 
                                     <Link key={employee.id} href={`/employee/${employee.id}`}>
                                         <div className='w-full my-2 h-24 hover:bg-primaryhover hover:text-white shadow bg-sidebar rounded-md mt-2 flex items-center pl-3 cursor-pointer'>
@@ -82,9 +82,9 @@ const Page = () => {
                                             {/* <div className="ml-auto mr-3 text-sm">
                                                         <p>5 min</p>
                                                     </div> */}
-                                        </div>
-                                    </Link>
-                                ))}
+                                        {/* </div> */}
+                                    {/* </Link>
+                                ))} */} 
 
 
                             </div>

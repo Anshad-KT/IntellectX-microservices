@@ -47,7 +47,7 @@ export = (dependencies: DepenteniciesData): any => {
         version:addedUser!.version
       });
 
-      res.json(addedUser);
+      res.json({addedUser,jwt:token});
       console.log(req.session);
       
     } catch (error: any) {

@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: company1-depl
+  name: company-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: company1
+      app: company
   template:
     metadata:
       labels:
-        app: company1
+        app: company
     spec:
       containers:
-        - name: company1
-          image: anshadkt/company1
+        - name: company
+          image: anshadkt/company
           env:
             - name: MONGO_URI
               valueFrom:
@@ -31,12 +31,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: company1-srv
+  name: company-srv
 spec:
   selector:
-    app: company1
+    app: company
   ports:
-    - name: company1
+    - name: company
       protocol: TCP
       port: 3000
       targetPort: 3000

@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Navbar from '@/components/SecondaryNavbar/Navbar'
 import auth from '@/services/axios';
@@ -36,10 +36,10 @@ const Page = () => {
       const response = await auth.get(url);
       console.log(response);
       
-      dispatch(addChannel(response.data));
+      
       return response.data
   };
-    const { data  } = useSWR(`/api/communication/getchannel`, fetchData);
+    
     const { value }:any = useSelector((state: RootState) => state.channel)
     const validateForm = () => {
       if (!email || !password) {
@@ -79,12 +79,17 @@ const Page = () => {
             console.log(response,"lllllllllllllllllll");
             setError('Something went wrong');
           } else {
-          
+          fetchData(`/api/communication/getchannel`).then((data)=>{
             console.log(value);
+            dispatch(addChannel(data));
+            console.log(`/thread/${data[0].id}`);
+            dispatch(addId(response.data.addedUser.id));
+            console.log(response.data);
             
-            console.log(`/thread/${value[0].id}`);
-            dispatch(addId(response.data.id));
-            router?.push(`/thread/${value[0].id}`);
+            localStorage.setItem(`user`, JSON.stringify({ token:response.data.token, user:response.data.addedUser}))
+            router?.push(`/thread/${data[0].id}`);
+          })
+            
           }
           console.log("sreyas");
           

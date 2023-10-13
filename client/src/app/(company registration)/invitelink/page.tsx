@@ -43,7 +43,7 @@ const Page = () => {
                 console.log(responce);
                 
                 dispatch(addChannel(responce.data));
-                router?.push(`/thread/${value[0].id}`);
+                router?.push(`/thread/${responce.data[0].id}`);
                 return responce.data
             })
             .catch((err) => {
