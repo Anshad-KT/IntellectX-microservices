@@ -8,7 +8,7 @@ export const getOtp_UseCase = (dependencies: DepenteniciesData) => {
   } = dependencies;
 
   if (!userRepository)
-    throw new Error("The user repository should be dependencie");
+    throw new Error("The user repository should be dependencies i guess");
 
   const execute = (email:string) => {
     console.log(email);
