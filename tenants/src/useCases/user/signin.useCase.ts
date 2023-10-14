@@ -7,7 +7,7 @@ export const signIn_UseCase = (dependencies: DepenteniciesData) => {
   } = dependencies;
 
   if (!userRepository)
-    throw new Error("The user repository should be dependencie");
+    throw new Error("The user repository should be dependenciew i guess");
 
   const execute = ({ password, email }: UserData) => {
     const userCredential = { password, email };
