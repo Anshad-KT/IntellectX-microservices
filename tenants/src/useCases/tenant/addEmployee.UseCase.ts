@@ -7,7 +7,7 @@ export const addEmployee_UseCase = (dependencies: DepenteniciesData) => {
   } = dependencies;
 
   if (!companyRepository)
-    throw new Error("The company repository should be dependencie");
+    throw new Error("The company repository should be dependencies  present");
 
     const execute = (comapanyId:string,id:any) => {
  

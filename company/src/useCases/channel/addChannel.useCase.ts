@@ -9,7 +9,7 @@ export const addChannel_UseCase = (dependencies: DepenteniciesData) => {
   } = dependencies;
 
   if (!channelRepository)
-    throw new Error("The company repository should be dependencies");
+    throw new Error("The company repository should be dependencies right");
 
     const execute = async(channel:Channel,companyName:string) => {
     const model = await tenantRepository.getCompanySchema(companyName,"Channel")
