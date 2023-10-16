@@ -76,7 +76,7 @@ const Page = () => {
           console.log(response);
           
           if (response.data.msg) {
-            console.log(response,"lllllllllllllllllll");
+            console.log(response,"nooppp");
             setError('Something went wrong');
           } else {
             localStorage.setItem("companyName", response.data as string)
