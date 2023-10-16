@@ -290,7 +290,8 @@ const Page = () => {
 
   const toggleMic = () => {
     const audioTrack = localStream.current?.getAudioTracks()[0];
-
+    console.log(audioTrack?.enabled);
+    
     if (audioTrack?.enabled) {
       audioTrack.enabled = false;
       setSlash({ ...slash, audio: true });
