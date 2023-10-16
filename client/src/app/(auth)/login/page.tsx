@@ -61,7 +61,7 @@ const Page = () => {
     };
   
     const signUpHandler = (event: { preventDefault: () => void; }) => {
-      console.log("////////////////////////////////////////");
+      console.log("////////////////////////");
       
       event.preventDefault();
       if (!validateForm()) {
