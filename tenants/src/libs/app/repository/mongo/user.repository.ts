@@ -36,5 +36,9 @@ console.log(userList);
   },
   verify: async (link: string) => {
     const existingLink = await User.findOne({})
+  },
+  updateCurrentCompany: async (email: string,currentCompany:string) => {
+    const existringUser = await User.updateOne({email},{currentCompany})
+    return existringUser
   }
 };

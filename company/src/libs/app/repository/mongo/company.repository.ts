@@ -132,13 +132,16 @@ export = {
           if (!mongooseObject) {
             return false;
           }
-    
+  //fix the mistakes that you already created  
           const hashedLinkExists = mongooseObject.inviteLinks.some(async (linkObj: any) => {
             const hashedLinkValue = linkObj.link.split('/').pop(); 
             return await Password.compare(hashedLinkValue, companyName);
+            
           });
-    
-          return hashedLinkExists;
+          if(!hashedLinkExists){
+             return false
+          }
+          return companyName;
         }
     
         return false;

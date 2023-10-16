@@ -16,7 +16,7 @@ export = (dependencies: DepenteniciesData): any => {
       const { 
         threadId,id
       } = req.body;
-      const  companyName  = req.subdomains[0]
+      const  companyName  =   req.headers.companyname as string
 
  
       if (!threadId) throw new BadRequestError("Please provide thread Id");

@@ -12,7 +12,7 @@ export = (dependencies: DepenteniciesData): any => {
     try { 
       
       const employeeDetails = req.body;
-      const  companyName  = req.subdomains[0]
+      const  companyName  =   req.headers.companyname as string
  
       if (!employeeDetails) throw new BadRequestError("Please provide employee details");
       if (!companyName) throw new BadRequestError("Please provide a password");

@@ -12,7 +12,7 @@ export = (dependencies: DepenteniciesData): any => {
   const getChat = async (req: Request, res: Response, next: NextFunction) => {
     try {
 
-      const  companyName  = req.subdomains[0] 
+      const  companyName  =   req.headers.companyname as string 
       if (!companyName) throw new BadRequestError("Please provide companyName");
  
       

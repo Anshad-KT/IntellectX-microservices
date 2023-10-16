@@ -1,4 +1,5 @@
 
+import mongoose from "mongoose";
 import { Tenant, TenantData } from "./Tenant";
 import { User, UserData } from "./User";
 
@@ -38,5 +39,6 @@ export interface repositoryData {
     signUp: (user: any) => Promise<any>
     getUser: (email: string) => Promise<any[]>
     signIn: (user: any) => Promise<any | boolean>
+    updateCurrentCompany: (email: string,currentCompany:string) => Promise<mongoose.UpdateWriteOpResult>
   }
 }

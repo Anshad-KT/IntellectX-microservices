@@ -37,7 +37,7 @@ console.log(id,"idddd");
 
             localStorage.removeItem("user");
    
-   
+            localStorage.setItem("companyname", username as string)
             localStorage.setItem("superUser", JSON.stringify(userContents)); 
             router?.push('/channel');
            }

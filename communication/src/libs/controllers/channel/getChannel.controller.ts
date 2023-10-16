@@ -13,8 +13,9 @@ export = (dependencies: DepenteniciesData): any => {
   const addChannel = async (req: Request, res: Response, next: NextFunction) => {
     try {
       
+    console.log(req.headers);
     
-      const  companyName  = req.subdomains[0]
+      const  companyName  =   req.headers.companyname as string
     
       console.log("aswioiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiinnn");
       

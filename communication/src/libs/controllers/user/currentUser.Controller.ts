@@ -13,7 +13,7 @@ export = (dependencies: DepenteniciesData): any => {
       const { 
         id
       } = req.params;
-      const  companyName  = req.subdomains[0]
+      const  companyName  =   req.headers.companyname as string
 console.log(id);
 
  

@@ -15,7 +15,7 @@ export = (dependencies: DepenteniciesData): any => {
       const { 
         threadName,channelName
       } = req.body;
-      const  companyName  = req.subdomains[0]
+      const  companyName  =   req.headers.companyname as string
 
  
       if (!threadName) throw new BadRequestError("Please provide thread details");

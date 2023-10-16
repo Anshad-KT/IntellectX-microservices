@@ -15,7 +15,7 @@ export = (dependencies: DepenteniciesData): any => {
       const { 
         from,fileType,content,threadName
           } = req.body;
-      const  companyName  = req.subdomains[0]
+      const  companyName  =   req.headers.companyname as string
      
  
       if (!from) throw new BadRequestError("Please provide from details");

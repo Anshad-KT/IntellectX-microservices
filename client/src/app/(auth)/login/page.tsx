@@ -79,7 +79,8 @@ const Page = () => {
             console.log(response,"lllllllllllllllllll");
             setError('Something went wrong');
           } else {
-          fetchData(`/api/communication/getchannel`).then((data)=>{
+            localStorage.setItem("companyName", response.data as string)
+           fetchData(`/api/communication/getchannel`).then((data)=>{
             console.log(value);
             dispatch(addChannel(data));
             console.log(`/thread/${data[0].id}`);

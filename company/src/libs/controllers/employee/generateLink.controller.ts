@@ -11,7 +11,7 @@ export = (dependencies: DepenteniciesData): any => {
   const signIn = async (req: Request, res: Response, next: NextFunction) => {
     try {
       
-      const companyName = req.subdomains[0]
+      const companyName =   req.headers.companyname as string
   
       const generateLink = await generateLink_UseCase(dependencies).execute(
         companyName

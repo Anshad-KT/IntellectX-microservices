@@ -11,7 +11,7 @@ export = (dependencies: DepenteniciesData): any => {
   const getEmployee = async (req: Request, res: Response, next: NextFunction) => {
     try {
  
-      const companyName = req.subdomains[0]
+      const companyName =   req.headers.companyname as string
     
       
       

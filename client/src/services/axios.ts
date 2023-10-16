@@ -20,7 +20,10 @@ const  auth : AxiosInstance= axios.create({
           config.headers["superUserauthorization"] = `Bearer ${tokens}`;
         }
       }
-  
+      const companyName =localStorage.getItem("companyname") as string
+      console.log(companyName);
+      
+      config.headers["companyname"] = companyName;
      
       return config;
     },

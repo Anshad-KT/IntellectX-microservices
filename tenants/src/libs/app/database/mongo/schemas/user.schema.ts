@@ -35,6 +35,9 @@ const userSchema = new mongoose.Schema(
       type: String, 
       required: true,
     },
+    currentCompany: {
+      type: String,
+    }
   },
   {
     toJSON: {

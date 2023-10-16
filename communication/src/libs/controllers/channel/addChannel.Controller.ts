@@ -19,7 +19,9 @@ export = (dependencies: DepenteniciesData): any => {
         previlagedUsers: string[], // Array of strings
         threads: string[], // Array of strings
       } = req.body;
-      const  companyName  = req.subdomains[0]
+      console.log(req.headers);
+      
+      const companyName =  req.headers.companyname as string
 
  
       if (!channel) throw new BadRequestError("Please provide employee details");
