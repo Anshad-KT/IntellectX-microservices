@@ -12,12 +12,13 @@ export = (dependencies: DepenteniciesData): any => {
  
   const signUp = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { username, email, password } = req.body;
+      const { username, email, password,currentCompany } = req.body;
    
       
       if (!username) throw new BadRequestError("Please provide a username");
       if (!email) throw new BadRequestError("Please provide a email");
       if (!password) throw new BadRequestError("Please provide a password");
+      if (!currentCompany) throw new BadRequestError("Please provide a comapanyName")
       
       const userPresent = await getUser_UseCase(dependencies).execute(email);
 
@@ -31,6 +32,7 @@ export = (dependencies: DepenteniciesData): any => {
         username,
         email,
         password,
+        currentCompany
       }); 
 
       const token: any = generateToken(addedUser);

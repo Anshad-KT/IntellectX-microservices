@@ -25,7 +25,7 @@ const UserProtectedRouter: React.FC<UserProtectedRouterProps> = ({ children }) =
 
   
   if (user||superUser) {
-    console.log("shit");
+    console.log("return children");
     
     return children;
   } else {
