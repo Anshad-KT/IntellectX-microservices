@@ -1,0 +1,24 @@
+name: deploy-communication
+
+on: 
+  push:
+    branches: 
+      - master
+    paths:
+      - 'communication/**'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v2
+      - run: cd communication && docker build -t anshadkt/communication .
+      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      - run: docker push anshadkt/communication
+      - uses: digitalocean/action doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - run: doctl kubernetes cluster kubeconfig save intellectx
+      - run: kubectl rollout restart deployment communication-depl
