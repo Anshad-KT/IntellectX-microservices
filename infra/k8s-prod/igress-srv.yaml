@@ -1,0 +1,53 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-service
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/websocket-services: "communication-srv"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "http://brototype.intellectx.com"  # CORS Allow Origin setting
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, PUT, POST, DELETE, OPTIONS"  # CORS Allow Methods setting
+    nginx.ingress.kubernetes.io/cors-allow-headers: "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range"  # CORS Allow Headers setting
+    nginx.ingress.kubernetes.io/cross-origin-opener-policy: "same-origin"
+spec:
+  rules:
+    - host: "*.intellectx.com"
+      http:
+        paths:
+          - path: /api/tenant/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: tenant-srv
+                port:
+                  number: 3000
+          - path: /api/company/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: company-srv
+                port:
+                  number: 3000
+          - path: /api/communication/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: communication-srv
+                port:
+                  number: 3000
+          - path: /socket.io/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: communication-srv
+                port:
+                  number: 3000
+          - path: /?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: client-srv
+                port:
+                  number: 3000
