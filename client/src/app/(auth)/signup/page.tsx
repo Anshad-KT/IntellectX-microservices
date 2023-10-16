@@ -131,10 +131,10 @@ const Page = () => {
                         <h2 className='text-4xl mt-7'>Sign up or log in</h2>
                         <div className="mt-10">
                             <button className='opacity-0 text-center my-5 border w-96 h-12 bg-white border-gray-300 rounded-md'>
-                            <GoogleOAuthProvider clientId="271001457248-4kcskf4juada36227ud0i9icjgoagbvo.apps.googleusercontent.com">
+                            {/* <GoogleOAuthProvider clientId="271001457248-4kcskf4juada36227ud0i9icjgoagbvo.apps.googleusercontent.com">
                         <GoogleLogin
                             onSuccess={handleGoogleSignUp}    />
-                    </GoogleOAuthProvider>
+                    </GoogleOAuthProvider> */}
                                 {/* <div className='flex justify-center items-center'>
                                     <Image className='mr-2' width={30}
                                         height={30}
