@@ -118,8 +118,8 @@ export = {
         if(!mongooseObject){
         return null
       }
-  
-        mongooseObject.inviteLinks.push({link:`intellectx.${companyName}.invite/${hashedValue}`});
+      
+        mongooseObject.inviteLinks.push({link:`www.intellectx.cloud.${companyName}.invite/${hashedValue}`});
         await mongooseObject.save(); // Save the updated document
         return {link:`intellectx.${companyName}.invite/${hashedValue}`};
       }
