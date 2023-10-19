@@ -40,6 +40,8 @@ const response = await auth.get(url);
       
       return response.data
       }else{
+        console.log(id);
+        
         const response = await auth.post(url,{id});
         console.log(response);
         
@@ -75,6 +77,7 @@ const response = await auth.get(url);
       
       event.preventDefault();
       if (!validateForm()) {
+
         return;
       }
       auth
