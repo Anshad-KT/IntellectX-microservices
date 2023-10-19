@@ -8,6 +8,7 @@ import { removeEmployee_UseCase } from "./removeEmployee.UseCase";
 import { getEmployeeDetails_UseCase } from "./getEmployeeDetails.UseCase";
 import { company_SignUp_UseCase } from "./signup.useCase";
 import { getEmployee_UseCase } from "./getEmployee.UseCase";
+import { getSuperUserDetails_UseCase } from "./getSuperUserDetails.UseCase";
 
 
-export {getEmployee_UseCase,company_SignUp_UseCase, getEmployeeDetails_UseCase, getCompany_UseCase, addSuperUser_UseCase, removeSuperUser_UseCase,addEmployee_UseCase,removeEmployee_UseCase };
+export {getSuperUserDetails_UseCase,getEmployee_UseCase,company_SignUp_UseCase, getEmployeeDetails_UseCase, getCompany_UseCase, addSuperUser_UseCase, removeSuperUser_UseCase,addEmployee_UseCase,removeEmployee_UseCase };

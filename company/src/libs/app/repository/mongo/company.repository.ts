@@ -82,6 +82,12 @@ export = {
     await mongooseObject.save();
     return mongooseObject
   }, 
+  getEmployeeSuperUserStatus: async (CompanyUserSchema:any,userId:mongoose.Types.ObjectId)=>{
+     const mongooseObject = await CompanyUserSchema.findOne({})
+
+     const foundUserId = mongooseObject.superUsers.find((item: mongoose.Types.ObjectId) => item === userId);
+     return foundUserId
+  },
   getEmployee:async (CompanyUserSchema:any,UserSchema:any) => {
     const employees = await CompanyUserSchema.find();
     

@@ -6,6 +6,7 @@ import { EmployeeAttrs } from "../app/database/mongo/schemas/company/employee.sc
 import { User, UserData } from "./User";
 import { Channel } from "./Channel";
 
+
 export interface DepenteniciesData {
   useCases: useCaseData;
   repository: repositoryData;
@@ -43,6 +44,10 @@ export interface useCaseData {
   addTenant_UseCase:(dependencies:DepenteniciesData)=>{ 
     execute: (companyName:string) => Promise<Tenant | null>;
   };
+  getSuperUserDetails_UseCase: (dependencies:DepenteniciesData)=>{
+    execute: (id: mongoose.Types.ObjectId, companyName: string) => Promise<mongoose.Types.ObjectId | undefined>
+  }  
+
   company_SignUp_UseCase:(dependencies:DepenteniciesData)=>{ 
     execute: ({id,companyName,companyEmail,budget,superUsers,employees}:{id:string,companyName:string,companyEmail:string,budget:number,superUsers:string,employees:string},companyTitle:string) => Promise<Tenant | null>;
   };
@@ -59,9 +64,18 @@ export interface useCaseData {
     execute: ({ id, link }: { id: string; link: string; }, companyName: string) => Promise<any>;
   };  
 }
-
+interface CompanyUserDocument extends Document {
+  // Define the properties of CompanyUserSchema
+  superUsers: mongoose.Types.ObjectId[];
+  // Add other properties here if necessary
+}
 export interface repositoryData {
   companyRepository: {
+    getEmployeeSuperUserStatus : (
+      CompanyUserModel: Model<any>,
+      userId: mongoose.Types.ObjectId
+    ) => Promise<mongoose.Types.ObjectId | undefined>
+    
     getEmployee:(companySchema:any,UserSchema:any) => Promise<EmployeeAttrs[] | null>
     signUp:(
       company: Company,

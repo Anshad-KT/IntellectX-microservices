@@ -82,5 +82,5 @@ export = {
     // Save the updated company details
     await mongooseObject.save();
     return mongooseObject
-  }, 
+  }
 };

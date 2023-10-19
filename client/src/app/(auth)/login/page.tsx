@@ -32,13 +32,23 @@ const Page = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
-    const fetchData = async (url: string) => {
-      const response = await auth.get(url);
+    const fetchData = async (url: string,method:string) => {
+      if(method == "get"){
+const response = await auth.get(url);
       console.log(response);
       
       
       return response.data
+      }else{
+        const response = await auth.post(url);
+        console.log(response);
+        
+        
+        return response.data
+      }
+      
   };
+  
     
     const { value }:any = useSelector((state: RootState) => state.channel)
     const validateForm = () => {
@@ -80,14 +90,19 @@ const Page = () => {
             setError('Something went wrong');
           } else {
             localStorage.setItem("companyName", response.data as string)
-           fetchData(`/api/communication/getchannel`).then((data)=>{
+           fetchData(`/api/communication/getchannel`,"get").then(async (data)=>{
             console.log(value);
             dispatch(addChannel(data));
             console.log(`/thread/${data[0].id}`);
             dispatch(addId(response.data.addedUser.id));
             console.log(response.data);
+            const superUserdetails = await fetchData('api/company/getsuperuser',"post")
+            if(!superUserdetails){
+              localStorage.setItem(`user`, JSON.stringify({ token:response.data.jwt, user:response.data.addedUser}))
+            }else{
+              localStorage.setItem(`superUser`, JSON.stringify({ token:response.data.jwt, user:response.data.addedUser}))
+            }
             
-            localStorage.setItem(`user`, JSON.stringify({ token:response.data.jwt, user:response.data.addedUser}))
             router?.push(`/thread/${data[0].id}`);
           })
             
