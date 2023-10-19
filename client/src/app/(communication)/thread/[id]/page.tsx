@@ -136,7 +136,18 @@ const Page = () => {
 
     const { data, error } = useSWR(`/api/communication/getchannel`, fetchData);
     const { data: employeeData, error: employeeError } = useSWR('/api/company/getemployee', fetchEmployee);
+    const [superUser, setSuperUser] = useState<{ superUser?: { email?: string } }>({});
 
+  useEffect(() => {
+    // Perform localStorage action
+    
+    const storedSuperUser = JSON.parse(localStorage.getItem("superUser") || "{}");
+
+    
+    
+    setSuperUser(storedSuperUser?.user?.email);
+
+  }, []);
 
 
 
@@ -156,14 +167,14 @@ const Page = () => {
                 {/* content div */}
                 <div className='lg:w-full lg:h-screenc lg:pt-5  bg-secondary lg:col-span-10 col-span-12'>
                     <div className="h-1/6 bg-secondary flex justify-center items-end">
-                        <div className='w-2/3 bg-secondary h-2/4 lg:flex relative'>
+                        <div className='w-2/3 h-2/4 lg:flex relative'>
                             <div className='lg:flex-col justify-start items-center ml-2 bg-secondary lg:w-2/4 w-3/4 block'>
                                 {foundItem?.threads.length === 0 ? (<div>
                                     <h1 className='text-4xl'>No threads!</h1>
                                     <p className='my-5'>please create one</p>
                                 </div>
                                 ) : (<div>
-                                    <h1 className='text-4xl'>{foundItem?.channelName}</h1>
+                                    <h1 className='text-4xl'>{foundItem?.channelName}{superUser}</h1>
                                     <p className='my-5'>Public - closed threads are hidden</p>
                                 </div>
                                 )

@@ -87,7 +87,7 @@ const Page = () => {
             dispatch(addId(response.data.addedUser.id));
             console.log(response.data);
             
-            localStorage.setItem(`user`, JSON.stringify({ token:response.data.token, user:response.data.addedUser}))
+            localStorage.setItem(`user`, JSON.stringify({ token:response.data.jwt, user:response.data.addedUser}))
             router?.push(`/thread/${data[0].id}`);
           })
             
