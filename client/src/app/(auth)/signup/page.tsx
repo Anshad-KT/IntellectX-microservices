@@ -31,6 +31,8 @@ const Page = () => {
   const [error, setError] = useState('');
 
   const validateForm = () => {
+    console.log(email,username,password);
+    
     if (!email || !username || !password) {
       setError('All fields are required');
       return false;
