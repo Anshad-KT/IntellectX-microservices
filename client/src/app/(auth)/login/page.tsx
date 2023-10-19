@@ -32,7 +32,7 @@ const Page = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
-    const fetchData = async (url: string,method:string) => {
+    const fetchData = async (url: string,method:string,id?:string) => {
       if(method == "get"){
 const response = await auth.get(url);
       console.log(response);
@@ -40,7 +40,7 @@ const response = await auth.get(url);
       
       return response.data
       }else{
-        const response = await auth.post(url);
+        const response = await auth.post(url,{id});
         console.log(response);
         
         
@@ -96,7 +96,7 @@ const response = await auth.get(url);
             console.log(`/thread/${data[0].id}`);
             dispatch(addId(response.data.addedUser.id));
             console.log(response.data);
-            const superUserdetails = await fetchData('api/company/getsuperuser',"post")
+            const superUserdetails = await fetchData('api/company/getsuperuser',"post",response.data.addedUser.id)
             if(!superUserdetails){
               localStorage.setItem(`user`, JSON.stringify({ token:response.data.jwt, user:response.data.addedUser}))
             }else{
