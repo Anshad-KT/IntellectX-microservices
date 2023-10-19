@@ -43,7 +43,7 @@ const Page = () => {
     const { value }:any = useSelector((state: RootState) => state.channel)
     const validateForm = () => {
       if (!email || !password) {
-        setError('All fields are required');
+        setError('All fields are ruired');
         return false;
       }
       if (!isValidEmail(email)) {
