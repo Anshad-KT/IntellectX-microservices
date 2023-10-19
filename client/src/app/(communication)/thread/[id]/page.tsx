@@ -143,10 +143,10 @@ const Page = () => {
     
     const storedSuperUser = JSON.parse(localStorage.getItem("superUser") || "{}");
 
+    console.log(storedSuperUser);
     
     
-    setSuperUser(storedSuperUser?.user?.email);
-
+  
   }, []);
 
 
@@ -174,7 +174,7 @@ const Page = () => {
                                     <p className='my-5'>please create one</p>
                                 </div>
                                 ) : (<div>
-                                    <h1 className='text-4xl'>{foundItem?.channelName}{superUser}</h1>
+                                    <h1 className='text-4xl'>{foundItem?.channelName}</h1>
                                     <p className='my-5'>Public - closed threads are hidden</p>
                                 </div>
                                 )
