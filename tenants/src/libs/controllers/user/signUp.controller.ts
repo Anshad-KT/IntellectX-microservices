@@ -14,15 +14,15 @@ export = (dependencies: DepenteniciesData): any => {
     try {
       const { username, email, password,currentCompany } = req.body;
    
-      
+       console.log(req.body);
       if (!username) throw new BadRequestError("Please provide a username");
       if (!email) throw new BadRequestError("Please provide a email");
       if (!password) throw new BadRequestError("Please provide a password");
-      if (!currentCompany) throw new BadRequestError("Please provide a comapanyName")
-      
+      // if (!currentCompany) throw new BadRequestError("Please provide a comapanyName")
+     
       const userPresent = await getUser_UseCase(dependencies).execute(email);
 
-     console.log(userPresent);
+    
      
       if (userPresent) {
         throw new BadRequestError("Email already in use !");
@@ -32,7 +32,7 @@ export = (dependencies: DepenteniciesData): any => {
         username,
         email,
         password,
-        currentCompany
+        
       }); 
 
       const token: any = generateToken(addedUser);
