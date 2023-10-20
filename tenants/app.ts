@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import { json } from "body-parser";
 import cookieSession from "cookie-session";
 import { routes } from "./src/routes/index";
-import ErrorHandler from "./src/libs/utils/ErrorHnadler";
+// import ErrorHandler from "./src/libs/utils/ErrorHnadler";
 import {    
   NotFoundError,  
 } from "@intellectx/build";
@@ -21,7 +21,7 @@ app.all("*", async (req, res) => {
   throw new NotFoundError();
 })  
    
-app.use(ErrorHandler);
+// app.use(ErrorHandler);
  
 export { app };
     
