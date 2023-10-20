@@ -137,7 +137,9 @@ const Page = () => {
     const { data, error } = useSWR(`/api/communication/getchannel`, fetchData);
     const { data: employeeData, error: employeeError } = useSWR('/api/company/getemployee', fetchEmployee);
     const [superUser, setSuperUser] = useState<{ superUser?: { email?: string } }>({});
+    const storedSuperUser = JSON.parse(localStorage.getItem("superUser") || "{}");
 
+    console.log(storedSuperUser);
   useEffect(() => {
     // Perform localStorage action
     
