@@ -5,8 +5,8 @@ export = (err: any, req: Request, res: Response, next: NextFunction) => {
   
   const error = new ResponseError({
     status: err.status || 500,
-    msg: err.message || err.msg || "No message",
-    reason: err.reason || err.stack || "Somebody failed",
+    msg: (err.message || err.msg || "No message") as string,
+    reason: (err.reason || err.stack || "Somebody failed") as string,
     url: req.originalUrl,
     ip: req.ip,
     validationErrors: [],
