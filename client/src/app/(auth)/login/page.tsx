@@ -102,8 +102,11 @@ const response = await auth.get(url);
             const superUserdetails = await fetchData('api/company/getsuperuser',"post",response.data.addedUser.id)
             if(!superUserdetails){
               localStorage.setItem(`user`, JSON.stringify({ token:response.data.jwt, user:response.data.addedUser}))
+              console.log("this part is not done");
             }else{
               localStorage.setItem(`superUser`, JSON.stringify({ token:response.data.jwt, user:response.data.addedUser}))
+              console.log("this part is done");
+              
             }
             
             router?.push(`/thread/${data[0].id}`);
