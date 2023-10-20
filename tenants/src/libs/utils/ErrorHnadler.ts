@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { CommonResponse, ResponseError } from "./Response";
 export = (err: any, req: Request, res: Response, next: NextFunction) => {
+  console.log("why");
+  
   const error = new ResponseError({
     status: err.status || 500,
     msg: err.message || err.msg || "No message",
