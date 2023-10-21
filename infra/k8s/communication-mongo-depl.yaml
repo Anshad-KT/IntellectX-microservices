@@ -4,7 +4,7 @@ metadata:
   name: communication-mongo-depl
 spec:
   replicas: 1
-  selector: 
+  selector:  
     matchLabels:
       app: communication-mongo
   template:
