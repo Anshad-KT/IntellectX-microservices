@@ -21,7 +21,7 @@ spec:
                 secretKeyRef:
                   name: my-env-secret3
                   key: MONGO_URI
-            - name: JWT_KEY
+            - name: JWT_KEY 
               valueFrom:
                 secretKeyRef:
                   name: my-env-secret3
