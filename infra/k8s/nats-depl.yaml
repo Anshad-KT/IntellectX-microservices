@@ -10,7 +10,7 @@ spec:
   template:
     metadata:
       labels:
-        app: nats
+        app: nats 
     spec:
       containers:
         - name: nats 

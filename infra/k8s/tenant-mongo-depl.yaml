@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       app: tenant-mongo
-  template:
+  template: 
     metadata:
       labels:
         app: tenant-mongo

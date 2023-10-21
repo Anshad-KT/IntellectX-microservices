@@ -8,7 +8,7 @@ spec:
     matchLabels:
       app: communication-mongo
   template:
-    metadata:
+    metadata: 
       labels:
         app: communication-mongo
     spec:

@@ -10,7 +10,7 @@ spec:
   template:
     metadata:
       labels:
-        app: tenant
+        app: tenant 
     spec:
       containers:
         - name: tenant
