@@ -141,7 +141,7 @@ console.log("message recieved",newMessageRecieved);
       setIsPopupActive(!isPopupActive); // Toggle the state from true to false or vice versa
     };
     const handleResponseData = async (datas: any) => {
-        const meetLink = `https://www.intellectx.cloud/conference/${datas}`
+        const meetLink = `https://www.intellectx.cloud/conference/${datas}/newlink`
         const msgData = { from: value, fileType: "videocall", content: meetLink, threadName: id }
         console.log(msgData)
         const { data } = await auth.post("/api/communication/chat/addchat", msgData)
