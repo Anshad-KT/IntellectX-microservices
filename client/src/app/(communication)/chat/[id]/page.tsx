@@ -206,7 +206,7 @@ console.log("message recieved",newMessageRecieved);
                
                 
                 {/* content div */}
-                {responseData}
+                
                 <div className='lg:w-full lg:h-full   bg-secondary lg:col-span-10 col-span-12'>
                     <div className="h-1/6 bg-secondary flex justify-center items-end">
                         <div className='w-2/3 bg-secondary h-2/4 lg:flex relative'>
