@@ -169,7 +169,7 @@ const Page = () => {
             <div className='grid grid-cols-12'>
                 {/* sidebar div */}
                 
-                     {superUser ? <SideBar isOpen={isPopupActive} isSuperUser={true} /> : <SideBar isOpen={false} isSuperUser={false} />}
+                     {superUser?.jwt ? <SideBar isOpen={isPopupActive} isSuperUser={true} /> : <SideBar isOpen={false} isSuperUser={false} />}
            
              
                 {/* content div */}
