@@ -9,7 +9,7 @@ spec:
       app: company-mongo  
   template:
     metadata:    
-      labels:
+      labels: 
         app: company-mongo
     spec:
       containers: 
