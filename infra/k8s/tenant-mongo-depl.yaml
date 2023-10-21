@@ -8,7 +8,7 @@ spec:
     matchLabels:  
       app: tenant-mongo
   template: 
-    metadata: 
+    metadata:  
       labels: 
         app: tenant-mongo
     spec:
