@@ -12,7 +12,7 @@ spec:
       labels:
         app: company-mongo
     spec:
-      containers:
+      containers: 
         - name: company-mongo
           image: mongo
 ---
