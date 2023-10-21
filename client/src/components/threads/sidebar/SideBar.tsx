@@ -6,24 +6,25 @@ import PopupButton from '@/components/Popup/PopupButton'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import PopupButtonAdd from './sidebarpopup/PopupButton'
 
-const SideBar = () => {
+const SideBar = ({ isSuperUser,isOpen }: { isSuperUser: boolean,isOpen:boolean }) => {
 
 
     const [channels, setChannels] = useState<any>([]);
     const channelData = useSelector((state: RootState) => state.channel)
     const dispatch = useDispatch()
-   
+    const companyName:string = useSelector((state: RootState) => state.company.name)
     return (
-        <div className='lg:w-full lg:h-screen lg:bg-sidebar lg:col-span-2 lg:text-sm hidden lg:block'>
-
-            <div className='flex items-center justify-start w-full h-12'>
+       
+<div className='lg:w-full lg:h-screen lg:bg-sidebar lg:col-span-2 lg:text-sm hidden lg:block '>
+<div className='flex items-center justify-start w-full h-12'>
                 <svg className='w-9 h-9 ml-4' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
 
-                <div className='justify-start ml-2'><p className='font-semibold'>wisebox</p></div>
-                <PopupButton />
+                <div className='justify-start ml-2'><p className='font-semibold'>{companyName}</p></div>
+                {isSuperUser ? <PopupButton /> : ''}
 
 
                 <div className='ml-auto mr-2'>
@@ -35,7 +36,7 @@ const SideBar = () => {
 
             </div>
             <div className='flex-col items-center justify-evenly p-5 text-sm'>
-                <div className='flex mb-2 border'>
+                {/* <div className='flex mb-2 border'>
                     <svg className='w-4 h-4 mt-1 mr-1' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
                     </svg>
@@ -58,7 +59,7 @@ const SideBar = () => {
 
 
                     <p className='mt-1'>Messages</p>
-                </div>
+                </div> */}
                 <Link href={'/saved'}>
                      <div className='flex mb-2 border'>
                     <svg className='w-4 h-4 mt-1 mr-1' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
@@ -90,9 +91,10 @@ const SideBar = () => {
 
             </div>
             <PopupButton1 />
-              
-            <Link href={'/employee'}><div className='ml-5'>+<span className='ml-1'>Inivite your team </span></div></Link>
-        </div>
+            {isSuperUser ?<PopupButtonAdd />:""}
+            
+</div>
+
     )
 }
 

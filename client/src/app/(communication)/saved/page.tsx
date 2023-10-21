@@ -33,8 +33,22 @@ const Page = () => {
 
         fetchData()
     }, [])
+    const [superUser, setSuperUser] = useState<any>({});
+    useEffect(() => {
+        // Perform localStorage action
+        
+        const storedSuperUser = JSON.parse(localStorage.getItem("superUser") || "{}");
+    
+        
+        setSuperUser(storedSuperUser)
+        
+      
+      }, []);
+      const [isPopupActive, setIsPopupActive] = useState<boolean>(false);
 
-
+      const togglePopup = () => {
+        setIsPopupActive(!isPopupActive); // Toggle the state from true to false or vice versa
+      };
 
 
 
@@ -47,7 +61,10 @@ const Page = () => {
             <Navbar />
             <div className='grid grid-cols-12'>
                 {/* sidebar div */}
-                <SideBar />
+                {/* <div onClick={togglePopup}> */}
+                     {superUser ? <SideBar isOpen={isPopupActive} isSuperUser={true} /> : <SideBar isOpen={false} isSuperUser={false} />}
+                {/* </div> */}
+               
                 {/* content div */}
                 <div className='lg:w-full lg:h-screenc lg:pt-5  bg-secondary lg:col-span-10 col-span-12'>
                     <div className="h-1/6 bg-secondary flex justify-center items-end">

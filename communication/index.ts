@@ -7,8 +7,7 @@ import { UserCreatedListener } from "./src/events/listeners/user-created-listene
 import {TenantCreatedListener } from "./src/events/listeners/tenant-created-listener";
 import { Server as SocketIOServer, Socket } from 'socket.io';
 import { v4 as uuidv4 } from 'uuid';
-let rooms:any[] = []
-let connectedUsers: any[] = []
+
 const start = async () => {  
   if (!process.env.JWT_KEY) {
     throw new Error("JWT_KEY must be defined");
@@ -23,7 +22,7 @@ const start = async () => {
   try {  
     await natsWrapper.connect(
       "ticketing",
-       "communicationss",  
+       "communications",  
       "http://nats-srv:4222" 
     )      
          

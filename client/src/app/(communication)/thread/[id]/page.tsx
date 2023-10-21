@@ -80,6 +80,11 @@ const Page = () => {
           autoClose: 3000,
     });
     }
+    const [isPopupActive, setIsPopupActive] = useState<boolean>(false);
+
+    const togglePopup = () => {
+      setIsPopupActive(!isPopupActive); // Toggle the state from true to false or vice versa
+    };
     const { value } = useSelector((state: RootState) => state.channel)
     const foundItem: any = value?.find((item: any) => item.id === id);
    
@@ -136,17 +141,15 @@ const Page = () => {
 
     const { data, error } = useSWR(`/api/communication/getchannel`, fetchData);
     const { data: employeeData, error: employeeError } = useSWR('/api/company/getemployee', fetchEmployee);
-    const [superUser, setSuperUser] = useState<{ superUser?: { email?: string } }>({});
-    const storedSuperUser = JSON.parse(localStorage.getItem("superUser") || "{}");
-
-    console.log(storedSuperUser);
+    const [superUser, setSuperUser] = useState<any>({});
+   
   useEffect(() => {
     // Perform localStorage action
     
     const storedSuperUser = JSON.parse(localStorage.getItem("superUser") || "{}");
 
-    console.log(storedSuperUser);
     
+    setSuperUser(storedSuperUser)
     
   
   }, []);
@@ -160,12 +163,15 @@ const Page = () => {
 
 
     return (
-        <main className='font-default'>
+        <main className={`font-default ${isPopupActive ? 'blurred' : 'normal'}`}>
             <Navbar />
             <ToastContainer />
             <div className='grid grid-cols-12'>
                 {/* sidebar div */}
-                <SideBar />
+                
+                     {superUser ? <SideBar isOpen={isPopupActive} isSuperUser={true} /> : <SideBar isOpen={false} isSuperUser={false} />}
+           
+             
                 {/* content div */}
                 <div className='lg:w-full lg:h-screenc lg:pt-5  bg-secondary lg:col-span-10 col-span-12'>
                     <div className="h-1/6 bg-secondary flex justify-center items-end">
@@ -186,7 +192,7 @@ const Page = () => {
 
                             <div className='block pl-2 lg:flex h-full items-center justify-end mr-16 mb-auto bg-secondary  w-2/4 relative cursor-pointer'>
 
-                                <PopupButton />
+                               {superUser?.user ? <PopupButton /> : ""}
                                 <div className='bg-slate-400 ml-2 w-14 border-primary h-10 flex items-center justify-center rounded-md text-sm text-secondary hover:text-orange-500'>save</div>
 
 

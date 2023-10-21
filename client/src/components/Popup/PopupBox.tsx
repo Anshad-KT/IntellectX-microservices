@@ -3,7 +3,7 @@ import React from 'react';
 
 const PopupBox = ({ onClose }: any) => {
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50">
+    <div className="absolute  z-50 inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50">
       <div className="bg-white rounded-lg p-8">
         <div className='flex justify-start items-center'>
           <svg className='w-9 h-9 ml-4' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">

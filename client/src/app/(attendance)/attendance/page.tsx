@@ -10,7 +10,7 @@ const page = () => {
             <Navbar />
             <div className='grid grid-cols-12'>
                 {/* sidebar div */}
-                <SideBar />
+                <SideBar isOpen={true} isSuperUser={true} /> 
                 {/* content div */}
                 <div className=' w-full h-full lg:col-span-10 '>
                     <div className='flex-col mt-5 bg-red-300 w-full p-3 h-1/3'>

@@ -68,9 +68,9 @@ const PopupBox = ({ onClose }: any) => {
 
   return (
     <CSSTransition in={true} timeout={300} classNames="popup-fade" unmountOnExit>
-      <div className="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50">
-        <div className="bg-white rounded-lg p-8">
-          <div className="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50">
+      {/* <div className="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50">
+        <div className="bg-white rounded-lg p-8"> */}
+          <div className="absolute z-50 inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50">
             <div className="bg-white rounded-lg p-8">
               <div className='flex justify-start items-center'>
                 <div>
@@ -133,8 +133,8 @@ const PopupBox = ({ onClose }: any) => {
               </form>
             </div>
           </div>
-        </div>
-      </div>
+        {/* </div>
+      </div> */}
     </CSSTransition>
 
   );

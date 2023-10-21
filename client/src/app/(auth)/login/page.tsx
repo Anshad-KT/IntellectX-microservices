@@ -12,6 +12,7 @@ import jwt_decode from "jwt-decode";
 import { RootState } from '@/app/GlobalRedux/store';
 import useSWR, { mutate } from 'swr';
 import { addChannel } from '@/app/GlobalRedux/Features/channel/channelSlice';
+import { addCompanyName } from '@/app/GlobalRedux/Features/company/companySlice';
 
   
 interface ApiError {
@@ -93,6 +94,7 @@ const response = await auth.get(url);
             setError('Something went wrong');
           } else {
             localStorage.setItem("companyName", response.data as string)
+            dispatch(addCompanyName(response.data as string))
            fetchData(`/api/communication/getchannel`,"get").then(async (data)=>{
             console.log(value);
             dispatch(addChannel(data));

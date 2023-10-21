@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import PopupBox from './PopupBox';
 
-const PopupButton1 = () => {
+const PopupButtonAdd = () => {
   const [showPopup, setShowPopup] = useState(false);
 
   const togglePopup = () => {
@@ -12,10 +12,10 @@ const PopupButton1 = () => {
 
   return (
     <>
- <div onClick={togglePopup} className='ml-5 z-50'>+ new channel</div>
+ <div onClick={togglePopup} className='ml-5 z-50'>+ invite your team</div>
       {showPopup && <PopupBox onClose={togglePopup} />}
     </>
   );
 };
 
-export default PopupButton1;
+export default PopupButtonAdd;
