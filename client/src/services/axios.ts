@@ -23,7 +23,7 @@ const  auth : AxiosInstance= axios.create({
       const companyName =localStorage.getItem("companyname") as string
       console.log(companyName);
       
-      config.headers["companyname"] = companyName;
+      config.headers["companyname"] = companyName || "brototype";
      
       return config;
     },
