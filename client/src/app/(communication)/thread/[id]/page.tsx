@@ -19,7 +19,7 @@ import { currentThread } from '@/app/GlobalRedux/Features/currentThread/currentT
 import { io } from 'socket.io-client';
 
 const Page = () => {
-    const socket = io("http://brototype.intellectx.com");
+    const socket = io("http://www.intellectx.cloud");
     const [notification, setNotification] = useState<boolean>(false)
     useEffect(() => {
 

@@ -14,7 +14,7 @@ metadata:
 spec:
   rules:
     - host: "www.intellectx.cloud"
-      http:
+      http: 
         paths:
           - path: /api/tenant/?(.*)
             pathType: Prefix

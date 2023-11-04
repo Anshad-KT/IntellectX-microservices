@@ -10,7 +10,7 @@ spec:
   template:
     metadata:    
       labels: 
-        app: company-mongo
+        app: company-mongo 
     spec:
       containers: 
         - name: company-mongo

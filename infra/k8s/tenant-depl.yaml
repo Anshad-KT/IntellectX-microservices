@@ -11,7 +11,7 @@ spec:
     metadata:
       labels:
         app: tenant 
-    spec:
+    spec: 
       containers:
         - name: tenant
           image: anshadkt/tenant

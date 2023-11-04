@@ -8,7 +8,7 @@ spec:
     matchLabels:
       app: client
   template:
-    metadata:
+    metadata: 
       labels:
         app: client
     spec:

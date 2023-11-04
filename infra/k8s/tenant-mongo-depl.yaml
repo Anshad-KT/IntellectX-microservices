@@ -11,7 +11,7 @@ spec:
     metadata:  
       labels:   
         app: tenant-mongo
-    spec:
+    spec: 
       containers:
         - name: tenant-mongo
           image: mongo

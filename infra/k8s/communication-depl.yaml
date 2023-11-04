@@ -8,7 +8,7 @@ spec:
     matchLabels:
       app: communication
   template:
-    metadata:
+    metadata: 
       labels:
         app: communication
     spec:
