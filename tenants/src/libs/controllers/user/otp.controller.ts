@@ -16,24 +16,24 @@ export = (dependencies: DepenteniciesData): any => {
       if (!email) throw new BadRequestError("Please provide a email");
 
       const getUser = await getUser_UseCase(dependencies).execute(email)
-console.log(getUser,email);
+
 
       if(getUser){
         const verifiedUser = await getOtp_UseCase(dependencies).execute(
         email
-      ); 
-      console.log(verifiedUser);
+      ); console.log(verifiedUser);
+      
         req.session!.otp = verifiedUser.otp
         res.json(verifiedUser)
       
       }else{
-        console.log("shi");
+    
         
       res.status(404).json({message:"user not found"});
       }
  
     } catch (error: any) {
-    console.log(error);
+
     
       throw new Error(error);
     }

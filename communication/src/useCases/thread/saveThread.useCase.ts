@@ -13,11 +13,11 @@ export const saveThread_UseCase = (dependencies: DepenteniciesData) => {
     throw new Error("The company repository should be dependencies");
     const execute = async (threadId: mongoose.Types.ObjectId, companyName: string, userId:string) => {
 
-      console.log(threadId);
+    
       
       const model = await tenantRepository.getCompanySchema("intellectX-tenants", "User");
       
-      console.log("console.logs",threadId,model,userId);
+    
       
       return userRepository.saveThread(threadId,model,userId)
   };

@@ -23,7 +23,7 @@ export = (dependencies: DepenteniciesData): any => {
       if (!companyName) throw new BadRequestError("Please provide a companyName");
       
       const response = await saveThread_UseCase(dependencies).execute(new mongoose.Types.ObjectId(threadId),companyName,id);
-  console.log(response);
+
   
       res.json(response);  
       

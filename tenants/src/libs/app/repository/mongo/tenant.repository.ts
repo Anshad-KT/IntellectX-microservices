@@ -5,13 +5,13 @@ const { Tenant } = schemas;
 
 export = {
   signUp: async (company: any) => {
-    console.log(company);
+  
     
     const existingCompany:any = await Tenant.findOne({ tenantName: company });
     if(!existingCompany){
      const mongooseObject = Tenant.build({tenantName:company});
      await mongooseObject.save();
-     console.log(mongooseObject,"rrr");
+
      
      return mongooseObject
     }

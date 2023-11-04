@@ -112,7 +112,7 @@ export = {
     
     const employeesWithDetails = await Promise.all(employeeDetailsPromises);
     
-    console.log(employeesWithDetails);
+
     
     return employeesWithDetails;
   },
@@ -125,9 +125,9 @@ export = {
         return null
       }
       
-        mongooseObject.inviteLinks.push({link:`www.intellectx.cloud.${companyName}.invite/${hashedValue}`});
+        mongooseObject.inviteLinks.push({link:`intellectx.cloud.${companyName}.invite/${hashedValue}`});
         await mongooseObject.save(); // Save the updated document
-        return {link:`intellectx.${companyName}.invite/${hashedValue}`};
+        return {link:`intellectx.cloud.${companyName}.invite/${hashedValue}`};
       }
     },
     verifyGeneratedLink: async (companyName: string,CompanySchema: any) => {

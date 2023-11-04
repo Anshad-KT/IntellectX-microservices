@@ -29,7 +29,7 @@ const UserProtectedRouter: React.FC<UserProtectedRouterProps> = ({ children }) =
     
     return children;
   } else {
-    console.log("whyy");
+
     
     router.push("/login");
     return null;

@@ -26,7 +26,7 @@ const Page = () => {
     const [data, setData] = useState<boolean>()
     const [displayChat, setDisplayChat] = useState<any>()
     const [responseData, setResponseData] = useState<any>(null);
-    const socket = io("https://www.intellectx.cloud");
+    const socket = io("http://brototype.intellectx.com");
     const channel: any = useSelector((state: RootState) => state.channel)
     const currentChannel: any = useSelector((state: RootState) => state.currentChannel)
     const threadValue: any = useSelector((state: RootState) => state.currentThread)
@@ -60,7 +60,7 @@ const Page = () => {
                 console.log(msgData)
                 const { data } = await auth.post("/api/communication/chat/addchat", msgData)
                 setMessage('')
-                console.log(chatContainerRef,chatContainerRef.current);
+        
                 
                 if (chatContainerRef.current) {
                     chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
@@ -141,7 +141,7 @@ console.log("message recieved",newMessageRecieved);
       setIsPopupActive(!isPopupActive); // Toggle the state from true to false or vice versa
     };
     const handleResponseData = async (datas: any) => {
-        const meetLink = `https://www.intellectx.cloud/conference/${datas}/newlink`
+        const meetLink = `https://brototype.intellectx.com/conference/${datas}/newlink`
         const msgData = { from: value, fileType: "videocall", content: meetLink, threadName: id }
         console.log(msgData)
         const { data } = await auth.post("/api/communication/chat/addchat", msgData)

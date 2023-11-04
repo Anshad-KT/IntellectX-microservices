@@ -13,12 +13,13 @@ export = (dependencies: DepenteniciesData): any => {
       
       const { id,link } = req.body 
       const companyName =  req.headers.companyname as string
-      console.log(req.body);
+
       
       const generatedResult = await verifyGeneratedLink_UseCase(dependencies).execute(
       {id,link},companyName
       );
-      console.log(generatedResult,"everything i sfine, closer to finsh thigns off");
+    console.log(generatedResult);
+    
       res.json(generatedResult) 
       
     } catch (error: any) {

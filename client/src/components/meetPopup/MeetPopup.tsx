@@ -1,8 +1,6 @@
 "use client"
 import { addvideoConferenceIsRoomHost } from '@/app/GlobalRedux/Features/videoConfererence/videoConferenceSlice';
 import { RootState } from '@/app/GlobalRedux/store';
-import auth from '@/services/axios';
-import { createNewRoom } from '@/utils/wss';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
@@ -17,13 +15,13 @@ const MeetPopup: React.FC<MeetPopupProps> = ({onResponseData}) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleModal = (buttonName:string) => {
-        console.log(buttonName);
+      
         if(buttonName==="create"){
 
             const roomID = uuidv4();
             onResponseData(roomID)
             dispatch(addvideoConferenceIsRoomHost(true))
-            console.log("create");
+         
             
         }
         setIsOpen(!isOpen);

@@ -8,7 +8,7 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("superUser")
-    console.log("logoutingh");
+   
     
     router.push('/login')
   }

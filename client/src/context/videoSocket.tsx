@@ -5,7 +5,7 @@ type DataType = {
   firstName: string;
 };
 
-const SERVER = "https://www.intellectx.cloud/";
+const SERVER = "https://brototype.intellectx.com";
 
 const VideoContext = createContext<Socket | null>(null); // Specify the type as Socket | null
 

@@ -10,19 +10,23 @@ export const verifyGeneratedLink_UseCase = (dependencies: DepenteniciesData) => 
     throw new Error("The user repository should be dependencie");
 
   const execute = async ({id,link}:{id:string,link:string}) => {
+
+    
     const regxArray =  link.match(/\.cloud\.(\w+)\.invite/) as RegExpMatchArray
+    console.log(regxArray);
+    
     const companyName = regxArray[1]
     const companyModel = await tenantRepository.getCompanySchema(companyName,"Company")
     let result = await companyRepository.verifyGeneratedLink(companyName,companyModel);
-    console.log(result);
-    
-    if(result) {
+    console.log(companyName,regxArray);
+    let i=true
+    if(i) {
         const model = await tenantRepository.getCompanySchema(companyName,"Employee")
-        console.log(model,id,result,"--------------");
+       
         
-        return companyRepository.addEmployee({id},model)
+        return { companyName, result: await companyRepository.addEmployee({ id }, model) };
     }
-    console.log(id,result,"+++++++");
+  
    
     return result
   };

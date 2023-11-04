@@ -21,7 +21,7 @@ console.log(id);
       if (!companyName) throw new BadRequestError("Please provide a companyName");
       
       const response = await getUser_UseCase(dependencies).execute(id,companyName);
-  console.log(response);
+
   
       res.json(response);  
       

@@ -12,7 +12,7 @@ const ChildrenVideo = ({ userVideoSrc,onClick }: any) => {
     };
     handleVideoRef();
   }, [userVideoSrc]);
-console.log(userVideoSrc);
+
 
   return (
     <div onClick={onClick} className='w-5/6 h-1/4 bg-violet-400 my-5'>

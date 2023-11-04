@@ -11,7 +11,7 @@ export const getOtp_UseCase = (dependencies: DepenteniciesData) => {
     throw new Error("The user repository should be dependencies i guess");
 
   const execute = (email:string) => {
-    console.log(email);
+   
     
     
     return sendOtpEmail("intellectx303@gmail.com",email);

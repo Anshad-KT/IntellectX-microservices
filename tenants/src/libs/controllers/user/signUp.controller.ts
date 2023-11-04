@@ -14,7 +14,7 @@ export = (dependencies: DepenteniciesData): any => {
     try {
       const { username, email, password,currentCompany } = req.body;
    
-       console.log(req.body);
+   
       if (!username) throw new BadRequestError("Please provide a username");
       if (!email) throw new BadRequestError("Please provide a email");
       if (!password) throw new BadRequestError("Please provide a password");
@@ -50,7 +50,7 @@ export = (dependencies: DepenteniciesData): any => {
       });
 
       res.json({addedUser,jwt:token});
-      console.log(req.session);
+
       
     } catch (error: any) {
       res.json({msg:"something went wrong"})

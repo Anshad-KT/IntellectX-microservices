@@ -12,7 +12,7 @@ export = {
 
   getUser: async (email: string): Promise<any> => {
     const userList = await User.findOne({ email });
-console.log(userList);
+
 
     return userList;
   },

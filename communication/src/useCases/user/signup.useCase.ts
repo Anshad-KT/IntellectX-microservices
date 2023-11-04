@@ -11,7 +11,7 @@ export const signUp_UseCase = (dependencies: DepenteniciesData) => {
 
   const execute = async({ username, id, email }: UserData) => {
     const model = await tenantRepository.getCompanySchema("intellectX-tenants","User")
-    console.log(model,"ss");
+
     
     const user = new User({ username, id, email });
     return userRepository.signUp(user,model);

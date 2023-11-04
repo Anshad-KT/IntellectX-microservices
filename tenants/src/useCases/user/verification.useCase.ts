@@ -10,7 +10,7 @@ export const verification_UseCase = (dependencies: DepenteniciesData) => {
     throw new Error("The user repository should be dependencie");
 
   const execute = (link:string,sessionValue:any) => {
-    console.log(link,sessionValue);
+   
     
     if(sessionValue == link){
         return true

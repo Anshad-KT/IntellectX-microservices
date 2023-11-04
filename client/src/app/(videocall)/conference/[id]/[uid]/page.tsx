@@ -80,7 +80,7 @@ const Page = () => {
             await remoteStream.current![user_id].addTrack(track, remoteStream.current[user_id]);
 
           });
-          console.log("sdsdsdssssssss");
+     
 
           setStreams((prev: any) => ({
             ...prev,
@@ -290,7 +290,7 @@ const Page = () => {
 
   const toggleMic = () => {
     const audioTrack = localStream.current?.getAudioTracks()[0];
-    console.log(audioTrack?.enabled);
+  
     
     if (audioTrack?.enabled) {
       audioTrack.enabled = false;
@@ -350,7 +350,7 @@ const Page = () => {
           <br />
           {Object.entries(remoteStream.current).map(([streamKey, streamValue], index) => {
             if (streamKey !== selected) {
-              console.log(selected);
+            
 
               return (
                 <ChildrenVideo onClick={() => setSelected(streamKey)} key={index} userVideoSrc={streamValue} />

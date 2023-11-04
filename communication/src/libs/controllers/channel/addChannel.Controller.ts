@@ -19,7 +19,7 @@ export = (dependencies: DepenteniciesData): any => {
         previlagedUsers: string[], // Array of strings
         threads: string[], // Array of strings
       } = req.body;
-      console.log(req.headers);
+   
       
       const companyName =  req.headers.companyname as string
 
@@ -27,10 +27,10 @@ export = (dependencies: DepenteniciesData): any => {
       if (!channel) throw new BadRequestError("Please provide employee details");
       if (!companyName) throw new BadRequestError("Please provide a password");
       
-      console.log("shanu0",req.body);
+      
       const addChannel = await addChannel_UseCase(dependencies).execute(channel,companyName);
 ;
-console.log(addChannel,"shahiiinuuu");
+
 
       if (!addChannel) throw new BadRequestError("Invalid Credentials");
 

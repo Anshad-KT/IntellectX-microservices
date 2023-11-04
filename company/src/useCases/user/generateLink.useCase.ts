@@ -11,7 +11,7 @@ export const generateLink_UseCase = (dependencies: DepenteniciesData) => {
 
   const execute = async (companyName:string) => {
     const companyModel = await tenantRepository.getCompanySchema(companyName,"Company")
-    console.log(companyName,companyModel);
+
     
     return companyRepository.generateLink(companyName,companyModel);
   };

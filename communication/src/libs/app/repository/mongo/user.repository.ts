@@ -38,7 +38,7 @@ export = {
       })
     );
 
-    console.log('Found Threads:', foundThreads);
+   
 
     // You can return the user along with the found threads
     return {
@@ -79,18 +79,18 @@ export = {
         console.log('User not found.');
         return false;
       }
-       console.log(existingUser);
+   
        
       // Check if the threadId is already in the savedThreads array
       const isThreadAlreadySaved = existingUser.savedThreads.find((savedThread: any) => {
         const savedThreadIdAsString = savedThread.id.toString(); // Convert ObjectId to string
        
         const threadIdAsString = threadId.toString(); // Convert threadId to string
-        console.log(savedThread, '   ', threadId, '  ', typeof savedThread, '  ', typeof threadId);
+    
         return savedThreadIdAsString === threadIdAsString;
     });
     
-    console.log(threadId, isThreadAlreadySaved);
+    
     
     if (isThreadAlreadySaved) {
       // If the thread is already saved, remove it from the savedThreads array

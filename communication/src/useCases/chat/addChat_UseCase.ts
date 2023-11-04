@@ -12,7 +12,7 @@ export const addChat_UseCase = (dependencies: DepenteniciesData) => {
   if (!chatRepository)
     throw new Error("The company repository should be dependencies");
     const execute = async (from:string,fileType:string,content:string,companyName:string) => {
-console.log("sence");
+
 
       const Chatmodel = await tenantRepository.getCompanySchema(companyName, "Chat");
         const chatInstance = {

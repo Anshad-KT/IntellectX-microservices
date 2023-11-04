@@ -13,7 +13,7 @@ export const routes = (dependencies: any) => {
   routes.use("/communication/thread", thread)
   routes.use("/communication/chat",chat)
   routes.use("/communication", channel);
-  console.log("whyso serious");
+  
 
   return routes;
 };

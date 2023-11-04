@@ -19,7 +19,7 @@ import { currentThread } from '@/app/GlobalRedux/Features/currentThread/currentT
 import { io } from 'socket.io-client';
 
 const Page = () => {
-    const socket = io("https://www.intellectx.cloud/");
+    const socket = io("http://brototype.intellectx.com");
     const [notification, setNotification] = useState<boolean>(false)
     useEffect(() => {
 
@@ -147,6 +147,7 @@ const Page = () => {
         // Perform localStorage action
 
         const storedSuperUser = JSON.parse(localStorage.getItem("superUser") || "{}");
+console.log(storedSuperUser);
 
         
         setSuperUser(storedSuperUser)
@@ -154,6 +155,7 @@ const Page = () => {
 
     }, []);
 
+console.log(superUser);
 
 
 

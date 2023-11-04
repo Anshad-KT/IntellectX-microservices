@@ -33,7 +33,7 @@ export class TenantCreatedListener extends Listener<TenantCreatedEvent>{
   async onMessage(data: TenantCreatedEvent["data"], msg: Message) {
     const { id, companyName, companyEmail, budget, superUsers,employee } = data;
     try { 
-      console.log(employee);
+  
       
       await addTenant_UseCase(dependencies).execute({ tenantName: companyName })
       await company_SignUp_UseCase(dependencies).execute({ id, companyName, companyEmail, budget, superUsers }, companyName)

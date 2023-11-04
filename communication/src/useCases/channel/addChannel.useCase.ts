@@ -20,7 +20,7 @@ export const addChannel_UseCase = (dependencies: DepenteniciesData) => {
     }, companyName: string) => {
 
       const model = await tenantRepository.getCompanySchema(companyName, "Channel");
-    console.log(channel);
+   
      const g = new mongoose.Types.ObjectId(channel.creator)
   
       
@@ -32,7 +32,7 @@ export const addChannel_UseCase = (dependencies: DepenteniciesData) => {
         superUsers: channel.superUsers.map(id => new mongoose.Types.ObjectId(id)), 
         previlagedUsers: channel.previlagedUsers.map(id => new mongoose.Types.ObjectId(id)), 
         threads: channel.threads.map(id => new mongoose.Types.ObjectId(id)), 
-      }; console.log(model);
+      }; 
  
        
 

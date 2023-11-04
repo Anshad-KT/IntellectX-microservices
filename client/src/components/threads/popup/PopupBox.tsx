@@ -18,7 +18,7 @@ const PopupBox = ({ onClose }: any) => {
   const [threadName, setThreadName] = useState('');
   const [selectedOptions, setSelectedOptions] = useState([]);
   const {id} = useParams()
-  console.log(value);
+
   
   const handleChange = (selectedItems: any) => {
     setSelectedOptions(selectedItems);
@@ -26,7 +26,7 @@ const PopupBox = ({ onClose }: any) => {
   const [selectedChannelId, setSelectedChannelId] = useState<string[]>(['']);
   const matchingChannel = value.find((channel: any) => {
 
-   console.log(channel.id, "----------",id );
+
    
 
     return channel?.id === id;
@@ -48,10 +48,10 @@ const PopupBox = ({ onClose }: any) => {
     setThreadName('');
     setSelectedChannelId(['']);
     const fetchData = async (url: string) => {
-      // console.log(value);
-      console.log({ threadName, channelName: matchingChannel, previlagedUsers: selectedChannelId },"valueeeeeee");
+      
+     
 
-      console.log(value,"nnottttvalueeeeeee");
+  
 
 
       const response = await auth.post(url, { threadName, channelName: matchingChannel, previlagedUsers: selectedChannelId });
@@ -111,7 +111,7 @@ const PopupBox = ({ onClose }: any) => {
                     multiple   >
 
                     {channelData.value.map((item: any, index: number) => {
-                      console.log(item); // Log the item
+                   
 
                       return (
                         <option value={item.id} key={index}>

@@ -2,7 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 
 const ImageBubble = ({ isClient, from,  time,content }: { isClient: boolean, from: string, time: string,content:string }) => {
-  console.log(content);
+ 
   
   return (
     <div className='max-w-2xl bg-sidebar rounded-md mt-2 flex items-start pl-3 pr-5 py-1 cursor-pointer'>

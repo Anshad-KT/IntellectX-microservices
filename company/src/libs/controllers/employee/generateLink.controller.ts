@@ -16,7 +16,7 @@ export = (dependencies: DepenteniciesData): any => {
       const generateLink = await generateLink_UseCase(dependencies).execute(
         companyName
       );
-      console.log(generateLink);
+  
       res.json(generateLink) 
       
     } catch (error: any) {

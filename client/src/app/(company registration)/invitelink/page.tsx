@@ -6,7 +6,7 @@ import auth from '@/services/axios'
 import { useRouter } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/app/GlobalRedux/store'
-import { addCompany } from '@/app/GlobalRedux/Features/company/companySlice'
+import { addCompany, addCompanyName } from '@/app/GlobalRedux/Features/company/companySlice'
 import { addChannel } from '@/app/GlobalRedux/Features/channel/channelSlice'
 const Page = () => {
 
@@ -29,6 +29,7 @@ const Page = () => {
                     setError('something went wrong')
                 } else {
                     console.log(response.data);
+                    dispatch(addCompanyName(response.data.companyName as string))
                     dispatch(addCompany(response.data.id));                    
                 }
             })

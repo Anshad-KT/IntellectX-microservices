@@ -20,7 +20,7 @@ export = {
             previlagedUsers: { $in: [new mongoose.Types.ObjectId(id)] },
         }).lean(); // Use .lean() to get plain objects
         
-        console.log(channels);
+       
         
         if(channels.length==0){
             const channels = await ChannelSchema.find().sort({_id:1}).lean();
@@ -36,12 +36,12 @@ export = {
          
                 return populatedChannel;
             }));
-            console.log("pouplatedchannel",populatedChannels);
+     
             
             return populatedChannels
         }else{
              if (!channels[0]?.threads) {
-            console.log("this one");
+           
             return channels;
            
         } 

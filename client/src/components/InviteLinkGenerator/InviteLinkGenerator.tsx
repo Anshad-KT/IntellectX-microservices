@@ -12,11 +12,11 @@ const InviteLinkGenerator = () => {
    
     const fetchData = async () => {
         const response = await auth.get('/api/company/generatelink');
-        console.log(response.data,"xxxxxx"); 
+      
         return response.data
     };
     const generatedLink = await fetchData()
-    console.log(generatedLink,"generatedLink");
+
     
     setInviteLink(generatedLink.link);
     clipboardCopy(inviteLink)
