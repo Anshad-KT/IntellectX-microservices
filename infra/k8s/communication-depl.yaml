@@ -4,7 +4,7 @@ metadata:
   name: communication-depl
 spec:
   replicas: 1
-  selector:
+  selector: 
     matchLabels:
       app: communication
   template:
