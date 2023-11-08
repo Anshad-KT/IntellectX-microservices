@@ -18,7 +18,7 @@ spec:
 ---
 apiVersion: v1
 kind: Service
-metadata:
+metadata: 
   name: communication-mongo-srv
 spec:
   selector:

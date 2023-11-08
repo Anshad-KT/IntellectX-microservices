@@ -11,7 +11,7 @@ const VideoContext = createContext<Socket | null>(null); // Specify the type as 
 
 
 export const VideoContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Create the socket using useMemo
+ 
   const socket = useMemo(() => io(SERVER), []);
 
   return (
