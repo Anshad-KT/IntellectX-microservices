@@ -15,7 +15,7 @@ spec:
       containers:
         - name: communication-mongo
           image: mongo
----
+--- 
 apiVersion: v1 
 kind: Service 
 metadata: 

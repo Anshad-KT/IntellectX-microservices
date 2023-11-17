@@ -36,7 +36,8 @@ export class TenantCreatedListener extends Listener<TenantCreatedEvent>{
       
       await addTenant_UseCase(dependencies).execute({ tenantName: companyName })
       await company_SignUp_UseCase(dependencies).execute({ id, companyName, companyEmail, budget, superUsers }, companyName)
-     await addEmployee_UseCase(dependencies).execute({id:employee},companyName)
+      await addEmployee_UseCase(dependencies).execute({id:employee},companyName)
+
       msg.ack();
       console.log("acked ");
     } catch (error) {
