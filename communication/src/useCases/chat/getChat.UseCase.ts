@@ -10,13 +10,10 @@ export const getChat_UseCase = (dependencies: DepenteniciesData) => {
   } = dependencies;
 
   if (!chatRepository)
-    throw new Error("The company repository should be dependencies");
-    const execute = async (threadName:string,companyName:string) => {
-
+      throw new Error("The company repository should be dependencies");
+      const execute = async (threadName:string,companyName:string) => {
       const ThreadModel = await tenantRepository.getCompanySchema(companyName, "Thread");
-        
       const UserModel = await tenantRepository.getCompanySchema(companyName, "User");
-      
       return chatRepository.getChat(ThreadModel,threadName,UserModel)
   };
   return {

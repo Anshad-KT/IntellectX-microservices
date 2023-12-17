@@ -7,8 +7,8 @@ metadata:
     nginx.ingress.kubernetes.io/websocket-services: "communication-srv"
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/enable-cors: "true"
-    nginx.ingress.kubernetes.io/cors-allow-origin: "http://brototype.intellectx.com"  # CORS Allow Origin setting
-    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, PUT, POST, DELETE, OPTIONS"  # CORS Allow Methods setting
+    nginx.ingress.kubernetes.io/cors-allow-origin: "http://brototype.intellectx.com"  
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, PUT, POST, DELETE, OPTIONS"  
     nginx.ingress.kubernetes.io/cors-allow-headers: "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range"  # CORS Allow Headers setting
     nginx.ingress.kubernetes.io/cross-origin-opener-policy: "same-origin"
 spec:

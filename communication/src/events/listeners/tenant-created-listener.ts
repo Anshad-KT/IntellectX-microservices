@@ -37,12 +37,14 @@ export class TenantCreatedListener extends Listener<TenantCreatedEvent>{
       
       await addTenant_UseCase(dependencies).execute({ tenantName: companyName })
       await company_SignUp_UseCase(dependencies).execute({ id, companyName, companyEmail, budget, superUsers }, companyName)
-      const hello  =await addEmployee_UseCase(dependencies).execute({employeeId:employee},companyName)
+      await addEmployee_UseCase(dependencies).execute({employeeId:employee},companyName)
+      
       msg.ack();
       console.log("acked ");
     } catch (error) {
       console.log(error); 
     } 
+
   } 
   subject: any = "tenant:created"
   queueGroup: string = 'communication-tenant-service';
