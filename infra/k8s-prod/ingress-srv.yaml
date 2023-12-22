@@ -49,6 +49,6 @@ spec:
             backend:
               service:
                 name: client-srv
-                port:    
+                port:     
                   number: 3000
   

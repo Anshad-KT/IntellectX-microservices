@@ -6,7 +6,7 @@ import { natsWrapper } from "./nats-wrapper";
 import { UserCreatedListener } from "./src/events/listeners/user-created-listener";
 import {TenantCreatedListener } from "./src/events/listeners/tenant-created-listener";
 
-
+ 
 const start = async () => {
   if (!process.env.JWT_KEY) {
     throw new Error("JWT_KEY must be defined");

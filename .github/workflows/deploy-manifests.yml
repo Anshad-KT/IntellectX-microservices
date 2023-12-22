@@ -7,12 +7,12 @@ on:
     paths:    
       - 'infra/**'
 jobs:
-  build:
+  build: 
     runs-on: ubuntu-latest 
-    steps:  
+    steps:   
       - uses: actions/checkout@v2
       - uses: digitalocean/action-doctl@v2
         with:
-          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN2 }}
-      - run: doctl kubernetes cluster kubeconfig save intellectx-cluster2
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN3 }}
+      - run: doctl kubernetes cluster kubeconfig save intellectx-cluster3
       - run: kubectl apply -f infra/k8s && kubectl apply -f infra/k8s-prod
