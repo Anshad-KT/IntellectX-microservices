@@ -7,7 +7,7 @@ const CustomLoader = () => {
     alignItems: 'center',
     height: '100vh', // Adjust this value as needed
     background: 'white', // Set the background color to white
-  };
+  };   
 
   const loaderStyle = {
     width: '50px',

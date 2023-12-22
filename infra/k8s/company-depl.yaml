@@ -9,7 +9,7 @@ spec:
       app: company 
   template:
     metadata:
-      labels:
+      labels:   
         app: company 
     spec:
       containers:

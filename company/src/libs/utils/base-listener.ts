@@ -3,7 +3,7 @@ import { Subject } from "@intellectx/build";
 interface Event {
     subject: Subject;
     data: any;
-}
+}     
 export abstract class Listener<T extends Event> {
     abstract subject: T['subject'];
     abstract queueGroup: string;

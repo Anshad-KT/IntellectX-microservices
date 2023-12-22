@@ -18,7 +18,7 @@ spec:
         paths:
           - path: /api/tenant/?(.*)
             pathType: Prefix
-            backend:
+            backend:   
               service:
                 name: tenant-srv
                 port:
