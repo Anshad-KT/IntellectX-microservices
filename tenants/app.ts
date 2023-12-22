@@ -14,7 +14,7 @@ app.use(
   cookieSession({
     signed: false,
   })      
-)         
+)          
 app.use("/api", routes(depentencies));
 
 app.all("*", async (req, res) => {

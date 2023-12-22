@@ -19,6 +19,6 @@ jobs:
       - run: docker push anshadkt/client
       - uses: digitalocean/action-doctl@v2
         with:
-          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN2 }}
       - run: doctl kubernetes cluster kubeconfig save intellectx-cluster
       - run: kubectl rollout restart deployment client-depl
