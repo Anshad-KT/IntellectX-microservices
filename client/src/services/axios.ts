@@ -1,7 +1,7 @@
 import axios,{AxiosError, AxiosInstance} from "axios"
 const  auth : AxiosInstance= axios.create({
     baseURL : "/"
-  })
+  }) 
   auth.interceptors.request.use(
     (config) => {
       const user = JSON.parse(localStorage.getItem("user") as string);

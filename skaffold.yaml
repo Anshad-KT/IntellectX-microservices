@@ -10,7 +10,7 @@ build:
     push: false
   artifacts:
     - image: anshadkt/tenant
-      context: tenants
+      context: tenants 
       docker:
         dockerfile: Dockerfile
       sync:

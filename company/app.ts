@@ -3,7 +3,7 @@ import { json } from "body-parser";
 import cookieSession from "cookie-session";
 import { routes } from "./src/routes";
 // import ErrorHandler from "./src/libs/utils/ErrorHnadler";
-import {               
+import {                
   NotFoundError,  
 } from "@intellectx/build"; 
 import depentencies from "./src/config/depentencies";
