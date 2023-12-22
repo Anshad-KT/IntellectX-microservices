@@ -18,7 +18,7 @@ const PopupBox = ({ onClose }: any) => {
   const [threadName, setThreadName] = useState('');
   const [selectedOptions, setSelectedOptions] = useState([]);
   const {id} = useParams()
-
+     
   
   const handleChange = (selectedItems: any) => {
     setSelectedOptions(selectedItems);
