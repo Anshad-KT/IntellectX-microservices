@@ -22,3 +22,4 @@ jobs:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN2 }} 
       - run: doctl kubernetes cluster kubeconfig save intellectx-cluster2
       - run: kubectl rollout restart deployment tenant-depl
+ 
