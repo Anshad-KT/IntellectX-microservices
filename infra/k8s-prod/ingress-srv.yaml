@@ -32,7 +32,7 @@ spec:
                   number: 3000
           - path: /api/communication/?(.*)
             pathType: Prefix
-            backend:
+            backend: 
               service:
                 name: communication-srv
                 port:
