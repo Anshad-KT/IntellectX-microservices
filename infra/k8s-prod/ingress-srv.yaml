@@ -12,7 +12,7 @@ metadata:
     nginx.ingress.kubernetes.io/cors-allow-headers: "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range"  # CORS Allow Headers setting
     nginx.ingress.kubernetes.io/cross-origin-opener-policy: "same-origin"
 spec: 
-  rules:
+  rules:  
     - host: "www.intellectx.cloud"
       http: 
         paths:
