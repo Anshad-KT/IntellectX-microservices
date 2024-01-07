@@ -52,7 +52,7 @@ const Page = () => {
   };
 
   const signUpHandler = (event: { preventDefault: () => void; }) => {
-    event.preventDefault();
+    
     if (!validateForm()) {
       return;
     }
