@@ -60,6 +60,8 @@ const Page = () => {
       .post('/api/tenant/user/signup', { email, username, password })
       .then((response) => {
         if (response.data.msg) {
+          console.log("/api/tenant/user/signup");
+          
           setError('Something went wrong');
         } else {
           
@@ -75,7 +77,7 @@ const Page = () => {
                 })
                 .catch((err)=>{
                  console.log(err);
-                 
+                 setError('An error occurred');
                 })
         
           
