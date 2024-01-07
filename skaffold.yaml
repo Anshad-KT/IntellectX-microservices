@@ -6,7 +6,7 @@ deploy:
       - ./infra/k8s/*
       - ./infra/k8s-dev/*
 build:
-  local: 
+  local:  
     push: false
   artifacts:
     - image: anshadkt/tenant

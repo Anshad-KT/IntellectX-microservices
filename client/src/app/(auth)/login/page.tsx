@@ -85,7 +85,7 @@ const response = await auth.get(url);
         .post('/api/tenant/user/login', { email, password })
        
         
-        .then((response) => {
+        .then((response) => { 
       
           console.log(response);
           

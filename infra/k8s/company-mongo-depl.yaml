@@ -13,7 +13,7 @@ spec:
         app: company-mongo 
     spec:
       containers: 
-        - name: company-mongo
+        - name: company-mongo 
           image: mongo
 ---
 apiVersion: v1

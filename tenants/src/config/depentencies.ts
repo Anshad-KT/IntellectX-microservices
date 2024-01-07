@@ -18,7 +18,7 @@ const useCases: useCaseData = {
 const repository: repositoryData = {
   userRepository,
   tenantRepository
-};
+}; 
 
 export = {
   useCases,
