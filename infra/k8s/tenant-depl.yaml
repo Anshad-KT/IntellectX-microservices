@@ -26,7 +26,7 @@ spec:
                 secretKeyRef:
                   name: my-env-secret2
                   key: JWT_KEY
-            - name: NODEPASS
+            - name: NODEPASS 
               valueFrom:
                 secretKeyRef:
                   name: my-env-secret2

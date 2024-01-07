@@ -19,7 +19,7 @@ spec:
           - path: /api/tenant/?(.*)
             pathType: Prefix
             backend:   
-              service:
+              service: 
                 name: tenant-srv
                 port:
                   number: 3000

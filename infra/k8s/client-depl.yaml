@@ -23,7 +23,7 @@ spec:
                   key: AWS_ACCESS_KEY_ID 
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
-                secretKeyRef:
+                secretKeyRef: 
                   name: my-env-secret4
                   key: AWS_SECRET_ACCESS_KEY
             - name: BUCKET_NAME

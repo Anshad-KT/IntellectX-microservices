@@ -27,7 +27,7 @@ spec:
             - "-hbf"
             - "2"
             - "-SD"
-            - "-cid"
+            - "-cid" 
             - "ticketing"
           # env:
           #   - name: NATS_CLIENT_ID

@@ -23,7 +23,7 @@ const Page = () => {
     const chatContainerRef = useRef(null);
     const { id } = useParams()
     const [message, setMessage] = useState<string>()
-    const [data, setData] = useState<boolean>()
+    const [data, setData] = useState<boolean>() 
     const [displayChat, setDisplayChat] = useState<any>()
     const [responseData, setResponseData] = useState<any>(null);
     const socket = io("https://www.intellectx.cloud");
