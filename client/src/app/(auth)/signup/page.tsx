@@ -56,6 +56,8 @@ const Page = () => {
     if (!validateForm()) {
       return;
     }
+    console.log("updating api");
+    
     auth
       .post('/api/tenant/user/signup', { email, username, password })
       .then((response) => {
