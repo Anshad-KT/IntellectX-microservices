@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: tenant-mongo-depl
 spec:
-  replicas: 2
+  replicas: 1
   selector: 
     matchLabels:    
       app: tenant-mongo 

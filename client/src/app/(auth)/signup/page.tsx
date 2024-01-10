@@ -66,6 +66,7 @@ const Page = () => {
           
           setError('Something went wrong');
         } else {
+          console.log("something not went wrong");
           
           dispatch(addId(response.data.addedUser.id));
          
