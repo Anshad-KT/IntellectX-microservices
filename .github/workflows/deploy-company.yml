@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:  
+    steps:   
       - uses: actions/checkout@v2
       - run: cd company && docker build -t anshadkt/company .
       - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
