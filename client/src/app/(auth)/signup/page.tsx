@@ -63,6 +63,7 @@ const Page = () => {
       .then((response) => {
         if (response.data.msg) {
           console.log("/api/tenant/user/signup");
+          console.log(response.data.msg);
           
           setError('Something went wrong');
         } else {
