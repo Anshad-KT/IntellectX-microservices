@@ -88,6 +88,8 @@ const Page = () => {
         }
       })
       .catch((error) => {
+        console.log(error);
+        
         setError('An error occurred');
       });
   };
