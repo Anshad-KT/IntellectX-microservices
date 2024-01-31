@@ -6,13 +6,15 @@ export const signIn_UseCase = (dependencies: DepenteniciesData) => {
     repository: { userRepository },
   } = dependencies;
 
-  if (!userRepository)
-    throw new Error("The user repository should be dependenciew i guess");
+  if (!userRepository) {
+    throw new Error("The user repository should be a dependency.");
+  }
 
   const execute = ({ password, email }: UserData) => {
     const userCredential = { password, email };
     return userRepository.signIn(userCredential);
   };
+
   return {
     execute,
   };
