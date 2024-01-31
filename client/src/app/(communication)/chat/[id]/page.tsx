@@ -20,7 +20,7 @@ import { currentThread } from '@/app/GlobalRedux/Features/currentThread/currentT
 
 const Page = () => {
     const { value } = useSelector((state: RootState) => state.id)
-    const chatContainerRef = useRef(null);
+    const chatContainerRef = useRef<any>(null);
     const { id } = useParams()
     const [message, setMessage] = useState<string>()
     const [data, setData] = useState<boolean>() 
@@ -63,7 +63,7 @@ const Page = () => {
         
                 
                 if (chatContainerRef.current) {
-                    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+                    (chatContainerRef.current as HTMLDivElement).scrollTop = chatContainerRef.current.scrollHeight;
                 }
                 console.log("sencee")
                 
