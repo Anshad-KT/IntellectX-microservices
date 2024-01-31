@@ -9,7 +9,7 @@ spec:
       app: tenant-mongo 
   template:  
     metadata:  
-      labels:   
+      labels:    
         app: tenant-mongo 
     spec: 
       containers:

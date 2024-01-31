@@ -13,7 +13,7 @@ export = (dependencies: DepenteniciesData): any => {
       const email = req.params.id;
    
       
-      if (!email) throw new BadRequestError("Please provide a email");
+      if (!email) return res.status(500).json({ "Please provide a Email" });
 
       const getUser = await getUser_UseCase(dependencies).execute(email)
 
@@ -29,13 +29,15 @@ export = (dependencies: DepenteniciesData): any => {
       }else{
     
         
-      res.status(404).json({message:"user not found"});
+     return res.status(404).json({message:"user not found"});
       }
  
     } catch (error: any) {
 
     
-      throw new Error(error);
+      console.log(error);
+      
+    return  res.status(500).json({msg:error.message})
     }
   };
   return otp;

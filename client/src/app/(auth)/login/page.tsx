@@ -18,7 +18,7 @@ import { addCompanyName } from '@/app/GlobalRedux/Features/company/companySlice'
 interface ApiError {
   message: string;
 }
-interface JwtPayload {
+interface JwtPayload{ 
   sub: string;
   name: string;
   exp: number;

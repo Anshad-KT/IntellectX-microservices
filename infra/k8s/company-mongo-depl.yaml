@@ -8,7 +8,7 @@ spec:
     matchLabels: 
       app: company-mongo  
   template:
-    metadata:    
+    metadata:     
       labels: 
         app: company-mongo 
     spec:

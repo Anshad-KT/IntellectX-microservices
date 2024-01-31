@@ -277,6 +277,7 @@ const Page = () => {
 
   const toggleCamera = () => {
     const videoTrack = localStream.current?.getVideoTracks()[0];
+  
     if (videoTrack?.enabled) {
       videoTrack.enabled = false;
       setSlash({ ...slash, video: true });

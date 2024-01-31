@@ -24,15 +24,15 @@ export = (dependencies: DepenteniciesData): any => {
       const companyName =  req.headers.companyname as string
 
  
-      if (!channel) throw new BadRequestError("Please provide employee details");
-      if (!companyName) throw new BadRequestError("Please provide a password");
+      if (!channel) return res.status(500).json({ "No channel present" });
+      if (!companyName) return res.status(500).json({"No company present" });
       
       
       const addChannel = await addChannel_UseCase(dependencies).execute(channel,companyName);
 ;
 
 
-      if (!addChannel) throw new BadRequestError("Invalid Credentials");
+      if (!addChannel) return res.status(500).json({ "Internal Server Error" });
 
       res.json(addChannel);
     
@@ -40,7 +40,7 @@ export = (dependencies: DepenteniciesData): any => {
     } catch (error: any) {
       console.log(error);
       
-      res.status(error.status || 500).json({ error: error.message || "Internal Server Error" });
+     return res.status(error.status || 500).json({ error: error.message || "Internal Server Error" });
     }
   };
   return addChannel;

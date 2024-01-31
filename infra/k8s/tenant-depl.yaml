@@ -9,7 +9,7 @@ spec:
       app: tenant 
   template: 
     metadata:
-      labels:
+      labels: 
         app: tenant  
     spec: 
       containers:

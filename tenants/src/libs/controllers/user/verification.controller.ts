@@ -27,8 +27,8 @@ export = (dependencies: DepenteniciesData): any => {
       res.json(verifiedUser);      
       
     } catch (error: any) {
-      res.json({msg:"something went wrong"})
-      throw new Error(error);
+     return res.json({msg:"something went wrong"})
+     
     }
   };
   return verification;

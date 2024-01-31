@@ -14,18 +14,20 @@ export = (dependencies: DepenteniciesData): any => {
       const employeeDetails = req.body;
       const  companyName  =   req.headers.companyname as string
  
-      if (!employeeDetails) throw new BadRequestError("Please provide employee details");
-      if (!companyName) throw new BadRequestError("Please provide a password");
+      if (!employeeDetails) return res.status(500).json({"Please provide emoyeeDetails" });
+      if (!companyName) return res.status(500).json({"Please provide companyName" });
       
       // const employeeDetails = await getEmployeeDetails_UseCase(dependencies).execute(id,companyName)
       const addEmployee = await addEmployee_UseCase(dependencies).execute(employeeDetails,companyName);
 
 
-      if (!addEmployee) throw new BadRequestError("Invalid Credentials");
+      if (!addEmployee) return res.status(500).json({"Error adding employees"});
 
       res.json(addEmployee);
     } catch (error: any) {
-      throw new Error(error);
+      console.log(error);
+      
+     return res.status(500).json({msg:error.message})
     }
   };
   return addEmployee;

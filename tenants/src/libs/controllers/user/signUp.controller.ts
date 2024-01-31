@@ -53,8 +53,9 @@ export = (dependencies: DepenteniciesData): any => {
 
       
     } catch (error: any) {
-      res.json({msg:"something went wrong"})
-      throw new Error(error);
+      console.log(error);
+      
+      return res.status(500).json({msg:error.message})
     }
   };
   return signUp;

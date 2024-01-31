@@ -15,7 +15,7 @@ export = (dependencies: DepenteniciesData): any => {
       const { id } = req.body;
       const companyName =   req.headers.companyname as string
     
-      if (!id) throw new BadRequestError("Please provide a id");
+      if (!id) return res.status(500).json({"Please provide a id"}); 
       
       const getSuperUser = await getSuperUserDetails_UseCase(dependencies).execute(id,companyName);
 
@@ -23,7 +23,9 @@ export = (dependencies: DepenteniciesData): any => {
 
       res.json(getSuperUser);
     } catch (error: any) {
-      throw new Error(error);
+      console.log(error);
+      
+     return res.status(500).json({msg:error.message})
     }
   };
   return getSuperUser;

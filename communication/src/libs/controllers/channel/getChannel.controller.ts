@@ -36,7 +36,7 @@ export = (dependencies: DepenteniciesData): any => {
     } catch (error: any) {
       console.log(error);
       
-      res.status(error.status || 500).json({ error: error.message || "Internal Server Error" });
+     return res.status(error.status || 500).json({ error: error.message || "Internal Server Error" });
     }
   };
   return addChannel;

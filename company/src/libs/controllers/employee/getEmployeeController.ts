@@ -17,12 +17,14 @@ export = (dependencies: DepenteniciesData): any => {
       
       const employees = await getEmployee_UseCase(dependencies).execute(companyName);
 
-      if (!employees) throw new BadRequestError("Invalid Credentials");
+      if (!employees) return res.status(500).json({"No employees present"});
 
 res.json(employees);
             
     } catch (error: any) {
-      throw new Error(error);
+      console.log(error);
+      
+     return res.status(500).json({msg:error.message})
     }
   };
   return getEmployee;

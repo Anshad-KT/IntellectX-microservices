@@ -15,7 +15,7 @@ spec:
       containers:
         - name: client
           image: anshadkt/client
-          env: 
+          env:  
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:

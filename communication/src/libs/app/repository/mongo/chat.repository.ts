@@ -41,7 +41,7 @@ export = {
             const thread = await ThreadSchema.findById(threadName)
 
             if (!thread) {
-                throw new Error('Thread not found');
+                return null
              }
 
             if (thread.chat && thread.chat.length > 0) {

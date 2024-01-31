@@ -12,8 +12,8 @@ export = (dependencies: DepenteniciesData): any => {
     try {
       const { email, password } = req.body;
 
-      if (!email) throw new BadRequestError("Please provide a email");
-      if (!password) throw new BadRequestError("Please provide a password");
+      if (!email)  return res.status(500).json({"Please provide a email" });
+      if (!password) return res.status(500).json({"Please provide a password" });
 
       const addedUser = await signIn_UseCase(dependencies).execute({
         email,
@@ -32,12 +32,14 @@ export = (dependencies: DepenteniciesData): any => {
           userDetails: addedUser,
         };
   
-        res.json({addedUser,jwt:token});
+       return res.json({addedUser,jwt:token});
       } 
 
       
     } catch (error: any) {
-      throw new Error(error);
+      console.log(error);
+      
+     return res.status(500).json({msg:error.message})
     }
   };
   return signIn;

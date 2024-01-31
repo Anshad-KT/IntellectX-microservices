@@ -51,11 +51,6 @@ const Page = () => {
       };
 
 
-
-
-
-
-
     return (
         <main className='font-default'>
             <Navbar />

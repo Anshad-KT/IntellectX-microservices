@@ -4,7 +4,7 @@ import cookieSession from "cookie-session";
 import { routes } from "./src/routes";
 // import ErrorHandler from "./src/libs/utils/ErrorHnadler";
 import {                 
-  NotFoundError,  
+  NotFoundError,   
 } from "@intellectx/build"; 
 import depentencies from "./src/config/depentencies";
         
