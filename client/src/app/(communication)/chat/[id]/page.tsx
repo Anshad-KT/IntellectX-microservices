@@ -161,7 +161,7 @@ console.log("message recieved",newMessageRecieved);
             accessKeyId: process.env.AWS_ACCESS_KEY_ID,
             secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
         });
-        const params = {
+        const params:any = {
             Bucket: process.env.BUCKET_NAME,
             Key: `videos/${file.name}`,
             Body: file,
