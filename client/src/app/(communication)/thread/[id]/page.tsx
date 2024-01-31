@@ -238,7 +238,7 @@ console.log(superUser);
 
                                     {demos?.threads
                                         ?.slice()
-                                        .sort((a, b) => (b.chat.status ? 1 : -1))
+                                        .sort((a:any, b:any) => (b.chat.status ? 1 : -1))
                                         .map((item: any, index: number) => {
                                             return (
                                                 <Link key={item.id} href={`/chat/${item.id}`}>
