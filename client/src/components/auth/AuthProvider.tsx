@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react'
-const AuthProvider = ({children}) => {
+const AuthProvider = ({children}:any) => {
   return (
 
        {children}
